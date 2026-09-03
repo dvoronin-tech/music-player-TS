@@ -1,5 +1,6 @@
 import { createReducer, createAsyncThunk } from "@reduxjs/toolkit";
 import { ITrack } from "@/store/likedPlayList/reducerLiked";
+import { serverUrl } from "@/utils/constants";
 
 interface ITrackList {
     trackList: ITrack[],
@@ -12,8 +13,6 @@ const initialState: ITrackList = {
     loading: false,
     error: undefined
 }
-
-const serverUrl = 'https://music-server-production-5ca2.up.railway.app'
 
 export const loadTrackList = createAsyncThunk<ITrack[], undefined, {rejectValue: string}> (
     '@@trackList/LOAD_TRACK_LIST',

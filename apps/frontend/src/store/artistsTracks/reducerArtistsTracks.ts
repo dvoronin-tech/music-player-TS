@@ -1,5 +1,6 @@
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import { ITrack } from "@/store/likedPlayList/reducerLiked";
+import { serverUrl } from "@/utils/constants";
 
 const initialState: {
     loading: boolean,
@@ -10,8 +11,6 @@ const initialState: {
    error: undefined,
    tracks: [] 
 }
-
-const serverUrl = 'https://music-server-production-5ca2.up.railway.app';
 
 export const loadArtistTracks = createAsyncThunk<ITrack[], string[], {rejectValue: string}>(
     '@@artistTracks/LOAD_ARTIST_TRACKS',

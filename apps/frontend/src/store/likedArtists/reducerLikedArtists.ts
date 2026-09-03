@@ -1,5 +1,6 @@
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import { IArtist } from "@/store/artists/reducerArtists";
+import { serverUrl } from "@/utils/constants";
 
 interface IArtistsState {
     likedArtists: IArtist[],
@@ -12,8 +13,6 @@ const initialState: IArtistsState = {
     loading: false,
     error: undefined,
 }
-
-const serverUrl = 'https://music-server-production-5ca2.up.railway.app';
 
 export const loadLikedArtists = createAsyncThunk<IArtist[], undefined, {rejectValue: string}>(
     '@@artists/LOAD_LIKED_ARTISTS',

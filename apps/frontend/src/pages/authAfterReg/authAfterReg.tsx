@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Button from '@/components/buttons/buttons';
 import { useAppDispatch } from '@/hooks/useTypedRedux';
 import { logoutUser } from '@/store/user/actionsUser';
+import { serverUrl } from '@/utils/constants';
 
 const Main = styled.main`
 	padding-top: 100px;
@@ -31,8 +32,6 @@ const ButtonsWrapper = styled.div`
 	}
 `;
 export const logout = () => {
-	const serverUrl = 'https://music-server-production-5ca2.up.railway.app';
-
 	try {
 		fetch(serverUrl + '/api/users/logout/', {
 			method: 'GET',

@@ -15,6 +15,7 @@ import {
 	selectCurrentTrack,
 	selectShuffledPlayList,
 } from '@/store/current/actionsCurrent';
+import { serverUrl } from '@/utils/constants';
 
 export const shuffle = (array: ITrack[]): ITrack[] => {
 	const shuffledArray = [...array];
@@ -130,7 +131,7 @@ const AudioModule: FC = () => {
 
 		try {
 			fetch(
-				'https://music-server-production-5ca2.up.railway.app/api/tracks/addaudition/',
+				serverUrl + '/api/tracks/addaudition/',
 				{
 					method: 'POST',
 					headers: { 'Content-type': 'application/json' },

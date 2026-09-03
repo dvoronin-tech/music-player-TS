@@ -10,6 +10,7 @@ import {
 } from '@/store/user/actionsUser';
 import { logout } from '@/pages/authAfterReg/authAfterReg';
 import { useNavigate } from 'react-router-dom';
+import { serverUrl } from '@/utils/constants';
 
 const AccountBar = styled.aside<{ $isShow: boolean }>`
 	width: 450px;
@@ -259,7 +260,6 @@ const AccountDataBar: FC = () => {
 	const regDate = new Date(reg_date);
 	const navigate = useNavigate();
 
-	const serverUrl = 'https://music-server-production-5ca2.up.railway.app';
 
 	const [isPressed, setIsPressed] = useState(false);
 	const [startDate, setStartDate] = useState<null | number>(null);
