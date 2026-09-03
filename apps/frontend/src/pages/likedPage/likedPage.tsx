@@ -153,7 +153,7 @@ const LikedPage: FC = () => {
 						autoPlay
 						loop
 						muted
-						src={publicUrl + 'video/likedVideo.webm'}
+						src='/video/liked-video.webm'
 					/>
 				</div>
 				<div className="liked_title_wrapper">

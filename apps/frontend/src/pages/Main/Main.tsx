@@ -178,7 +178,7 @@ const Main: FC = () => {
 								category="Артист месяца"
 								content="Тринадцать карат"
 								additionalContent="242412 прослушиваний"
-								img={publicUrl + 'img/homecard1.jpg'}
+								img="/img/home-card-1.webp"
 							/>
 							<HomeCard
 								onClick={setBestInBrooklyn}
@@ -186,7 +186,7 @@ const Main: FC = () => {
 								category="Лучшее"
 								content="в BROOKLYN"
 								additionalContent="Моргенштерн, Тринадцать карат ..."
-								img={publicUrl + 'img/homecard2.jpeg'}
+								img="/img/home-card-2.webp"
 							/>
 						</div>
 						<div className="cards">
@@ -196,7 +196,7 @@ const Main: FC = () => {
 								category="ТОП"
 								content="в Стране"
 								additionalContent="Тима белорусских, Макс Корж ..."
-								img={publicUrl + 'img/homecard3.jpeg'}
+								img="/img/home-card-3.webp"
 							/>
 							<HomeCard
 								onClick={bestForYou}
@@ -204,7 +204,7 @@ const Main: FC = () => {
 								category="Подборка"
 								content="Для вас"
 								additionalContent="Nikitata, Тринадцать карат, Три дня до..."
-								img={publicUrl + 'img/homecard4.jpeg'}
+								img="/img/home-card-4.webp"
 							/>
 						</div>
 						<div className="home_artists_line">
