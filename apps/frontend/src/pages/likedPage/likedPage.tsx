@@ -7,6 +7,7 @@ import { Input } from "../../components/inputFields/inputFields";
 import Button from "../../components/buttons/buttons";
 import { HomeTrackCard } from "../../components/cards/homeTrackCards/homeTrackCards";
 import { ITrack } from "../../store/likedPlayList/reducerLiked";
+import { publicUrl } from "../../utils/constants";
 
 const Background = styled.div`
     height: 333px;
@@ -123,7 +124,7 @@ const LikedPage: FC = () => {
         <div className="liked_page" style={{paddingBottom: trackId ? '40px' : 0}}>
             <Background>
                 <div className="video_wrapper">
-                    <video autoPlay loop muted src={process.env.PUBLIC_URL + '/video/likedVideo.webm'} />
+                    <video autoPlay loop muted src={publicUrl + "video/likedVideo.webm"} />
                 </div>
                 <div className="liked_title_wrapper">
                     <span className="liked_title">Любимые треки</span>

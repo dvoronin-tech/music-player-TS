@@ -9,6 +9,7 @@ import { HomeTrackCard } from "../../components/cards/homeTrackCards/homeTrackCa
 import { selectCurrentTrack, selectPlayList } from "../../store/current/actionsCurrent";
 import { ITrack } from "../../store/likedPlayList/reducerLiked";
 import { shuffle } from "../audioModule/audioModule";
+import { publicUrl } from "../../utils/constants";
 
 
 const Main: FC = () => {
@@ -141,24 +142,24 @@ const Main: FC = () => {
                                 onClick={setArtistOfMonthPlayList}
                                 W={800} category="Артист месяца" content="Тринадцать карат" 
                                 additionalContent="242412 прослушиваний"
-                                img={process.env.PUBLIC_URL + "/img/homecard1.jpg"}/>
+                                img={publicUrl + "img/homecard1.jpg"}/>
                             <HomeCard 
                                 onClick={setBestInBrooklyn}
                                 W={530} category="Лучшее" content="в BROOKLYN" 
                                 additionalContent="Моргенштерн, Тринадцать карат ..."
-                                img={process.env.PUBLIC_URL + "/img/homecard2.jpeg"} />
+                                img={publicUrl + "img/homecard2.jpeg"} />
                         </div>
                         <div className="cards">
                             <HomeCard 
                                 onClick={setBestInCountry}
                                 W={530} category="ТОП" content="в Стране" 
                                 additionalContent="Тима белорусских, Макс Корж ..."
-                                img={process.env.PUBLIC_URL + "/img/homecard3.jpeg"} />
+                                img={publicUrl + "img/homecard3.jpeg"} />
                             <HomeCard 
                                 onClick={bestForYou}
                                 W={800} category="Подборка" content="Для вас" 
                                 additionalContent="Nikitata, Тринадцать карат, Три дня до..."
-                                img={process.env.PUBLIC_URL + "/img/homecard4.jpeg"}/>
+                                img={publicUrl + "img/homecard4.jpeg"}/>
                         </div>
                         <div className="home_artists_line">
                             <span>Артисты</span>
