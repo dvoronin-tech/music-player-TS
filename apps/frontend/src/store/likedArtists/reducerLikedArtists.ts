@@ -1,5 +1,5 @@
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
-import { IArtist } from "../artists/reducerArtists";
+import { IArtist } from "@/store/artists/reducerArtists";
 
 interface IArtistsState {
     likedArtists: IArtist[],

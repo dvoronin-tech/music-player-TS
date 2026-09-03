@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FaUserAltSlash } from "react-icons/fa";
-import Button from "../../components/buttons/buttons";
+import Button from "@/components/buttons/buttons";
 
 import './preRegErrorPage.scss';
 

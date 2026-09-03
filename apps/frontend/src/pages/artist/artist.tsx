@@ -1,25 +1,25 @@
 import { FC, useEffect, useState } from 'react';
 
 import './artist.scss';
-import Headers from '../../components/headers/headers';
+import Headers from '@/components/headers/headers';
 
 import { styled } from 'styled-components';
-import Button from '../../components/buttons/buttons';
+import Button from '@/components/buttons/buttons';
 import {
 	Follow,
 	PlayOrPause,
 	UnFollow,
-} from '../../components/icons and tags/icons';
-import ArtistTrackCard from '../../components/cards/artistTrackCards/artistTrackCards';
-import { useAppDispatch, useAppSelector } from '../../hooks/useTypedRedux';
-import { loadArtistTracks } from '../../store/artistsTracks/reducerArtistsTracks';
-import { HomeTrackCard } from '../../components/cards/homeTrackCards/homeTrackCards';
+} from '@/components/icons and tags/icons';
+import ArtistTrackCard from '@/components/cards/artistTrackCards/artistTrackCards';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import { loadArtistTracks } from '@/store/artistsTracks/reducerArtistsTracks';
+import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
 import {
 	selectCurrentTrack,
 	selectPlayList,
-} from '../../store/current/actionsCurrent';
-import { toggleArtist } from '../../store/likedArtists/reducerLikedArtists';
-import { addNotification } from '../../store/notificationQueue/actionsNotification';
+} from '@/store/current/actionsCurrent';
+import { toggleArtist } from '@/store/likedArtists/reducerLikedArtists';
+import { addNotification } from '@/store/notificationQueue/actionsNotification';
 import { v4 as randomId } from 'uuid';
 
 const PopularTrackListWrapper = styled.div`

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import './PreRegPage.scss';
-import Button from "../../components/buttons/buttons";
+import Button from "@/components/buttons/buttons";
 import styled from "styled-components";
 
 const ContentSelection = styled.div`

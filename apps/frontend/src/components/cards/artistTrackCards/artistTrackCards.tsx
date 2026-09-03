@@ -3,20 +3,20 @@ import { FC, useEffect, useState } from 'react';
 import './artistTrackCards.scss';
 
 import styled from 'styled-components';
-import Button from '../../buttons/buttons';
-import { ITrack, toggleLike } from '../../../store/likedPlayList/reducerLiked';
-import { useAppDispatch, useAppSelector } from '../../../hooks/useTypedRedux';
+import Button from '@/components/buttons/buttons';
+import { ITrack, toggleLike } from '@/store/likedPlayList/reducerLiked';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
 	addToCurrentPlayList,
 	selectCurrentTrack,
 	selectPlayList,
-} from '../../../store/current/actionsCurrent';
+} from '@/store/current/actionsCurrent';
 import {
 	AddToPlayList,
 	Like,
 	PlayingTrackTag,
-} from '../../icons and tags/icons';
-import { addNotification } from '../../../store/notificationQueue/actionsNotification';
+} from '@/components/icons and tags/icons';
+import { addNotification } from '@/store/notificationQueue/actionsNotification';
 import { v4 as randomId } from 'uuid';
 import { MdErrorOutline } from 'react-icons/md';
 

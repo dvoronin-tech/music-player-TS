@@ -1,15 +1,15 @@
 import { FC } from 'react';
 
 import './headers.scss';
-import Button from '../buttons/buttons';
+import Button from '@/components/buttons/buttons';
 import { IoIosSearch } from 'react-icons/io';
-import { Input } from '../inputFields/inputFields';
+import { Input } from '@/components/inputFields/inputFields';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { HiHome } from 'react-icons/hi2';
-import { useAppDispatch, useAppSelector } from '../../hooks/useTypedRedux';
-import { toggleShowUserData } from '../../store/user/actionsUser';
-import { UserIcon } from '../icons and tags/icons';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import { toggleShowUserData } from '@/store/user/actionsUser';
+import { UserIcon } from '@/components/icons and tags/icons';
 
 interface IHeadersProp {
 	type: 'simple' | 'main';

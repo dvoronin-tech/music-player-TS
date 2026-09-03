@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
-import Button from "../../components/buttons/buttons";
+import Button from "@/components/buttons/buttons";
 import { useNavigate } from "react-router-dom";
 
 const Main = styled.main`

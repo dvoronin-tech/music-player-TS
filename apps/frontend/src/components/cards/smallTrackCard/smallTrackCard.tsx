@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from 'react';
 import './smallTrackCard.scss';
 import styled from 'styled-components';
-import { Cross, Like } from '../../icons and tags/icons';
-import { ITrack, toggleLike } from '../../../store/likedPlayList/reducerLiked';
-import { useAppDispatch, useAppSelector } from '../../../hooks/useTypedRedux';
+import { Cross, Like } from '@/components/icons and tags/icons';
+import { ITrack, toggleLike } from '@/store/likedPlayList/reducerLiked';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
 	deleteCurrentTrack,
 	selectCurrentTrack,
 	selectPlayList,
-} from '../../../store/current/actionsCurrent';
-import { addNotification } from '../../../store/notificationQueue/actionsNotification';
+} from '@/store/current/actionsCurrent';
+import { addNotification } from '@/store/notificationQueue/actionsNotification';
 import { v4 as randomId } from 'uuid';
 
 interface ISmallTrackListProps {

@@ -2,10 +2,10 @@ import { FC, SyntheticEvent, useEffect, useRef, useState } from 'react';
 
 import './fullScreen.scss';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../hooks/useTypedRedux';
-import { ITrack, toggleLike } from '../../store/likedPlayList/reducerLiked';
-import { HomeTrackCard } from '../../components/cards/homeTrackCards/homeTrackCards';
-import Button from '../../components/buttons/buttons';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import { ITrack, toggleLike } from '@/store/likedPlayList/reducerLiked';
+import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
+import Button from '@/components/buttons/buttons';
 import {
 	CurrentPlayList,
 	Like,
@@ -14,7 +14,7 @@ import {
 	Repeat,
 	Rewind,
 	FullScreen as FullScreenIcon,
-} from '../../components/icons and tags/icons';
+} from '@/components/icons and tags/icons';
 import {
 	setPause,
 	setPlay,
@@ -22,11 +22,11 @@ import {
 	switchTrackAction,
 	toggleRandom,
 	toggleRepeat,
-} from '../../store/trackState/actionsTrackState';
-import { humanizingNumbers } from '../PlaySelection/PlaySelection';
-import { addNotification } from '../../store/notificationQueue/actionsNotification';
+} from '@/store/trackState/actionsTrackState';
+import { humanizingNumbers } from '@/pages/PlaySelection/PlaySelection';
+import { addNotification } from '@/store/notificationQueue/actionsNotification';
 import { v4 as randomId } from 'uuid';
-import { showCurrentPlayListAction } from '../../store/current/actionsCurrent';
+import { showCurrentPlayListAction } from '@/store/current/actionsCurrent';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const Background = styled.div<{ $img: string }>`

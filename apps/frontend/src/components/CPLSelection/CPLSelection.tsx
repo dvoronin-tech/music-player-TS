@@ -2,9 +2,9 @@ import { FC } from 'react';
 
 import './CPLSelection.scss';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../hooks/useTypedRedux';
-import SmallTrackCard from '../cards/smallTrackCard/smallTrackCard';
-import { showCurrentPlayListAction } from '../../store/current/actionsCurrent';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import SmallTrackCard from '@/components/cards/smallTrackCard/smallTrackCard';
+import { showCurrentPlayListAction } from '@/store/current/actionsCurrent';
 
 const CPLSelectionComponent = styled.aside<{ $isShow: boolean }>`
 	position: fixed;

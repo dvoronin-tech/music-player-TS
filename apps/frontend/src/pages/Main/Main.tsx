@@ -1,18 +1,18 @@
 import { FC, MouseEventHandler, useEffect, useRef, useState } from 'react';
 import './Main.scss';
-import Button from '../../components/buttons/buttons';
-import { HomeCard } from '../../components/cards/homeCards/homeCards';
-import { ArtistCard } from '../../components/cards/artistCards/artistCards';
-import { useAppDispatch, useAppSelector } from '../../hooks/useTypedRedux';
-import { ArtistsError } from '../../components/errorMessages/artistsError';
-import { HomeTrackCard } from '../../components/cards/homeTrackCards/homeTrackCards';
+import Button from '@/components/buttons/buttons';
+import { HomeCard } from '@/components/cards/homeCards/homeCards';
+import { ArtistCard } from '@/components/cards/artistCards/artistCards';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import { ArtistsError } from '@/components/errorMessages/artistsError';
+import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
 import {
 	selectCurrentTrack,
 	selectPlayList,
-} from '../../store/current/actionsCurrent';
-import { ITrack } from '../../store/likedPlayList/reducerLiked';
-import { shuffle } from '../audioModule/audioModule';
-import { publicUrl } from '../../utils/constants';
+} from '@/store/current/actionsCurrent';
+import { ITrack } from '@/store/likedPlayList/reducerLiked';
+import { shuffle } from '@/pages/audioModule/audioModule';
+import { publicUrl } from '@/utils/constants';
 
 const Main: FC = () => {
 	const dispatch = useAppDispatch();

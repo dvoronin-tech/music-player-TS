@@ -1,4 +1,4 @@
-import { RootState } from "../store"
+import { RootState } from "@/store/store"
 import { createSelector } from "reselect"
 
 const selectLikedTracks = (state: RootState) => state.liked.likedTrackList

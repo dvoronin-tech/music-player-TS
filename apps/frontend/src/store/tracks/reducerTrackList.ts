@@ -1,5 +1,5 @@
 import { createReducer, createAsyncThunk } from "@reduxjs/toolkit";
-import { ITrack } from "../likedPlayList/reducerLiked";
+import { ITrack } from "@/store/likedPlayList/reducerLiked";
 
 interface ITrackList {
     trackList: ITrack[],

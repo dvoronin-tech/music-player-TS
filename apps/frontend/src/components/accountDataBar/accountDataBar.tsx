@@ -1,14 +1,14 @@
 import { ChangeEvent, FC, useState } from 'react';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../hooks/useTypedRedux';
-import { Cross, UserIcon } from '../icons and tags/icons';
-import Button from '../buttons/buttons';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import { Cross, UserIcon } from '@/components/icons and tags/icons';
+import Button from '@/components/buttons/buttons';
 import {
 	logoutUser,
 	setUserPhoto,
 	toggleShowUserData,
-} from '../../store/user/actionsUser';
-import { logout } from '../../pages/authAfterReg/authAfterReg';
+} from '@/store/user/actionsUser';
+import { logout } from '@/pages/authAfterReg/authAfterReg';
 import { useNavigate } from 'react-router-dom';
 
 const AccountBar = styled.aside<{ $isShow: boolean }>`

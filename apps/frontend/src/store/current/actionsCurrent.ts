@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { ITrack } from "../likedPlayList/reducerLiked";
+import { ITrack } from "@/store/likedPlayList/reducerLiked";
 
 export const selectPlayList = createAction('@@current/SELECT_PLAY_LIST', (playList: ITrack[]) => ({
     payload: {

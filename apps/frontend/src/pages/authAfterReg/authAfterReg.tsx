@@ -1,9 +1,9 @@
 import { FC, MouseEventHandler } from 'react';
 import './authAfterReg.scss';
 import styled from 'styled-components';
-import Button from '../../components/buttons/buttons';
-import { useAppDispatch } from '../../hooks/useTypedRedux';
-import { logoutUser } from '../../store/user/actionsUser';
+import Button from '@/components/buttons/buttons';
+import { useAppDispatch } from '@/hooks/useTypedRedux';
+import { logoutUser } from '@/store/user/actionsUser';
 
 const Main = styled.main`
 	padding-top: 100px;

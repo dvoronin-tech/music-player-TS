@@ -2,12 +2,12 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 
 import './likedPage.scss';
 import styled from 'styled-components';
-import { useAppSelector } from '../../hooks/useTypedRedux';
-import { Input } from '../../components/inputFields/inputFields';
-import Button from '../../components/buttons/buttons';
-import { HomeTrackCard } from '../../components/cards/homeTrackCards/homeTrackCards';
-import { ITrack } from '../../store/likedPlayList/reducerLiked';
-import { publicUrl } from '../../utils/constants';
+import { useAppSelector } from '@/hooks/useTypedRedux';
+import { Input } from '@/components/inputFields/inputFields';
+import Button from '@/components/buttons/buttons';
+import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
+import { ITrack } from '@/store/likedPlayList/reducerLiked';
+import { publicUrl } from '@/utils/constants';
 
 const Background = styled.div`
 	height: 333px;

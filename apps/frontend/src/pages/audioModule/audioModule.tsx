@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/useTypedRedux';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
 	resetSomeStateData,
 	setPlay,
@@ -9,12 +9,12 @@ import {
 	setAudioData,
 	switchTrackAction,
 	setPending,
-} from '../../store/trackState/actionsTrackState';
-import { ITrack } from '../../store/likedPlayList/reducerLiked';
+} from '@/store/trackState/actionsTrackState';
+import { ITrack } from '@/store/likedPlayList/reducerLiked';
 import {
 	selectCurrentTrack,
 	selectShuffledPlayList,
-} from '../../store/current/actionsCurrent';
+} from '@/store/current/actionsCurrent';
 
 export const shuffle = (array: ITrack[]): ITrack[] => {
 	const shuffledArray = [...array];

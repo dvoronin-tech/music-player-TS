@@ -2,10 +2,10 @@ import { FC, useState, useEffect, SyntheticEvent } from 'react';
 
 import './PlaySelection.scss';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/useTypedRedux';
-import { showCurrentPlayListAction } from '../../store/current/actionsCurrent';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import { showCurrentPlayListAction } from '@/store/current/actionsCurrent';
 
-import { ITrack, toggleLike } from '../../store/likedPlayList/reducerLiked';
+import { ITrack, toggleLike } from '@/store/likedPlayList/reducerLiked';
 
 import {
 	CurrentPlayList,
@@ -15,7 +15,7 @@ import {
 	Random,
 	Repeat,
 	Rewind,
-} from '../../components/icons and tags/icons';
+} from '@/components/icons and tags/icons';
 import {
 	setPause,
 	setPlay,
@@ -23,8 +23,8 @@ import {
 	switchTrackAction,
 	toggleRandom,
 	toggleRepeat,
-} from '../../store/trackState/actionsTrackState';
-import { addNotification } from '../../store/notificationQueue/actionsNotification';
+} from '@/store/trackState/actionsTrackState';
+import { addNotification } from '@/store/notificationQueue/actionsNotification';
 
 import { v4 as randomId } from 'uuid';
 import { useNavigate } from 'react-router-dom';

@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from 'react';
 import './asideBar.scss';
 import styled from 'styled-components';
-import { useAppSelector } from '../../hooks/useTypedRedux';
-import Button from '../buttons/buttons';
-import SmallTrackCard from '../cards/smallTrackCard/smallTrackCard';
-import { ArtistCard } from '../cards/artistCards/artistCards';
+import { useAppSelector } from '@/hooks/useTypedRedux';
+import Button from '@/components/buttons/buttons';
+import SmallTrackCard from '@/components/cards/smallTrackCard/smallTrackCard';
+import { ArtistCard } from '@/components/cards/artistCards/artistCards';
 import { useNavigate } from 'react-router-dom';
 
 const AsideBarComponent = styled.aside<{

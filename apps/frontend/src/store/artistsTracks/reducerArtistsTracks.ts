@@ -1,5 +1,5 @@
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
-import { ITrack } from "../likedPlayList/reducerLiked";
+import { ITrack } from "@/store/likedPlayList/reducerLiked";
 
 const initialState: {
     loading: boolean,

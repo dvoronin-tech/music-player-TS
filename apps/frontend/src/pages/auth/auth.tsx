@@ -1,9 +1,9 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState, useRef } from 'react';
 import './auth.scss';
-import Button from '../../components/buttons/buttons';
+import Button from '@/components/buttons/buttons';
 import { LuInfo } from "react-icons/lu";
 import { FaTelegramPlane } from 'react-icons/fa';
-import { Input } from '../../components/inputFields/inputFields';
+import { Input } from '@/components/inputFields/inputFields';
 import {useNavigate} from 'react-router-dom';
 
 interface IFormData {

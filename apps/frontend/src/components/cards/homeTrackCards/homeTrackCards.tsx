@@ -7,16 +7,16 @@ import {
 	Like,
 	PlayOrPause,
 	PlayingTrackTag,
-} from '../../icons and tags/icons';
-import { useAppDispatch, useAppSelector } from '../../../hooks/useTypedRedux';
+} from '@/components/icons and tags/icons';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
 	addToCurrentPlayList,
 	deleteCurrentTrack,
 	selectCurrentTrack,
 	selectPlayList,
-} from '../../../store/current/actionsCurrent';
-import { ITrack, toggleLike } from '../../../store/likedPlayList/reducerLiked';
-import { addNotification } from '../../../store/notificationQueue/actionsNotification';
+} from '@/store/current/actionsCurrent';
+import { ITrack, toggleLike } from '@/store/likedPlayList/reducerLiked';
+import { addNotification } from '@/store/notificationQueue/actionsNotification';
 import { v4 as randomId } from 'uuid';
 import { MdErrorOutline } from 'react-icons/md';
 

@@ -1,8 +1,8 @@
 import { FC, useEffect, useRef, useState } from 'react';
 
 import './homeCards.scss';
-import Button from '../../buttons/buttons';
-import { PlayOrPause } from '../../icons and tags/icons';
+import Button from '@/components/buttons/buttons';
+import { PlayOrPause } from '@/components/icons and tags/icons';
 
 interface IProp {
     img: string,

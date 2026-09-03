@@ -1,13 +1,13 @@
 import { FC, useEffect } from 'react';
 import './App.scss';
-import Main from '../Main/Main';
-import PlaySelection from '../PlaySelection/PlaySelection';
-import { useAppDispatch, useAppSelector } from '../../hooks/useTypedRedux';
-import Auth from '../auth/auth';
-import { loadUserData } from '../../store/user/reducerUser';
-import { loadArtists } from '../../store/artists/reducerArtists';
-import { loadTrackList } from '../../store/tracks/reducerTrackList';
-import Notification from '../../components/notification/notification';
+import Main from '@/pages/Main/Main';
+import PlaySelection from '@/pages/PlaySelection/PlaySelection';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import Auth from '@/pages/auth/auth';
+import { loadUserData } from '@/store/user/reducerUser';
+import { loadArtists } from '@/store/artists/reducerArtists';
+import { loadTrackList } from '@/store/tracks/reducerTrackList';
+import Notification from '@/components/notification/notification';
 import {
 	Outlet,
 	Route,
@@ -15,24 +15,24 @@ import {
 	useLocation,
 	useNavigate,
 } from 'react-router-dom';
-import PreRegPage from '../preRegPage/PreRegPage';
-import Artist from '../artist/artist';
+import PreRegPage from '@/pages/preRegPage/PreRegPage';
+import Artist from '@/pages/artist/artist';
 import { ThemeProvider } from 'styled-components';
-import ITheme from '../../utils/styled';
-import Headers from '../../components/headers/headers';
-import AuthAfterReg from '../authAfterReg/authAfterReg';
-import PreRegErrorPage from '../preRegErrorPage/preRegErrorPage';
-import { loadLikedTrackList } from '../../store/likedPlayList/reducerLiked';
-import AsideBar from '../../components/asideBar/asideBar';
-import { loadLikedArtists } from '../../store/likedArtists/reducerLikedArtists';
-import FullScreen from '../fullScreen/fullScreen';
-import AudioModule from '../audioModule/audioModule';
-import CPLSelection from '../../components/CPLSelection/CPLSelection';
-import LikedPage from '../likedPage/likedPage';
-import { toggleShowUserData } from '../../store/user/actionsUser';
-import { showCurrentPlayListAction } from '../../store/current/actionsCurrent';
-import AccountDataBar from '../../components/accountDataBar/accountDataBar';
-import NotFoundPage from '../notFoundPage/notFoundPage';
+import ITheme from '@/utils/styled';
+import Headers from '@/components/headers/headers';
+import AuthAfterReg from '@/pages/authAfterReg/authAfterReg';
+import PreRegErrorPage from '@/pages/preRegErrorPage/preRegErrorPage';
+import { loadLikedTrackList } from '@/store/likedPlayList/reducerLiked';
+import AsideBar from '@/components/asideBar/asideBar';
+import { loadLikedArtists } from '@/store/likedArtists/reducerLikedArtists';
+import FullScreen from '@/pages/fullScreen/fullScreen';
+import AudioModule from '@/pages/audioModule/audioModule';
+import CPLSelection from '@/components/CPLSelection/CPLSelection';
+import LikedPage from '@/pages/likedPage/likedPage';
+import { toggleShowUserData } from '@/store/user/actionsUser';
+import { showCurrentPlayListAction } from '@/store/current/actionsCurrent';
+import AccountDataBar from '@/components/accountDataBar/accountDataBar';
+import NotFoundPage from '@/pages/notFoundPage/notFoundPage';
 
 const AppWrapper: FC = () => {
 	const artists = useAppSelector((state) => state.artists.artists);

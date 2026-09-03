@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import likedReducer from "./likedPlayList/reducerLiked";
-import currentPlayListReducer from "./current/reducerCurrent";
-import userReducer from "./user/reducerUser";
-import trackListReducer from "./tracks/reducerTrackList";
-import artistsReducer from "./artists/reducerArtists";
-import notificationQueueReducer from "./notificationQueue/reducerNotification";
-import artistsTracksReducer from "./artistsTracks/reducerArtistsTracks";
-import likedArtistsReducer from "./likedArtists/reducerLikedArtists";
-import trackStateReducer from "./trackState/reducerTrackState";
+import likedReducer from "@/store/likedPlayList/reducerLiked";
+import currentPlayListReducer from "@/store/current/reducerCurrent";
+import userReducer from "@/store/user/reducerUser";
+import trackListReducer from "@/store/tracks/reducerTrackList";
+import artistsReducer from "@/store/artists/reducerArtists";
+import notificationQueueReducer from "@/store/notificationQueue/reducerNotification";
+import artistsTracksReducer from "@/store/artistsTracks/reducerArtistsTracks";
+import likedArtistsReducer from "@/store/likedArtists/reducerLikedArtists";
+import trackStateReducer from "@/store/trackState/reducerTrackState";
 
 const store = configureStore({
     reducer: {
