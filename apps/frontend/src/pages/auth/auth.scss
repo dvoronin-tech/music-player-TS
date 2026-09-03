@@ -1,8 +1,7 @@
-@import '../../constants';
 @import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 
 .auth {
-    background-color: $main-bg-color;
+    background-color: var(--main-bg-color);
     flex: 1 1 500px;
     &_header {
         display: flex;
@@ -14,7 +13,7 @@
         .reg_btn {
             width: 200px;
             height: 42px;
-            border: 1px solid $text-color;
+            border: 1px solid var(--text-color);
             border-radius: 10px;
             font-size: 2rem;
             font-weight: 600;
@@ -24,7 +23,7 @@
         .auth_btn {
             width: 150px;
             height: 42px;
-            background-color: $accent-color;
+            background-color: var(--accent-color);
             border-radius: 10px;
             font-size: 2rem;
             font-weight: 600;
@@ -33,7 +32,7 @@
 
     &_title {
         font-size: 4rem;
-        color: $text-color;
+        color: var(--text-color);
         letter-spacing: 5px;
         font-weight: bold;
         font-family: 'Inria Sans';
@@ -45,7 +44,7 @@
     justify-content: space-evenly;
     height: calc(100svh - 100px);
     align-items: center;
-    background-color: $second-bg-color;
+    background-color: var(--second-bg-color);
 }
 
 
@@ -58,7 +57,7 @@
 .auth_reg_form {
     width: 550px;
     height: 640px;
-    background-color: $main-bg-color;
+    background-color: var(--main-bg-color);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -74,7 +73,7 @@
     text-align: center;
     margin-top: 30px;
     .brooklyn_word {
-        color: $accent-color;
+        color: var(--accent-color);
     }
 }
 
@@ -112,7 +111,7 @@
         top: 30px;
         right: 10px;
         z-index: 11;
-        color: $error-color;
+        color: var(--error-color);
         transition: 0.2s all ease;
         cursor: pointer;
     }
@@ -121,7 +120,7 @@
 .response_message {
     position: absolute;
     bottom: 30px;
-    background-color: $main-bg-color-for-blur;
+    background-color: var(--main-bg-color-for-blur);
     backdrop-filter: blur(4px);
     padding: 10px 20px;
     font-size: 1.4rem;
@@ -135,7 +134,7 @@
     margin-top: 10px;
     
     button {
-        color: $text-disable-color;
+        color: var(--text-disable-color);
         width: max-content;
         cursor: pointer;
         font-size: 1.4rem;
@@ -143,7 +142,7 @@
         
         @media (hover: hover) {
             &:hover {
-                color: $text-color;
+                color: var(--text-color);
             }
         }
     }
@@ -160,7 +159,7 @@
 
     &:hover {
         @extend .disable_action;
-        box-shadow: 0px 0px 30px 1px $accent-color;
+        box-shadow: 0px 0px 30px 1px var(--accent-color);
     }
 }
 
@@ -174,7 +173,7 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    color: $error-color;
+    color: var(--error-color);
     font-size: 1.2rem;
     font-weight: 500;
     position: absolute;
@@ -182,7 +181,7 @@
     padding: 10px 20px;
     margin-left: 470px;
     margin-top: 23px;
-    background-color: $main-bg-color-for-blur;
+    background-color: var(--main-bg-color-for-blur);
     backdrop-filter: blur(4px);
     border-radius: 10px;
     z-index: 1;

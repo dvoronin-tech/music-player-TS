@@ -1,12 +1,10 @@
-@import '../../constants';
-
 .App {
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: $second-bg-color;
+    background-color: var(--second-bg-color);
 }
 
 .app_wrapper {
-    background-color: $main-bg-color;
+    background-color: var(--main-bg-color);
 }

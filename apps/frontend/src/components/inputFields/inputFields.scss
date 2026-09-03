@@ -1,11 +1,9 @@
-@import '../../constants';
-
 .input_field_component {
-    background-color: $inputs-bg-color;
+    background-color: var(--inputs-bg-color);
         border-radius: 5px;
-        border: 1px solid $inputs-bg-color;
+        border: 1px solid var(--inputs-bg-color);
         outline: none;
-        color: $text-color;
+        color: var(--text-color);
         padding: 0 40px 0 20px;
         font-weight: 600;
         transition: 0.2s all ease;
@@ -17,11 +15,11 @@
         }
 
         &:hover {
-            border-color: $text-color;
+            border-color: var(--text-color);
         }
 
         &:focus {
-            border-color: $accent-color;
-            box-shadow: 0 0 10px 0 $accent-color;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px 0 var(--accent-color);
         }
 }

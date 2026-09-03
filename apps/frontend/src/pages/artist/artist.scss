@@ -1,6 +1,3 @@
-@import '../../constants';
-
-
 .artist_info {
     margin: 60px 60px;
     z-index: 3;
@@ -14,7 +11,7 @@
 .artist {
     padding-top: 80px;
     padding-bottom: 40px;
-    background-color: $main-bg-color;
+    background-color: var(--main-bg-color);
 }
 
 .additional_artist_info {
@@ -22,14 +19,14 @@
         &:first-child {
             font-size: 2.4rem;
             font-weight: 600;
-            color: $text-second-color;
+            color: var(--text-second-color);
             margin-right: 20px;
         }
     
         &:last-child {
             font-size: 1.6rem;
             font-weight: 500;
-            color: $text-second-color;
+            color: var(--text-second-color);
         }
     }
 }
@@ -38,7 +35,7 @@
     margin-left: 20px;
     &:hover {
         svg {
-            color: $accent-color-hover;
+            color: var(--accent-color-hover);
         }
     }
 }

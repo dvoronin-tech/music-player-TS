@@ -1,8 +1,6 @@
-@import '../../constants';
-
 .main {
     padding: 80px 40px 40px 40px;
-    background-color: $main-bg-color;
+    background-color: var(--main-bg-color);
 }
 
 .cards_wrapper {
@@ -33,7 +31,7 @@
     button {
         position: absolute;
         top: 650px;
-        background-color: rgba($color: #2B2A2D, $alpha: 0.6);
+        background-color: color-mix(in srgb, var(--inputs-bg-color) 60%, transparent);
         backdrop-filter: blur(4px);
         z-index: 11;
         animation: fade-in 0.5s ease;
@@ -53,7 +51,7 @@
 
 
 .shade {
-    background: linear-gradient(270deg, rgba(38,22,22,0) 0%, $main-bg-color 100%);
+    background: linear-gradient(270deg, rgba(38,22,22,0) 0%, var(--main-bg-color) 100%);
     position: absolute;
     width: 100px;
     left: 40px;
@@ -71,7 +69,7 @@
 
     &::after {
         content: '';
-        background: linear-gradient(90deg, rgba(38,22,22,0) 0%, $main-bg-color 100%);
+        background: linear-gradient(90deg, rgba(38,22,22,0) 0%, var(--main-bg-color) 100%);
         position: absolute;
         width: 100px;
         right: 40px;
@@ -120,7 +118,7 @@
     width: 50px;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 8px solid $accent-color;
+    border: 8px solid var(--accent-color);
     animation:
       l20-1 0.8s infinite linear alternate,
       l20-2 1.6s infinite linear;

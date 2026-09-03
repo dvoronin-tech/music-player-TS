@@ -1,5 +1,3 @@
-@import '../../../constants';
-
 .home_card {
     background-position: center;
     border-radius: 35px;
@@ -30,13 +28,13 @@
             svg {
                 position: relative;
                 left: 3px;
-                color: $text-second-color;
+                color: var(--text-second-color);
                 transition: 0.2s ease color;
             }
 
             &:hover {
                 svg {
-                    color: $accent-color-hover;
+                    color: var(--accent-color-hover);
                 }
             }
         }
@@ -44,7 +42,7 @@
         .home_card_category {
             font-size: 6.4rem;
             font-weight: 800;
-            color: $text-color;
+            color: var(--text-color);
             position: relative;
             top: 45px;
             left: 30px;
@@ -70,7 +68,7 @@
         .home_card_additional {
             font-size: 1.5rem;
             font-weight: 400;
-            color: $text-second-color;
+            color: var(--text-second-color);
             position: relative;
             left: -250px;
             opacity: 0;
@@ -112,7 +110,7 @@
             font-weight: 500;
             left: 0;
             top: 0;
-            color: $text-second-color;
+            color: var(--text-second-color);
         }
     
         .home_card_content {

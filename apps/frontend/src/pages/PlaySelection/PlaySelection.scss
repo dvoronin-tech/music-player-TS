@@ -1,5 +1,3 @@
-@import '../../constants';
-
 button {
     background: transparent;
     padding: 0;
@@ -8,7 +6,7 @@ button {
     width: 20px;
     height: 20px;
     transition: 0.2s all ease;
-    color: $text-color;
+    color: var(--text-color);
 
     svg {
         width: 20px;
@@ -18,7 +16,7 @@ button {
 
 .play_selection {
     height: 50px;
-    background-color: $second-bg-color-for-blur;
+    background-color: var(--second-bg-color-for-blur);
     backdrop-filter: blur(20px);
     display: flex;
     padding: 15px 40px;
@@ -51,18 +49,18 @@ button {
     justify-content: space-around;
     font-size: 1.8rem;
     font-weight: bold;
-    color: $text-color;
+    color: var(--text-color);
     transition: 0.3s all ease;
 
     .artists {
-        color: $text-second-color;
+        color: var(--text-second-color);
         font-size: 1.4rem;
         cursor: pointer;
         transition: 0.15s all ease-in;
 
         @media (hover: hover) {
             &:hover {
-                color: $accent-color;
+                color: var(--accent-color);
             }
         }
     }
@@ -116,7 +114,7 @@ button {
     flex: 0 0 92%;
     height: 4px;
     border-radius: 5px;
-    background-color: $text-disable-color;
+    background-color: var(--text-disable-color);
     cursor: pointer;
     transition: 0.5s ease all;
     @media (hover: hover) {
@@ -127,7 +125,7 @@ button {
     
     .progress_bar {
         height: 100%;
-        background-color: $accent-color;
+        background-color: var(--accent-color);
         border-radius: 5px;
         display: flex;
         align-items: center;
@@ -140,7 +138,7 @@ button {
         left: 5px;
         width: 10px;
         height: 10px;
-        background-color: $text-color;
+        background-color: var(--text-color);
         border-radius: 100px;
         opacity: 0;
         transition: 0.15s all ease;
@@ -166,16 +164,16 @@ button {
 }
 
 .disable_control {
-    color: $text-second-color;
-    fill: $text-second-color;
+    color: var(--text-second-color);
+    fill: var(--text-second-color);
 }
 
 .active_control {
-    fill: $accent-color;
+    fill: var(--accent-color);
 }
 
 .active_repeat {
-    color: $accent-color
+    color: var(--accent-color)
 }
 
 .additional_track_info {

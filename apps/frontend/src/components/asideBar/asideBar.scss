@@ -1,9 +1,7 @@
-@import '../../constants';
-
 .aside_liked_track_list {
     width: 360px;
     flex: 0 1 360px;
-    background-color: $main-bg-color-for-blur;
+    background-color: var(--main-bg-color-for-blur);
     border-radius: 10px;
     margin-top: 10px;
     overflow: scroll;
@@ -14,7 +12,7 @@
 
 
 .aside_artist_list {
-    background-color: $main-bg-color-for-blur;
+    background-color: var(--main-bg-color-for-blur);
     border-radius: 10px;
     margin-top: 10px;
     overflow: scroll;

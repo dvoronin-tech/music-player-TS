@@ -1,9 +1,7 @@
-@import '../../constants';
-
 .pre_reg_main {
     height: calc(100svh - 100px);
     width: 100%;
-    background-color: $second-bg-color;
+    background-color: var(--second-bg-color);
     animation: fade-in 0.5s ease;
     main {
         display: flex;
@@ -14,7 +12,7 @@
             box-sizing: border-box;
             width: 1300px;
             height: 630px;
-            background-color: $main-bg-color;
+            background-color: var(--main-bg-color);
             border-radius: 20px;
             padding: 20px 40px 40px 40px;
             display: flex;
@@ -26,7 +24,7 @@
                 font-size: 2rem;
                 text-align: center;
                 span {
-                    color: $accent-color;
+                    color: var(--accent-color);
                 }
             }
             p {
@@ -43,7 +41,7 @@
 
     span {
         font-size: 2.4rem;
-        color: $error-color;
+        color: var(--error-color);
     }
 }
 

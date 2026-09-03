@@ -1,7 +1,5 @@
-@import '../../constants';
-
 .liked_page {
-    background-color: $main-bg-color;
+    background-color: var(--main-bg-color);
 }
 
 .liked_title_wrapper {
@@ -24,7 +22,7 @@
         span {
             font-size: 2.4rem;
             font-weight: 500;
-            color: $text-second-color;
+            color: var(--text-second-color);
             &:first-child {
                 font-family: 'Inria Sans';
                 letter-spacing: 5px;

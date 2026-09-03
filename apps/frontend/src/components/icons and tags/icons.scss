@@ -1,27 +1,25 @@
-@import '../../constants';
-
 .idle_icon {
-    color: $text-color;
+    color: var(--text-color);
     transition: 0.3s all ease;
 
     @media (hover: hover) {
         &:hover {
-            color: $accent-color-hover;
+            color: var(--accent-color-hover);
         }
     }
 }
 
 .disable_icon {
-    color: $text-disable-color;
+    color: var(--text-disable-color);
 }
 
 .active_icon {
-    color: $accent-color;
+    color: var(--accent-color);
     transition: 0.3s all ease;
 
     @media (hover: hover) {
         &:hover {
-            color: $accent-color-hover;
+            color: var(--accent-color-hover);
         }
     }
 }
@@ -32,7 +30,7 @@
 
     &:hover {
         fill: none;
-        color: $accent-color;
+        color: var(--accent-color);
     }
 }
 
