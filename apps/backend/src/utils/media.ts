@@ -1,6 +1,6 @@
 import { mkdir, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { env } from '@/utils/env.js';
+import { env } from '#/utils/env.js';
 
 const AVATAR_TYPES: Record<string, string> = {
 	'image/jpeg': '.jpg',

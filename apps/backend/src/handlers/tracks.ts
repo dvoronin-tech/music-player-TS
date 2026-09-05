@@ -1,11 +1,11 @@
 import { eq, sql } from 'drizzle-orm';
 import { tracks } from '@music-player/db';
-import { db } from '@/db.js';
-import { factory } from '@/factory.js';
-import { getTrackById, listTracks } from '@/queries/catalog.js';
-import { trackIdParamSchema } from '@/schemas/params.js';
-import { jsonError } from '@/utils/http.js';
-import { validateParam } from '@/utils/validate.js';
+import { db } from '#/db.js';
+import { factory } from '#/factory.js';
+import { getTrackById, listTracks } from '#/queries/catalog.js';
+import { trackIdParamSchema } from '#/schemas/params.js';
+import { jsonError } from '#/utils/http.js';
+import { validateParam } from '#/utils/validate.js';
 
 export const getTracks = factory.createHandlers(async (c) => {
 	return c.json(await listTracks());

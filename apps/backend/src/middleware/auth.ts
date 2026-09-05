@@ -1,6 +1,6 @@
-import { db } from '@/db.js';
-import { factory } from '@/factory.js';
-import { jsonError } from '@/utils/http.js';
+import { db } from '#/db.js';
+import { factory } from '#/factory.js';
+import { jsonError } from '#/utils/http.js';
 
 export const requireAuth = factory.createMiddleware(async (c, next) => {
 	const header = c.req.header('Authorization');

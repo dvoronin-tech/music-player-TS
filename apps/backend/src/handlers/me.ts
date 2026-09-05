@@ -1,23 +1,23 @@
 import { and, eq } from 'drizzle-orm';
 import { userLikedArtists, userLikedTracks, users } from '@music-player/db';
-import { db } from '@/db.js';
-import { factory } from '@/factory.js';
-import { toApiUser } from '@/mappers.js';
+import { db } from '#/db.js';
+import { factory } from '#/factory.js';
+import { toApiUser } from '#/mappers.js';
 import {
 	artistExists,
 	listLikedArtists,
 	listLikedTracks,
 	trackExists,
-} from '@/queries/catalog.js';
-import { artistIdParamSchema, trackIdParamSchema } from '@/schemas/params.js';
-import { jsonError } from '@/utils/http.js';
+} from '#/queries/catalog.js';
+import { artistIdParamSchema, trackIdParamSchema } from '#/schemas/params.js';
+import { jsonError } from '#/utils/http.js';
 import {
 	avatarExtension,
 	MAX_AVATAR_BYTES,
 	removeLocalMedia,
 	saveAvatar,
-} from '@/utils/media.js';
-import { validateParam } from '@/utils/validate.js';
+} from '#/utils/media.js';
+import { validateParam } from '#/utils/validate.js';
 
 async function findCurrentUser(userId: string) {
 	return db.query.users.findFirst({

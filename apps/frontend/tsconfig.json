@@ -18,7 +18,8 @@
 		"noImplicitAny": false,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["src/*"]
+			"@/*": ["src/*"],
+			"#/*": ["../backend/src/*"]
 		}
 	},
 	"include": ["src", "vite.config.ts"]

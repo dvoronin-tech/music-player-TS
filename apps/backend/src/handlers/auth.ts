@@ -1,14 +1,14 @@
 import { eq } from 'drizzle-orm';
 import { tokens, users } from '@music-player/db';
-import { db } from '@/db.js';
-import { factory } from '@/factory.js';
-import { toApiUser } from '@/mappers.js';
-import { loginBodySchema, registerBodySchema } from '@/schemas/auth.js';
-import { jsonError } from '@/utils/http.js';
-import { hashPassword, verifyPassword } from '@/utils/password.js';
-import { uniqueConstraint } from '@/utils/pg-errors.js';
-import { createToken } from '@/utils/token.js';
-import { validateJson } from '@/utils/validate.js';
+import { db } from '#/db.js';
+import { factory } from '#/factory.js';
+import { toApiUser } from '#/mappers.js';
+import { loginBodySchema, registerBodySchema } from '#/schemas/auth.js';
+import { jsonError } from '#/utils/http.js';
+import { hashPassword, verifyPassword } from '#/utils/password.js';
+import { uniqueConstraint } from '#/utils/pg-errors.js';
+import { createToken } from '#/utils/token.js';
+import { validateJson } from '#/utils/validate.js';
 
 export const registerUser = factory.createHandlers(
 	validateJson(registerBodySchema),

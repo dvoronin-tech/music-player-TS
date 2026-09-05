@@ -1,5 +1,5 @@
 import type { User } from '@music-player/db';
-import { toMediaUrl } from '@/utils/media.js';
+import { toMediaUrl } from '#/utils/media.js';
 
 export type ApiArtistRef = {
 	id: number;

@@ -1,8 +1,8 @@
-import { factory } from '@/factory.js';
-import { getArtistById, listArtists } from '@/queries/catalog.js';
-import { artistIdParamSchema } from '@/schemas/params.js';
-import { jsonError } from '@/utils/http.js';
-import { validateParam } from '@/utils/validate.js';
+import { factory } from '#/factory.js';
+import { getArtistById, listArtists } from '#/queries/catalog.js';
+import { artistIdParamSchema } from '#/schemas/params.js';
+import { jsonError } from '#/utils/http.js';
+import { validateParam } from '#/utils/validate.js';
 
 export const getArtists = factory.createHandlers(async (c) => {
 	return c.json(await listArtists());

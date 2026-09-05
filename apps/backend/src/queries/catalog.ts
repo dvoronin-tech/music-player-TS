@@ -5,14 +5,14 @@ import {
 	userLikedTracks,
 } from '@music-player/db';
 import { asc, desc, eq } from 'drizzle-orm';
-import { db } from '@/db.js';
+import { db } from '#/db.js';
 import {
 	toApiArtist,
 	toApiTrack,
 	type ApiArtist,
 	type ApiArtistDetail,
 	type ApiTrack,
-} from '@/mappers.js';
+} from '#/mappers.js';
 
 const trackWithArtists = {
 	artistsToTracks: {
