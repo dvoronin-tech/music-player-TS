@@ -8,7 +8,7 @@ import PlaySelection from '@/pages/PlaySelection/PlaySelection';
 import AsideBar from '@/components/asideBar/asideBar';
 import CPLSelection from '@/components/CPLSelection/CPLSelection';
 import AccountDataBar from '@/components/accountDataBar/accountDataBar';
-import { showCurrentPlayListAction } from '@/store/current/actionsCurrent';
+import { showCurrentPlayListAction } from '@/store/slices/current';
 import { shallowEqual } from 'react-redux';
 
 interface AuthedShellProps {

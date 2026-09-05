@@ -21,8 +21,8 @@ import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards'
 import {
 	selectCurrentTrack,
 	selectPlayList,
-} from '@/store/current/actionsCurrent';
-import { addNotification } from '@/store/notificationQueue/actionsNotification';
+} from '@/store/slices/current';
+import { addNotification } from '@/store/slices/notification';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import { v4 as randomId } from 'uuid';
 

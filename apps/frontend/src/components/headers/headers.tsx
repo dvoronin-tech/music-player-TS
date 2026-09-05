@@ -6,7 +6,7 @@ import { useLocation, useNavigate, useRouter } from '@tanstack/react-router';
 import styled from 'styled-components';
 import { HiHome } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
-import { toggleShowUserData } from '@/store/ui/reducerUi';
+import { toggleShowUserData } from '@/store/slices/ui';
 import { useGetMeQuery } from '@/api/rtk/user';
 import { UserIcon } from '@/components/icons and tags/icons';
 

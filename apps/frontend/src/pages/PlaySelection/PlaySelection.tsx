@@ -3,7 +3,7 @@ import { FC, useState, useEffect, SyntheticEvent } from 'react';
 import styles from './PlaySelection.module.scss';
 
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
-import { showCurrentPlayListAction } from '@/store/current/actionsCurrent';
+import { showCurrentPlayListAction } from '@/store/slices/current';
 import type { ApiTrack } from '@music-player/backend';
 import {
 	useGetLikedTracksQuery,
@@ -27,8 +27,8 @@ import {
 	switchTrackAction,
 	toggleRandom,
 	toggleRepeat,
-} from '@/store/trackState/actionsTrackState';
-import { addNotification } from '@/store/notificationQueue/actionsNotification';
+} from '@/store/slices/trackState';
+import { addNotification } from '@/store/slices/notification';
 
 import { v4 as randomId } from 'uuid';
 import { useNavigate } from '@tanstack/react-router';

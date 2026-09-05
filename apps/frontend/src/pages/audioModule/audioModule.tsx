@@ -9,13 +9,13 @@ import {
 	setAudioData,
 	switchTrackAction,
 	setPending,
-} from '@/store/trackState/actionsTrackState';
+} from '@/store/slices/trackState';
 import type { ApiTrack } from '@music-player/backend';
 import { usePlayTrackMutation } from '@/api/rtk/tracks';
 import {
 	selectCurrentTrack,
 	selectShuffledPlayList,
-} from '@/store/current/actionsCurrent';
+} from '@/store/slices/current';
 
 export const shuffle = (array: ApiTrack[]): ApiTrack[] => {
 	const shuffledArray = [...array];

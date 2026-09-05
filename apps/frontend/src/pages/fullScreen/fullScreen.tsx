@@ -27,11 +27,11 @@ import {
 	switchTrackAction,
 	toggleRandom,
 	toggleRepeat,
-} from '@/store/trackState/actionsTrackState';
+} from '@/store/slices/trackState';
 import { humanizingNumbers } from '@/pages/PlaySelection/PlaySelection';
-import { addNotification } from '@/store/notificationQueue/actionsNotification';
+import { addNotification } from '@/store/slices/notification';
 import { v4 as randomId } from 'uuid';
-import { showCurrentPlayListAction } from '@/store/current/actionsCurrent';
+import { showCurrentPlayListAction } from '@/store/slices/current';
 import { useNavigate, useRouter } from '@tanstack/react-router';
 
 const Background = styled.div<{ $img: string }>`

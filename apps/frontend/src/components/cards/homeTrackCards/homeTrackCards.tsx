@@ -18,8 +18,8 @@ import {
 	deleteCurrentTrack,
 	selectCurrentTrack,
 	selectPlayList,
-} from '@/store/current/actionsCurrent';
-import { addNotification } from '@/store/notificationQueue/actionsNotification';
+} from '@/store/slices/current';
+import { addNotification } from '@/store/slices/notification';
 import { formatArtistNames } from '@/utils/formatArtists';
 import type { ApiTrack } from '@music-player/backend';
 import { v4 as randomId } from 'uuid';

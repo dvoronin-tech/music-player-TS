@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import { Cross, UserIcon } from '@/components/icons and tags/icons';
 import Button from '@/components/buttons/buttons';
-import { toggleShowUserData } from '@/store/ui/reducerUi';
+import { toggleShowUserData } from '@/store/slices/ui';
 import { useGetMeQuery, useSetMyPhotoMutation } from '@/api/rtk/user';
 import { logout } from '@/utils/auth';
 import { useNavigate } from '@tanstack/react-router';

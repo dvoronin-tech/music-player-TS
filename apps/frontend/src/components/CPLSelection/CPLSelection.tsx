@@ -4,7 +4,7 @@ import styles from './CPLSelection.module.scss';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import SmallTrackCard from '@/components/cards/smallTrackCard/smallTrackCard';
-import { showCurrentPlayListAction } from '@/store/current/actionsCurrent';
+import { showCurrentPlayListAction } from '@/store/slices/current';
 
 const CPLSelectionComponent = styled.aside<{ $isShow: boolean }>`
 	position: fixed;

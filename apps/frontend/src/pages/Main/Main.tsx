@@ -11,7 +11,7 @@ import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards'
 import {
 	selectCurrentTrack,
 	selectPlayList,
-} from '@/store/current/actionsCurrent';
+} from '@/store/slices/current';
 import type { ApiTrack } from '@music-player/backend';
 import { shuffle } from '@/pages/audioModule/audioModule';
 import { publicUrl } from '@/utils/constants';

@@ -1,8 +1,10 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import styles from './notification.module.scss';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
-import { INotificationData } from '@/store/notificationQueue/reducerNotification';
-import { deleteNotification } from '@/store/notificationQueue/actionsNotification';
+import {
+	deleteNotification,
+	type INotificationData,
+} from '@/store/slices/notification';
 import { RxCross2 } from 'react-icons/rx';
 
 const Notification: FC = () => {
