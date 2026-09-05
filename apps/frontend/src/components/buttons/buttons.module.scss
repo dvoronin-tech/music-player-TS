@@ -1,6 +1,14 @@
-.general_btn {
+.general_btn,
+.general_link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: max-content;
-    font-family: 'Rubik';
+    max-width: 100%;
+    padding: 1rem 1.8rem;
+    line-height: 1.15;
+    white-space: nowrap;
+    font-family: inherit;
 }
 
 .accent {
@@ -55,38 +63,39 @@
     border-radius: 10px;
 }
 
-.general_link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .size_xs {
     font-size: 1.1rem;
+    padding: 0.6rem 1.2rem;
 }
 
 .size_s {
     font-size: 1.2rem;
+    padding: 0.4rem 1.2rem;
 }
 
 .size_m {
     font-size: 1.4rem;
+    padding: 0.7rem 1.6rem;
 }
 
 .size_l {
     font-size: 1.6rem;
+    padding: 1rem 2rem;
 }
 
 .size_xl {
     font-size: 1.8rem;
+    padding: 1.4rem 2.4rem;
 }
 
 .size_2xl {
     font-size: 2rem;
+    padding: 1rem 2rem;
 }
 
 .size_3xl {
     font-size: 3.2rem;
+    padding: 0.4rem 1.2rem;
 }
 
 .weight_regular {

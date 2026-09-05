@@ -208,8 +208,6 @@ const Artist: FC = () => {
 					<div className={styles.artist_action_buttons}>
 						<Button
 							variant="accent"
-							W={70}
-							H={70}
 							style={{ borderRadius: 100 }}
 							onClick={setCurrentTrack}
 						>
@@ -226,8 +224,6 @@ const Artist: FC = () => {
 						<Button
 							onClick={toggleIsFollowed}
 							variant="simple"
-							W={50}
-							H={50}
 							style={{ borderRadius: 100 }}
 							className={styles.follow_artist_btn}
 						>

@@ -397,8 +397,6 @@ const Auth: FC = () => {
 					)}
 				</div>
 				<Button
-					W={auth === 'reg' ? 250 : 180}
-					H={50}
 					variant={
 						usernameInvalid ||
 						passwordInvalid ||
@@ -440,8 +438,6 @@ const Auth: FC = () => {
 				<span className={styles.auth_title}>BROOKLYN</span>
 				<div>
 					<Button
-						H={42}
-						W={200}
 						variant="simple"
 						size="2xl"
 						weight="semibold"
@@ -451,8 +447,6 @@ const Auth: FC = () => {
 						Регистрация
 					</Button>
 					<Button
-						H={42}
-						W={150}
 						variant="accent"
 						size="2xl"
 						weight="semibold"

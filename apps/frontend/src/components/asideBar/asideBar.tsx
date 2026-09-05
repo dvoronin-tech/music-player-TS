@@ -172,8 +172,6 @@ const AsideBar: FC = () => {
 				<Button
 					to="/home/liked"
 					variant="alternative"
-					W={135}
-					H={24}
 					size="s"
 				>
 					Посмотреть всё
@@ -187,8 +185,6 @@ const AsideBar: FC = () => {
 				<Button
 					variant={isPopular ? 'accent' : 'alternative'}
 					onClick={() => setIsPopular(!isPopular)}
-					W={150}
-					H={24}
 					size="s"
 					weight={isPopular ? 'medium' : 'regular'}
 					style={{ borderRadius: 100 }}

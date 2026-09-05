@@ -33,6 +33,9 @@
 
 .follow_artist_btn {
     margin-left: 20px;
+    padding: 1.4rem;
+    aspect-ratio: 1;
+
     &:hover {
         svg {
             color: var(--accent-color-hover);
@@ -44,6 +47,11 @@
     margin-left: 40px;
     margin-bottom: 20px;
     z-index: 3;
+
+    > button:first-child {
+        aspect-ratio: 1;
+        padding: 2rem;
+    }
 }
 
 .artist_tracks_wrapper {

@@ -220,8 +220,6 @@ const Main: FC = () => {
 									<Button
 										onClick={slideToPrevArtistPage}
 										variant="alternative"
-										W={50}
-										H={50}
 										size="3xl"
 									>
 										{'<'}
@@ -249,8 +247,6 @@ const Main: FC = () => {
 									<Button
 										onClick={slideToNextArtistPage}
 										variant="alternative"
-										W={50}
-										H={50}
 										size="3xl"
 									>
 										{'>'}

@@ -202,8 +202,6 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 						<ButtonsWrapper>
 							<Button
 								variant="simple"
-								W={70}
-								H={30}
 								size="xs"
 								weight="semibold"
 								style={{ marginBottom: 10 }}
@@ -213,8 +211,6 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 							</Button>
 							<Button
 								variant="simple"
-								W={70}
-								H={30}
 								size="xs"
 								weight="semibold"
 								style={{ marginBottom: 10 }}
@@ -227,8 +223,6 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 							variant="accent"
 							style={{ borderRadius: 100 }}
 							onClick={setCurrentTrack}
-							W={150}
-							H={30}
 							size="m"
 							weight="semibold"
 						>

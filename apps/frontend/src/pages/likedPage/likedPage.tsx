@@ -177,8 +177,6 @@ const LikedPage: FC = () => {
 						<Button
 							onClick={() => setIsPopular(false)}
 							variant={isPopular ? 'simple' : 'accent'}
-							W={250}
-							H={40}
 							size="l"
 							weight="semibold"
 						>
@@ -187,8 +185,6 @@ const LikedPage: FC = () => {
 						<Button
 							onClick={() => setIsPopular(true)}
 							variant={isPopular ? 'accent' : 'simple'}
-							W={250}
-							H={40}
 							size="l"
 							weight="semibold"
 						>

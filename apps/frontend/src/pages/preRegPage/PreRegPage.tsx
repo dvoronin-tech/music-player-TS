@@ -110,8 +110,6 @@ const PreRegPage: FC = () => {
 					<div className={styles.action_links}>
 						<Button
 							variant="accent"
-							W={300}
-							H={50}
 							size="xl"
 							weight="bold"
 							to="/auth"

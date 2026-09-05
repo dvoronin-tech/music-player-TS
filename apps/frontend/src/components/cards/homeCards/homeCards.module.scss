@@ -20,6 +20,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            aspect-ratio: 1;
+            padding: 1.4rem;
             position: relative;
             right: -100px;
             opacity: 0;
@@ -95,6 +97,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            aspect-ratio: 1;
+            padding: 1.8rem;
             position: relative;
             right: 0;
             opacity: 1;

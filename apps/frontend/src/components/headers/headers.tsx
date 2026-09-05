@@ -74,8 +74,6 @@ const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
 				<nav>
 					<Button
 						variant="alternative"
-						H={40}
-						W={40}
 						size="3xl"
 						weight="regular"
 						onClick={goBack}
@@ -84,8 +82,6 @@ const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
 					</Button>
 					<Button
 						variant="alternative"
-						H={40}
-						W={40}
 						size="3xl"
 						weight="regular"
 						onClick={goForward}

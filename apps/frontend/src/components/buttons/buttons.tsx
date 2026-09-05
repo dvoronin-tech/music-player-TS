@@ -14,8 +14,6 @@ type ButtonTextWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 
 interface SharedProps {
 	variant: ButtonVariant;
-	W: number;
-	H: number;
 	size?: ButtonTextSize;
 	weight?: ButtonTextWeight;
 	className?: string;
@@ -36,8 +34,6 @@ function Button(props: AsLinkProps): JSX.Element;
 function Button(props: AsButtonProps): JSX.Element;
 function Button({
 	variant,
-	W,
-	H,
 	size,
 	weight,
 	className,
@@ -52,17 +48,12 @@ function Button({
 		weight && styles[`weight_${weight}`],
 		className,
 	);
-	const mergedStyle = {
-		width: `${W}px`,
-		height: `${H}px`,
-		...style,
-	};
 
 	if ('to' in rest && rest.to) {
 		const { to, ...linkRest } = rest;
 
 		return (
-			<Link className={classNames} style={mergedStyle} to={to} {...linkRest}>
+			<Link className={classNames} style={style} to={to} {...linkRest}>
 				{children}
 			</Link>
 		);
@@ -74,7 +65,7 @@ function Button({
 		<button
 			type={type}
 			className={classNames}
-			style={mergedStyle}
+			style={style}
 			{...buttonRest}
 		>
 			{children}

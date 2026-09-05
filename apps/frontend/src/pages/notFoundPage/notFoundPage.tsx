@@ -32,8 +32,6 @@ const NotFoundPage: FC = () => {
 			<ButtonsWrapper>
 				<Button
 					variant="accent"
-					W={250}
-					H={40}
 					size="xl"
 					weight="semibold"
 					onClick={() => navigate({ to: '/home' })}

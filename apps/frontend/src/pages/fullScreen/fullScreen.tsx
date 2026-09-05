@@ -438,8 +438,6 @@ const FullScreen: FC = () => {
 										variant="alternative"
 										className={styles.fullscreen_prev_button}
 										size="3xl"
-										W={55}
-										H={55}
 										onClick={CPLTranslateToPrev}
 									>
 										{'<'}
@@ -458,8 +456,6 @@ const FullScreen: FC = () => {
 										variant="alternative"
 										className={styles.fullscreen_next_button}
 										size="3xl"
-										W={55}
-										H={55}
 										onClick={CPLTranslateToNext}
 									>
 										{'>'}

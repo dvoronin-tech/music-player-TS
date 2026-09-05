@@ -12,7 +12,7 @@ const PreRegErrorPage: FC = () => {
                     <span>Для прехода на данный ресурс необходимо авторизоваться</span>
                 </div>
                 <FaUserAltSlash/>
-                <Button variant="accent" to="/auth" W={300} H={50} size="xl" weight="bold">Перейти к авторизации</Button>
+                <Button variant="accent" to="/auth" size="xl" weight="bold">Перейти к авторизации</Button>
             </main>
         </div>
     )

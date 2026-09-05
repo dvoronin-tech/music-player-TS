@@ -62,8 +62,6 @@ const AuthAfterReg: FC = () => {
 			<ButtonsWrapper>
 				<Button
 					variant="accent"
-					W={300}
-					H={50}
 					className={styles.logout_btn}
 					size="xl"
 					weight="bold"
@@ -73,8 +71,6 @@ const AuthAfterReg: FC = () => {
 				</Button>
 				<Button
 					variant="accent"
-					W={300}
-					H={50}
 					size="xl"
 					weight="bold"
 					to="/home"

@@ -119,6 +119,11 @@ const ButtonsSelection = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	margin-top: 10px;
+
+	button,
+	a {
+		width: 100%;
+	}
 `;
 
 const LogoutBtn = styled.button<{ $isPressed: boolean }>`
@@ -348,8 +353,6 @@ const AccountDataBar: FC = () => {
 								<span>Ваша фотография</span>
 								<Button
 									variant="accent"
-									H={30}
-									W={191}
 									size="l"
 									weight="semibold"
 								>
@@ -364,8 +367,6 @@ const AccountDataBar: FC = () => {
 						<Button
 							onClick={submitImg}
 							variant={file ? 'accent' : 'disable'}
-							H={40}
-							W={410}
 							size="xl"
 							weight="semibold"
 						>
@@ -374,8 +375,6 @@ const AccountDataBar: FC = () => {
 						<Button
 							onClick={() => setChangePhoto(false)}
 							variant="simple"
-							H={40}
-							W={410}
 							size="xl"
 							weight="semibold"
 						>
@@ -503,8 +502,6 @@ const AccountDataBar: FC = () => {
 						<Button
 							onClick={() => setChangePhoto(true)}
 							variant="accent"
-							H={40}
-							W={410}
 							size="xl"
 							weight="semibold"
 						>
