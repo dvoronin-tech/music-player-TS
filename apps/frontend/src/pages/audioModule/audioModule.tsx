@@ -9,15 +9,15 @@ import {
 	setAudioData,
 	switchTrackAction,
 	setPending,
-} from '@/store/trackState/actionsTrackState';
-import { ITrack } from '@/store/likedPlayList/reducerLiked';
+} from '@/store/slices/trackState';
+import type { ApiTrack } from '@music-player/backend';
+import { usePlayTrackMutation } from '@/api/rtk/tracks';
 import {
 	selectCurrentTrack,
 	selectShuffledPlayList,
-} from '@/store/current/actionsCurrent';
-import { serverUrl } from '@/utils/constants';
+} from '@/store/slices/current';
 
-export const shuffle = (array: ITrack[]): ITrack[] => {
+export const shuffle = (array: ApiTrack[]): ApiTrack[] => {
 	const shuffledArray = [...array];
 
 	for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -49,10 +49,11 @@ const AudioModule: FC = () => {
 
 	const [audio] = useState(new Audio());
 
-	const [currentTrack, setCurrentTrack] = useState<ITrack | undefined>(
+	const [currentTrack, setCurrentTrack] = useState<ApiTrack | undefined>(
 		undefined,
 	);
-	const [playList, setPlayList] = useState<ITrack[]>([]);
+	const [playList, setPlayList] = useState<ApiTrack[]>([]);
+	const [playTrack] = usePlayTrackMutation();
 
 	// Слушатели
 	useEffect(() => {
@@ -123,30 +124,6 @@ const AudioModule: FC = () => {
 			}
 		}
 	}
-
-	const postAudition = async (trackId) => {
-		const postData = {
-			trackId,
-		};
-
-		try {
-			fetch(
-				serverUrl + '/api/tracks/addaudition/',
-				{
-					method: 'POST',
-					headers: { 'Content-type': 'application/json' },
-					body: JSON.stringify(postData),
-				},
-			);
-		} catch (error) {
-			if (error) {
-				if (error) {
-					const err = error as Error;
-					console.log(err.message);
-				}
-			}
-		}
-	};
 
 	// Эффекты
 
@@ -268,9 +245,9 @@ const AudioModule: FC = () => {
 
 	useEffect(() => {
 		if (currentTrack) {
-			postAudition(currentTrack.id);
+			playTrack(currentTrack.id);
 		}
-	}, [currentTrack]);
+	}, [currentTrack, playTrack]);
 
 	return <></>;
 };

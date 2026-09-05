@@ -10,19 +10,24 @@ import {
 } from '@/components/icons and tags/icons';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
+	useGetLikedTracksQuery,
+	useToggleLikedTrackMutation,
+} from '@/api/rtk/liked';
+import {
 	addToCurrentPlayList,
 	deleteCurrentTrack,
 	selectCurrentTrack,
 	selectPlayList,
-} from '@/store/current/actionsCurrent';
-import { ITrack, toggleLike } from '@/store/likedPlayList/reducerLiked';
-import { addNotification } from '@/store/notificationQueue/actionsNotification';
+} from '@/store/slices/current';
+import { addNotification } from '@/store/slices/notification';
+import { formatArtistNames } from '@/utils/formatArtists';
+import type { ApiTrack } from '@music-player/backend';
 import { v4 as randomId } from 'uuid';
 import { MdErrorOutline } from 'react-icons/md';
 
 interface IProp {
-	track: ITrack;
-	playList: ITrack[];
+	track: ApiTrack;
+	playList: ApiTrack[];
 	forFullScreen?: boolean;
 }
 
@@ -34,7 +39,8 @@ export const HomeTrackCard: FC<IProp> = ({
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const dispatch = useAppDispatch();
 	const currentTrackId = useAppSelector((state) => state.current.trackId);
-	const { likedTrackList } = useAppSelector((state) => state.liked);
+	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
+	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 	const { currentPlayList, trackId } = useAppSelector(
 		(state) => state.current,
 	);
@@ -69,12 +75,12 @@ export const HomeTrackCard: FC<IProp> = ({
 	};
 
 	const toggleIsLiked = () => {
-		dispatch(toggleLike(id));
+		toggleLikedTrack({ id, isLiked });
 		dispatch(
 			addNotification({
 				notificationId: randomId(),
 				img: track.albumImg,
-				info: `${track.title} - ${track.artists}`,
+				info: `${track.title} - ${formatArtistNames(track.artists)}`,
 				additionalInfo: isLiked
 					? 'Трек удалён из <span>избранного</span>'
 					: 'Трек добавлен в <span>избранное</span>',
@@ -90,7 +96,7 @@ export const HomeTrackCard: FC<IProp> = ({
 				addNotification({
 					notificationId: randomId(),
 					img: track.albumImg,
-					info: `${track.title} - ${track.artists}`,
+					info: `${track.title} - ${formatArtistNames(track.artists)}`,
 					additionalInfo:
 						'Трек добавлен в <span>текущий плейлист</span>',
 				}),
@@ -100,7 +106,7 @@ export const HomeTrackCard: FC<IProp> = ({
 				addNotification({
 					notificationId: randomId(),
 					img: <MdErrorOutline style={{ color: '#C84141' }} />,
-					info: `${track.title} - ${track.artists}`,
+					info: `${track.title} - ${formatArtistNames(track.artists)}`,
 					additionalInfo:
 						'Трек уже добавлен в <span>текущий плейлист</span>',
 				}),
@@ -153,7 +159,7 @@ export const HomeTrackCard: FC<IProp> = ({
 			<div className={styles.home_track_card_data}>
 				<div className={styles.home_track_card_info}>
 					<span>{cutLongString(title)}</span>
-					<span>{cutLongString(artists)}</span>
+					<span>{cutLongString(formatArtistNames(artists))}</span>
 				</div>
 				<div className={styles.home_track_card_buttons}>
 					{forFullScreen ? (

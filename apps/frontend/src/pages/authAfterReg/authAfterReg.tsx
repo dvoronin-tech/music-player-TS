@@ -1,10 +1,8 @@
-import { FC, MouseEventHandler } from 'react';
+import { FC } from 'react';
 import styles from './authAfterReg.module.scss';
 import styled from 'styled-components';
 import Button from '@/components/buttons/buttons';
-import { useAppDispatch } from '@/hooks/useTypedRedux';
-import { logoutUser } from '@/store/user/actionsUser';
-import { serverUrl } from '@/utils/constants';
+import { logout } from '@/utils/auth';
 
 const Main = styled.main`
 	padding-top: 100px;
@@ -31,28 +29,9 @@ const ButtonsWrapper = styled.div`
 		}
 	}
 `;
-export const logout = () => {
-	try {
-		fetch(serverUrl + '/api/users/logout/', {
-			method: 'GET',
-			headers: {
-				Token: JSON.stringify(localStorage.getItem('Token')),
-			},
-		});
-	} catch (err) {
-		if (err) {
-			const error = err as Error;
-			console.log(error.message);
-		}
-	}
-	localStorage.removeItem('Token');
-};
-
 const AuthAfterReg: FC = () => {
-	const dispatch = useAppDispatch();
-	const logOut = () => {
-		dispatch(logoutUser());
-		logout();
+	const logOut = async () => {
+		await logout();
 		window.location.reload();
 	};
 

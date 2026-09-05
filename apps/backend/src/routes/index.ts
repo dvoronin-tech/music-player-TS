@@ -4,11 +4,20 @@ import { authRoutes } from '#/routes/auth.js';
 import { meRoutes } from '#/routes/me.js';
 import { tracksRoutes } from '#/routes/tracks.js';
 
-export const routes = factory
+const _routes = factory
 	.createApp()
-	.route('/api/auth', authRoutes)
-	.route('/api/me', meRoutes)
-	.route('/api/tracks', tracksRoutes)
-	.route('/api/artists', artistsRoutes);
+	.route('/auth', authRoutes)
+	.route('/me', meRoutes)
+	.route('/tracks', tracksRoutes)
+	.route('/artists', artistsRoutes);
+
+export const routes = factory.createApp().route('/api', _routes);
 
 export type AppType = typeof routes;
+export type {
+	ApiArtist,
+	ApiArtistDetail,
+	ApiArtistRef,
+	ApiTrack,
+	ApiUser,
+} from '#/mappers.js';

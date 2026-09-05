@@ -2,19 +2,24 @@ import { FC, useEffect, useState } from 'react';
 import styles from './smallTrackCard.module.scss';
 import styled from 'styled-components';
 import { Cross, Like } from '@/components/icons and tags/icons';
-import { ITrack, toggleLike } from '@/store/likedPlayList/reducerLiked';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import {
+	useGetLikedTracksQuery,
+	useToggleLikedTrackMutation,
+} from '@/api/rtk/liked';
 import {
 	deleteCurrentTrack,
 	selectCurrentTrack,
 	selectPlayList,
-} from '@/store/current/actionsCurrent';
-import { addNotification } from '@/store/notificationQueue/actionsNotification';
+} from '@/store/slices/current';
+import { addNotification } from '@/store/slices/notification';
+import { formatArtistNames } from '@/utils/formatArtists';
+import type { ApiTrack } from '@music-player/backend';
 import { v4 as randomId } from 'uuid';
 
 interface ISmallTrackListProps {
-	track: ITrack;
-	playList: ITrack[];
+	track: ApiTrack;
+	playList: ApiTrack[];
 	isLiked?: boolean;
 }
 
@@ -54,15 +59,16 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 }) => {
 	const dispatch = useAppDispatch();
 	const currentTrackId = useAppSelector((state) => state.current.trackId);
-	const { likedTrackList } = useAppSelector((state) => state.liked);
+	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
+	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 	const [isLikedTrack, setIsLikedTrack] = useState(false);
 
 	const deleteLike = () => {
-		dispatch(toggleLike(track.id));
+		toggleLikedTrack({ id: track.id, isLiked: isLikedTrack });
 		dispatch(
 			addNotification({
 				img: track.albumImg,
-				info: `${track.title} - ${track.artists}`,
+				info: `${track.title} - ${formatArtistNames(track.artists)}`,
 				additionalInfo: 'Трек удалён из <span>избранного</span>',
 				notificationId: randomId(),
 			}),
@@ -95,7 +101,7 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 				<ImgWrapper $img={track.albumImg}></ImgWrapper>
 				<div className={styles.small_track_item_info}>
 					<span>{track.title}</span>
-					<span>{track.artists}</span>
+					<span>{formatArtistNames(track.artists)}</span>
 				</div>
 			</TrackInfoWrapper>
 			{!isLiked && currentTrackId !== track.id && (

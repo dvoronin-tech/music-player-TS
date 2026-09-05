@@ -4,25 +4,30 @@ import styles from './artistTrackCards.module.scss';
 
 import styled from 'styled-components';
 import Button from '@/components/buttons/buttons';
-import { ITrack, toggleLike } from '@/store/likedPlayList/reducerLiked';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import {
+	useGetLikedTracksQuery,
+	useToggleLikedTrackMutation,
+} from '@/api/rtk/liked';
 import {
 	addToCurrentPlayList,
 	selectCurrentTrack,
 	selectPlayList,
-} from '@/store/current/actionsCurrent';
+} from '@/store/slices/current';
 import {
 	AddToPlayList,
 	Like,
 	PlayingTrackTag,
 } from '@/components/icons and tags/icons';
-import { addNotification } from '@/store/notificationQueue/actionsNotification';
+import { addNotification } from '@/store/slices/notification';
+import { formatArtistNames } from '@/utils/formatArtists';
+import type { ApiTrack } from '@music-player/backend';
 import { v4 as randomId } from 'uuid';
 import { MdErrorOutline } from 'react-icons/md';
 
 interface IProp {
-	playList: ITrack[];
-	track: ITrack;
+	playList: ApiTrack[];
+	track: ApiTrack;
 }
 
 const BackgroundImg = styled.div<{ $albumImg: string; $isHover: boolean }>`
@@ -108,7 +113,8 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const dispatch = useAppDispatch();
 	const { trackId } = useAppSelector((state) => state.current);
-	const { likedTrackList } = useAppSelector((state) => state.liked);
+	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
+	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 	const [isLiked, setIsLiked] = useState<boolean>(false);
 	const { currentPlayList } = useAppSelector((state) => state.current);
 
@@ -119,21 +125,16 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 	};
 
 	useEffect(() => {
-		const likedTrack = likedTrackList.find((track) => track.id === id);
-		if (likedTrack) {
-			setIsLiked(true);
-		} else {
-			setIsLiked(false);
-		}
+		setIsLiked(!!likedTrackList.find((track) => track.id === id));
 	}, [likedTrackList, id]);
 
 	const toggleIsLiked = () => {
-		dispatch(toggleLike(id));
+		toggleLikedTrack({ id, isLiked });
 		dispatch(
 			addNotification({
 				notificationId: randomId(),
 				img: track.albumImg,
-				info: `${track.title} - ${track.artists}`,
+				info: `${track.title} - ${formatArtistNames(track.artists)}`,
 				additionalInfo: isLiked
 					? 'Трек удалён из <span>избранного</span>'
 					: 'Трек добавлен в <span>избранное</span>',
@@ -149,7 +150,7 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 				addNotification({
 					notificationId: randomId(),
 					img: track.albumImg,
-					info: `${track.title} - ${track.artists}`,
+					info: `${track.title} - ${formatArtistNames(track.artists)}`,
 					additionalInfo:
 						'Трек добавлен в <span>текущий плейлист</span>',
 				}),
@@ -159,7 +160,7 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 				addNotification({
 					notificationId: randomId(),
 					img: <MdErrorOutline style={{ color: '#C84141' }} />,
-					info: `${track.title} - ${track.artists}`,
+					info: `${track.title} - ${formatArtistNames(track.artists)}`,
 					additionalInfo:
 						'Трек уже добавлен в <span>текущий плейлист</span>',
 				}),

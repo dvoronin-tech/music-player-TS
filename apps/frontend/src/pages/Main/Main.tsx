@@ -3,14 +3,16 @@ import styles from './Main.module.scss';
 import Button from '@/components/buttons/buttons';
 import { HomeCard } from '@/components/cards/homeCards/homeCards';
 import { ArtistCard } from '@/components/cards/artistCards/artistCards';
-import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import { useAppDispatch } from '@/hooks/useTypedRedux';
+import { useGetArtistsQuery } from '@/api/rtk/artists';
+import { useGetTracksQuery } from '@/api/rtk/tracks';
 import { ArtistsError } from '@/components/errorMessages/artistsError';
 import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
 import {
 	selectCurrentTrack,
 	selectPlayList,
-} from '@/store/current/actionsCurrent';
-import { ITrack } from '@/store/likedPlayList/reducerLiked';
+} from '@/store/slices/current';
+import type { ApiTrack } from '@music-player/backend';
 import { shuffle } from '@/pages/audioModule/audioModule';
 import { publicUrl } from '@/utils/constants';
 
@@ -18,15 +20,15 @@ const Main: FC = () => {
 	const dispatch = useAppDispatch();
 
 	const {
-		artists,
+		data: artists = [],
 		error: artistError,
-		loading: artistLoading,
-	} = useAppSelector((state) => state.artists);
+		isLoading: artistLoading,
+	} = useGetArtistsQuery();
 	const {
-		trackList,
+		data: trackList = [],
 		error: tracksError,
-		loading: tracksLoading,
-	} = useAppSelector((state) => state.trackList);
+		isLoading: tracksLoading,
+	} = useGetTracksQuery();
 
 	const [isButtonShow, setIsButtonShow] = useState<boolean>(false);
 	const [translateValue, setTranslateValue] = useState<number>(0);
@@ -90,14 +92,25 @@ const Main: FC = () => {
 	};
 
 	const renderArtists = () => {
-		if (artists) {
+		if (artists.length > 0) {
 			if (!artistError) {
 				return artists.map(({ name, artistImg, id }) => {
 					return <ArtistCard key={id} name={name} img={artistImg} />;
 				});
 			} else {
-				return <ArtistsError errorMessage={artistError} />;
+				const errorMessage =
+					artistError && 'data' in artistError && typeof artistError.data === 'string'
+						? artistError.data
+						: 'При получении артистов произошла ошибка';
+				return <ArtistsError errorMessage={errorMessage} />;
 			}
+		}
+		if (artistError) {
+			const errorMessage =
+				'data' in artistError && typeof artistError.data === 'string'
+					? artistError.data
+					: 'При получении артистов произошла ошибка';
+			return <ArtistsError errorMessage={errorMessage} />;
 		}
 	};
 
@@ -114,14 +127,20 @@ const Main: FC = () => {
 					);
 				});
 			} else {
-				return <ArtistsError errorMessage={tracksError} />;
+				const errorMessage =
+					tracksError &&
+					'data' in tracksError &&
+					typeof tracksError.data === 'string'
+						? tracksError.data
+						: 'При получении треков произошла ошибка';
+				return <ArtistsError errorMessage={errorMessage} />;
 			}
 		}
 	};
 
 	const setArtistOfMonthPlayList = () => {
-		const tracks = trackList.filter(
-			(item) => item.artists === 'Тринадцать карат',
+		const tracks = trackList.filter((item) =>
+			item.artists.some((artist) => artist.name === 'Тринадцать карат'),
 		);
 		if (tracks) {
 			dispatch(
@@ -136,7 +155,7 @@ const Main: FC = () => {
 	const setBestInBrooklyn = () => {
 		const oldArr = [...trackList];
 		const sortedArr = oldArr.sort((a, b) => a.auditions - b.auditions);
-		const currentArray: ITrack[] = [];
+		const currentArray: ApiTrack[] = [];
 		for (let i = 0; i <= 9; i++) {
 			currentArray.push(sortedArr[i]);
 		}
@@ -145,10 +164,12 @@ const Main: FC = () => {
 	};
 
 	const setBestInCountry = () => {
-		const tracks = trackList.filter(
-			(item) =>
-				item.artists === 'Макс корж' ||
-				item.artists === 'Тима Белоруских',
+		const tracks = trackList.filter((item) =>
+			item.artists.some(
+				(artist) =>
+					artist.name === 'Макс корж' ||
+					artist.name === 'Тима Белоруских',
+			),
 		);
 		if (tracks) {
 			dispatch(selectPlayList(tracks));
@@ -158,7 +179,7 @@ const Main: FC = () => {
 
 	const bestForYou = () => {
 		const shuffledArr = shuffle(trackList);
-		const currentArray: ITrack[] = [];
+		const currentArray: ApiTrack[] = [];
 		for (let i = 0; i <= 9; i++) {
 			currentArray.push(shuffledArr[i]);
 		}
