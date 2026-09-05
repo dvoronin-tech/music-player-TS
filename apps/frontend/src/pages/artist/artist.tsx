@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 
 import styles from './artist.module.scss';
 import { useParams } from '@tanstack/react-router';
@@ -11,16 +11,19 @@ import {
 	UnFollow,
 } from '@/components/icons and tags/icons';
 import ArtistTrackCard from '@/components/cards/artistTrackCards/artistTrackCards';
-import { useGetArtistsQuery } from '@/api/rtk/artists';
-import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
-import { loadArtistTracks } from '@/store/artistsTracks/reducerArtistsTracks';
+import { useGetArtistQuery, useGetArtistsQuery } from '@/api/rtk/artists';
+import {
+	useGetLikedArtistsQuery,
+	useToggleLikedArtistMutation,
+} from '@/api/rtk/liked';
+import { useAppDispatch } from '@/hooks/useTypedRedux';
 import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
 import {
 	selectCurrentTrack,
 	selectPlayList,
 } from '@/store/current/actionsCurrent';
-import { toggleArtist } from '@/store/likedArtists/reducerLikedArtists';
 import { addNotification } from '@/store/notificationQueue/actionsNotification';
+import { skipToken } from '@reduxjs/toolkit/query/react';
 import { v4 as randomId } from 'uuid';
 
 const PopularTrackListWrapper = styled.div`
@@ -92,24 +95,21 @@ const Artist: FC = () => {
 		from: '/artist/$name',
 	});
 	const dispatch = useAppDispatch();
-	const {
-		tracks: trackList,
-		loading,
-		error,
-	} = useAppSelector((state) => state.artistsTracks);
-	const { data: artists = [] } = useGetArtistsQuery();
-	const artist = artists.find((item) => item.name === artistName);
-	const likedArtistList = useAppSelector(
-		(state) => state.likedArtists.likedArtists,
+	const { data: artists = [], isLoading: artistsLoading } =
+		useGetArtistsQuery();
+	const artistSummary = useMemo(
+		() => artists.find((item) => item.name === artistName),
+		[artists, artistName],
 	);
+	const { data: artistDetail, isLoading } = useGetArtistQuery(
+		artistSummary?.id ?? skipToken,
+	);
+	const artist = artistDetail ?? artistSummary;
+	const trackList = artistDetail?.tracks ?? [];
+	const { data: likedArtistList = [] } = useGetLikedArtistsQuery();
+	const [toggleLikedArtist] = useToggleLikedArtistMutation();
 
 	const [isLikedArtist, setIsLikedArtist] = useState(false);
-
-	useEffect(() => {
-		if (artist) {
-			dispatch(loadArtistTracks(artist.trackIds));
-		}
-	}, [dispatch, artist]);
 
 	useEffect(() => {
 		const isLikedArtist = likedArtistList.find(
@@ -180,7 +180,7 @@ const Artist: FC = () => {
 
 	const toggleIsFollowed = () => {
 		if (artist) {
-			dispatch(toggleArtist(artist.id));
+			toggleLikedArtist({ id: artist.id, isLiked: isLikedArtist });
 			dispatch(
 				addNotification({
 					notificationId: randomId(),
@@ -194,12 +194,22 @@ const Artist: FC = () => {
 		}
 	};
 
+	if (artistsLoading) {
+		return (
+			<main className={styles.artist}>
+				<div className="loader"></div>
+			</main>
+		);
+	}
+
 	if (artist) {
 		return (
 			<main className={styles.artist}>
 				<ArtistBG id="bg" $big_img={artist.bigImg}>
 					<div className={styles.artist_info}>
-						<span className={styles.artist_name}>{artist.name}</span>
+						<span className={styles.artist_name}>
+							{artist.name}
+						</span>
 						<div className={styles.additional_artist_info}>
 							<span>Артист</span>
 							<span>{artist.likes} подписчиков</span>
@@ -250,9 +260,11 @@ const Artist: FC = () => {
 					</div>
 				</ArtistBG>
 				<div className={styles.artist_tracks_wrapper}>
-					<span className={styles.artist_track_title}>Популярные треки</span>
+					<span className={styles.artist_track_title}>
+						Популярные треки
+					</span>
 					<PopularTrackListWrapper>
-						{loading && !error ? (
+						{isLoading ? (
 							<div className="loader"></div>
 						) : (
 							renderBetterTracks(true)
@@ -262,7 +274,7 @@ const Artist: FC = () => {
 						Другие треки от {artist.name}
 					</span>
 					<MoreTracksWrapper>
-						{loading && !error ? (
+						{isLoading ? (
 							<div className="loader"></div>
 						) : (
 							renderBetterTracks(false)

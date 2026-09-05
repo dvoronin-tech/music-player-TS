@@ -2,6 +2,10 @@ import { FC, useEffect, useState } from 'react';
 import styles from './asideBar.module.scss';
 import styled from 'styled-components';
 import { useAppSelector } from '@/hooks/useTypedRedux';
+import {
+	useGetLikedTracksQuery,
+	useGetLikedArtistsQuery,
+} from '@/api/rtk/liked';
 import Button from '@/components/buttons/buttons';
 import SmallTrackCard from '@/components/cards/smallTrackCard/smallTrackCard';
 import { ArtistCard } from '@/components/cards/artistCards/artistCards';
@@ -74,12 +78,10 @@ const AsideBar: FC = () => {
 	const { trackId, currentPlayList } = useAppSelector(
 		(state) => state.current,
 	);
-	const { likedTrackList, loading: tracksLoading } = useAppSelector(
-		(state) => state.liked,
-	);
-	const { likedArtists, loading: artistsLoading } = useAppSelector(
-		(state) => state.likedArtists,
-	);
+	const { data: likedTrackList = [], isLoading: tracksLoading } =
+		useGetLikedTracksQuery();
+	const { data: likedArtists = [], isLoading: artistsLoading } =
+		useGetLikedArtistsQuery();
 
 	const [showPlayList, setShowPlayList] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);

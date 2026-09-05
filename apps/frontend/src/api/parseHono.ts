@@ -18,6 +18,10 @@ export async function parseHonoJson<T>(
 		};
 	}
 
+	if (res.status === 204) {
+		return { data: undefined as T };
+	}
+
 	const data = (await res.json()) as T;
 	return { data };
 }

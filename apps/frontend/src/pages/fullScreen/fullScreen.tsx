@@ -3,7 +3,12 @@ import { FC, SyntheticEvent, useEffect, useRef, useState } from 'react';
 import styles from './fullScreen.module.scss';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
-import { ITrack, toggleLike } from '@/store/likedPlayList/reducerLiked';
+import type { ApiTrack } from '@music-player/backend';
+import {
+	useGetLikedTracksQuery,
+	useToggleLikedTrackMutation,
+} from '@/api/rtk/liked';
+import { formatArtistNames } from '@/utils/formatArtists';
 import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
 import Button from '@/components/buttons/buttons';
 import {
@@ -178,9 +183,10 @@ const FullScreen: FC = () => {
 		pending,
 		trackTimeData: { currentTime, duration },
 	} = useAppSelector((state) => state.trackState);
-	const { likedTrackList } = useAppSelector((state) => state.liked);
+	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
+	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 
-	const [currentTrack, setCurrentTrack] = useState<ITrack | undefined>(
+	const [currentTrack, setCurrentTrack] = useState<ApiTrack | undefined>(
 		undefined,
 	); // Трек
 	const [spanTranslateValue, setSpanTranslateValue] = useState(0); //
@@ -346,12 +352,12 @@ const FullScreen: FC = () => {
 
 	const toggleIsLiked = () => {
 		if (trackId && currentTrack) {
-			dispatch(toggleLike(trackId));
+			toggleLikedTrack({ id: trackId, isLiked });
 			dispatch(
 				addNotification({
 					notificationId: randomId(),
 					img: currentTrack.albumImg,
-					info: `${currentTrack.title} - ${currentTrack.artists}`,
+					info: `${currentTrack.title} - ${formatArtistNames(currentTrack.artists)}`,
 					additionalInfo: isLiked
 						? 'Трек удалён из <span>избранного</span>'
 						: 'Трек добавлен в <span>избранное</span>',
@@ -475,7 +481,7 @@ const FullScreen: FC = () => {
 									{currentTrack.title}
 								</TrackTitle>
 								<span className={styles.fullscreen_artist}>
-									{currentTrack.artists}
+									{formatArtistNames(currentTrack.artists)}
 								</span>
 							</div>
 						</div>

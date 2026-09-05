@@ -3,10 +3,11 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 import styles from './likedPage.module.scss';
 import styled from 'styled-components';
 import { useAppSelector } from '@/hooks/useTypedRedux';
+import { useGetLikedTracksQuery } from '@/api/rtk/liked';
 import { Input } from '@/components/inputFields/inputFields';
 import Button from '@/components/buttons/buttons';
 import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
-import { ITrack } from '@/store/likedPlayList/reducerLiked';
+import type { ApiTrack } from '@music-player/backend';
 import { publicUrl } from '@/utils/constants';
 
 const Background = styled.div`
@@ -82,9 +83,9 @@ const NoDataDiv = styled.div`
 `;
 
 const LikedPage: FC = () => {
-	const { likedTrackList } = useAppSelector((state) => state.liked);
+	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const trackId = useAppSelector((state) => state.current.trackId);
-	const [dataArr, setDataArr] = useState<ITrack[]>([]);
+	const [dataArr, setDataArr] = useState<ApiTrack[]>([]);
 	const [searchStr, setSearchStr] = useState('');
 
 	const [isPopular, setIsPopular] = useState(false);

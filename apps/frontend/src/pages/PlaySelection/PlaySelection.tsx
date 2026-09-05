@@ -4,8 +4,12 @@ import styles from './PlaySelection.module.scss';
 
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import { showCurrentPlayListAction } from '@/store/current/actionsCurrent';
-
-import { ITrack, toggleLike } from '@/store/likedPlayList/reducerLiked';
+import type { ApiTrack } from '@music-player/backend';
+import {
+	useGetLikedTracksQuery,
+	useToggleLikedTrackMutation,
+} from '@/api/rtk/liked';
+import { formatArtistNames } from '@/utils/formatArtists';
 
 import {
 	CurrentPlayList,
@@ -66,7 +70,8 @@ const PlaySelection: FC = () => {
 	const { currentPlayList, trackId, showCurrentPlayList } = useAppSelector(
 		(state) => state.current,
 	);
-	const { likedTrackList } = useAppSelector((state) => state.liked);
+	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
+	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 	const {
 		isRandom,
 		isPlay,
@@ -76,7 +81,7 @@ const PlaySelection: FC = () => {
 	} = useAppSelector((state) => state.trackState);
 
 	const [currentWidth, setCurrentWidth] = useState(0);
-	const [currentTrack, setCurrentTrack] = useState<ITrack | undefined>(
+	const [currentTrack, setCurrentTrack] = useState<ApiTrack | undefined>(
 		undefined,
 	);
 
@@ -114,12 +119,12 @@ const PlaySelection: FC = () => {
 	//______________________________________________________
 	const toggleIsLiked = () => {
 		if (trackId && currentTrack) {
-			dispatch(toggleLike(trackId));
+			toggleLikedTrack({ id: trackId, isLiked });
 			dispatch(
 				addNotification({
 					notificationId: randomId(),
 					img: currentTrack.albumImg,
-					info: `${currentTrack.title} - ${currentTrack.artists}`,
+					info: `${currentTrack.title} - ${formatArtistNames(currentTrack.artists)}`,
 					additionalInfo: isLiked
 						? 'Трек удалён из <span>избранного</span>'
 						: 'Трек добавлен в <span>избранное</span>',
@@ -205,7 +210,7 @@ const PlaySelection: FC = () => {
 						<div className={styles.track_info}>
 							<span>{currentTrack.title}</span>
 							<span className={styles.artists}>
-								{currentTrack.artists}
+								{formatArtistNames(currentTrack.artists)}
 							</span>
 						</div>
 					</div>

@@ -5,7 +5,7 @@ import { LuInfo } from 'react-icons/lu';
 import { FaTelegramPlane } from 'react-icons/fa';
 import { Input } from '@/components/inputFields/inputFields';
 import { useNavigate } from '@tanstack/react-router';
-import { serverUrl } from '@/utils/constants';
+import { useLoginMutation, useRegisterMutation } from '@/api/rtk/auth';
 
 interface IFormData {
 	username: string | null;
@@ -43,47 +43,19 @@ const Auth: FC = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [response, setResponse] = useState<string | null>(null);
 	const prevAuth = useRef<'reg' | 'auth' | null>(null);
+	const [registerUser] = useRegisterMutation();
+	const [loginUser] = useLoginMutation();
 
-	const regUser = async (data) => {
-		try {
-			const res = await fetch(serverUrl + '/api/users/register/', {
-				method: 'POST',
-				headers: {
-					'Content-type': 'application/json',
-				},
-				body: JSON.stringify(data),
-			});
-
-			return await res.json();
-		} catch (err) {
-			if (err) {
-				const { message } = err as Error;
-				console.log(message);
-				setResponse('Неполадки с сервером, попробуйте позже');
-				setResponseColor(Colors.error);
-			}
+	const queryErrorMessage = (error: unknown) => {
+		if (
+			error &&
+			typeof error === 'object' &&
+			'data' in error &&
+			typeof error.data === 'string'
+		) {
+			return error.data;
 		}
-	};
-
-	const authUser = async (data) => {
-		try {
-			const res = await fetch(serverUrl + '/api/users/auth/', {
-				method: 'POST',
-				headers: {
-					'Content-type': 'application/json',
-				},
-				body: JSON.stringify(data),
-			});
-
-			return await res.json();
-		} catch (err) {
-			if (err) {
-				const { message } = err as Error;
-				console.log(message);
-				setResponse('Неполадки с сервером, попробуйте позже');
-				setResponseColor(Colors.error);
-			}
-		}
+		return 'Неполадки с сервером, попробуйте позже';
 	};
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -255,16 +227,20 @@ const Auth: FC = () => {
 
 		if (isValid) {
 			setIsLoading(true);
-			regUser(formData).then((data) => {
-				if (data.data) {
-					setResponse(data.data);
+			void registerUser({
+				username: formData.username ?? '',
+				email: formData.email ?? '',
+				password: formData.password ?? '',
+			}).then((result) => {
+				if ('data' in result) {
+					setResponse('Регистрация прошла успешно');
 					setResponseColor(Colors.success);
 				} else {
-					setResponse(data.error);
+					setResponse(queryErrorMessage(result.error));
 					setResponseColor(Colors.error);
 				}
+				setIsLoading(false);
 			});
-			setIsLoading(false);
 		} else {
 			setResponse('Вы заполнили не все поля или заполнили их не верно');
 			setResponseColor(Colors.error);
@@ -283,18 +259,20 @@ const Auth: FC = () => {
 		const form = e.target as HTMLFormElement;
 		setIsLoading(true);
 
-		authUser(formData).then((data) => {
-			if (!data.token) {
-				data.error && setResponse(data.error);
-				setResponseColor(Colors.error);
-			} else {
-				localStorage.setItem('Token', data.token);
+		void loginUser({
+			username: formData.username ?? '',
+			password: formData.password ?? '',
+		}).then((result) => {
+			if ('data' in result && result.data) {
+				localStorage.setItem('Token', result.data.token);
 				navigate({ to: '/home' });
 				window.location.reload();
+				return;
 			}
+			setResponse(queryErrorMessage(result.error));
+			setResponseColor(Colors.error);
+			setIsLoading(false);
 		});
-
-		setIsLoading(false);
 
 		setFormData(initialFormState);
 		form.reset();

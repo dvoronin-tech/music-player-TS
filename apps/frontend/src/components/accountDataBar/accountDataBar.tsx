@@ -5,7 +5,7 @@ import { Cross, UserIcon } from '@/components/icons and tags/icons';
 import Button from '@/components/buttons/buttons';
 import { toggleShowUserData } from '@/store/ui/reducerUi';
 import { useGetMeQuery, useSetMyPhotoMutation } from '@/api/rtk/user';
-import { logout } from '@/pages/authAfterReg/authAfterReg';
+import { logout } from '@/utils/auth';
 import { useNavigate } from '@tanstack/react-router';
 
 const AccountBar = styled.aside<{ $isShow: boolean }>`

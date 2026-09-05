@@ -1,11 +1,11 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { ITrack } from "@/store/likedPlayList/reducerLiked";
+import type { ApiTrack } from "@music-player/backend";
 import { selectCurrentTrack, selectPlayList, selectShuffledPlayList, showCurrentPlayListAction, deleteCurrentTrack, addToCurrentPlayList } from "./actionsCurrent";
 
 const initialState: {
-    currentPlayList: ITrack[],
+    currentPlayList: ApiTrack[],
     trackId: string | null,
-    shuffledArr: ITrack[],
+    shuffledArr: ApiTrack[],
     showCurrentPlayList: boolean
 } = {
     currentPlayList: [],
