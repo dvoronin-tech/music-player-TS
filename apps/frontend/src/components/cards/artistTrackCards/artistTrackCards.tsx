@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 
-import './artistTrackCards.scss';
+import styles from './artistTrackCards.module.scss';
 
 import styled from 'styled-components';
 import Button from '@/components/buttons/buttons';
@@ -170,7 +170,7 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 	return (
 		<div
 			style={{ flexBasis: isHovered ? '60%' : '35%' }}
-			className="popular_track_item"
+			className={styles.popular_track_item}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>
@@ -190,14 +190,14 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 				<>
 					<div
 						style={{ opacity: isHovered ? 1 : 0 }}
-						className="track_item_info"
+						className={styles.track_item_info}
 					>
 						<span>{title}</span>
 						<span>{auditions} прослушиваний</span>
 					</div>
 					<div
 						style={{ opacity: isHovered ? 1 : 0 }}
-						className="track_item_action_buttons"
+						className={styles.track_item_action_buttons}
 					>
 						<ButtonsWrapper>
 							<Button

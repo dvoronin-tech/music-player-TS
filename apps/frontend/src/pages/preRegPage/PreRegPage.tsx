@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import './PreRegPage.scss';
+import styles from './PreRegPage.module.scss';
 import Button from '@/components/buttons/buttons';
 import styled from 'styled-components';
 
@@ -18,9 +18,9 @@ const ContentSelection = styled.div`
 
 const PreRegPage: FC = () => {
 	return (
-		<div className="pre_reg_main">
+		<div className={styles.pre_reg_main}>
 			<main>
-				<div className="main_content">
+				<div className={styles.main_content}>
 					<ContentSelection>
 						<h1>
 							Добро пожаловать в <span>BROOKLYN</span>
@@ -107,7 +107,7 @@ const PreRegPage: FC = () => {
 						</p>
 						<h3>Разработчик: Воронин Денис</h3>
 					</ContentSelection>
-					<div className="action_links">
+					<div className={styles.action_links}>
 						<Button
 							type="accent"
 							isLink

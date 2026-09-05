@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 
-import './artist.scss';
+import styles from './artist.module.scss';
 import { useParams } from '@tanstack/react-router';
 
 import { styled } from 'styled-components';
@@ -196,16 +196,16 @@ const Artist: FC = () => {
 
 	if (artist) {
 		return (
-			<main className="artist">
+			<main className={styles.artist}>
 				<ArtistBG id="bg" $big_img={artist.big_img}>
-					<div className="artist_info">
-						<span className="artist_name">{artist.name}</span>
-						<div className="additional_artist_info">
+					<div className={styles.artist_info}>
+						<span className={styles.artist_name}>{artist.name}</span>
+						<div className={styles.additional_artist_info}>
 							<span>Артист</span>
 							<span>{artist.likes} подписчиков</span>
 						</div>
 					</div>
-					<div className="artist_action_buttons">
+					<div className={styles.artist_action_buttons}>
 						<Button
 							type="accent"
 							W={70}
@@ -230,7 +230,7 @@ const Artist: FC = () => {
 							W={50}
 							H={50}
 							style={{ borderRadius: 100 }}
-							propClassList="follow_artist_btn"
+							propClassList={styles.follow_artist_btn}
 							content={
 								isLikedArtist ? (
 									<UnFollow
@@ -255,8 +255,8 @@ const Artist: FC = () => {
 						/>
 					</div>
 				</ArtistBG>
-				<div className="artist_tracks_wrapper">
-					<span className="artist_track_title">Популярные треки</span>
+				<div className={styles.artist_tracks_wrapper}>
+					<span className={styles.artist_track_title}>Популярные треки</span>
 					<PopularTrackListWrapper>
 						{loading && !error ? (
 							<div className="loader"></div>
@@ -264,7 +264,7 @@ const Artist: FC = () => {
 							renderBetterTracks(true)
 						)}
 					</PopularTrackListWrapper>
-					<span className="artist_track_title">
+					<span className={styles.artist_track_title}>
 						Другие треки от {artist.name}
 					</span>
 					<MoreTracksWrapper>
@@ -279,7 +279,7 @@ const Artist: FC = () => {
 		);
 	} else {
 		return (
-			<main className="artist">
+			<main className={styles.artist}>
 				<ErrorBlock>
 					<span>Артист не найден</span>
 				</ErrorBlock>

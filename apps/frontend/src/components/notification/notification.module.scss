@@ -105,6 +105,7 @@
     }
 }
 
+:global {
 @keyframes notification-fade-out {
     from {
         transform: scale(1);
@@ -113,6 +114,8 @@
         transform: scale(0.9);
         opacity: 0;
     }
+}
+
 }
 
 @keyframes notifications-fade-up {

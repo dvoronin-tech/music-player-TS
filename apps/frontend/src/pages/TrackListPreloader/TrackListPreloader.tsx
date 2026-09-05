@@ -1,5 +1,5 @@
 import {FC} from 'react';
-import './TrackListPreloader.scss';
+import styles from './TrackListPreloader.module.scss';
 
 const TrackListPreloader: FC = () => {
     const wrapperWidth = document.querySelector('.info_bar_wrapper')?.clientHeight;
@@ -24,9 +24,9 @@ const TrackListPreloader: FC = () => {
         <>
             {arr.map((_, index) => {
                 return (
-                    <div className="track_preloader" key={index}>
-                        <div className='track_img_preloader'></div>
-                        <div className='track_info_preloader'>
+                    <div className={styles.track_preloader} key={index}>
+                        <div className={styles.track_img_preloader}></div>
+                        <div className={styles.track_info_preloader}>
                             <div></div>
                             <div></div>
                         </div>

@@ -1,6 +1,6 @@
 import { FC, SyntheticEvent, useEffect, useRef, useState } from 'react';
 
-import './fullScreen.scss';
+import styles from './fullScreen.module.scss';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import { ITrack, toggleLike } from '@/store/likedPlayList/reducerLiked';
@@ -420,13 +420,13 @@ const FullScreen: FC = () => {
 		<>
 			{currentTrack && currentPlayList && (
 				<Background $img={currentTrack.albumImg}>
-					<div className="fullscreen_top_elements">
+					<div className={styles.fullscreen_top_elements}>
 						<TrackImg
 							$isShow={showCurrentPlayList}
 							src={currentTrack.albumImg}
 							alt="фото альбома"
 						/>
-						<div className="fullscreen_info">
+						<div className={styles.fullscreen_info}>
 							<CurrentPlayListSelection
 								$showCPL={showCurrentPlayList}
 								$isCPLLong={isCPLLong}
@@ -436,7 +436,7 @@ const FullScreen: FC = () => {
 								{CPLTranslateValue ? (
 									<Button
 										type="alternative"
-										propClassList="fullscreen_prev_button"
+										propClassList={styles.fullscreen_prev_button}
 										fontS={3}
 										content="<"
 										W={55}
@@ -455,7 +455,7 @@ const FullScreen: FC = () => {
 								{isCPLLong && (
 									<Button
 										type="alternative"
-										propClassList="fullscreen_next_button"
+										propClassList={styles.fullscreen_next_button}
 										fontS={3}
 										content=">"
 										W={55}
@@ -466,7 +466,7 @@ const FullScreen: FC = () => {
 							</CurrentPlayListSelection>
 							<div
 								ref={infoDiv}
-								className="fullscreen_track_info"
+								className={styles.fullscreen_track_info}
 							>
 								<TrackTitle
 									$translate={spanTranslateValue}
@@ -476,14 +476,14 @@ const FullScreen: FC = () => {
 								>
 									{currentTrack.title}
 								</TrackTitle>
-								<span className="fullscreen_artist">
+								<span className={styles.fullscreen_artist}>
 									{currentTrack.artists}
 								</span>
 							</div>
 						</div>
 					</div>
-					<div className="fullscreen_bottom_elements">
-						<div className="fullscreen_controls">
+					<div className={styles.fullscreen_bottom_elements}>
+						<div className={styles.fullscreen_controls}>
 							<div>
 								<button onClick={toggleIsLiked}>
 									<Like
@@ -514,13 +514,13 @@ const FullScreen: FC = () => {
 								) : (
 									<button
 										style={{ height: 70 }}
-										className="fullscreen_play_btn"
+										className={styles.fullscreen_play_btn}
 										onClick={toggleIsPlay}
 									>
 										<PlayOrPause
 											type={isPlay ? 'active' : 'idle'}
 											style={{ left: isPlay ? 0 : 2 }}
-											className="play_or_pause_icon"
+											className={styles.play_or_pause_icon}
 											scale={30}
 										/>
 									</button>
@@ -554,13 +554,13 @@ const FullScreen: FC = () => {
 								</button>
 							</div>
 						</div>
-						<div className="fullscreen_progress_controls">
-							<div className="time_wrapper">
+						<div className={styles.fullscreen_progress_controls}>
+							<div className={styles.time_wrapper}>
 								<span>{humanizingNumbers(currentTime)}</span>
 								<span>{humanizingNumbers(duration)}</span>
 							</div>
 							<div
-								className="progress_bar_wrapper"
+								className={styles.progress_bar_wrapper}
 								onMouseEnter={() => setIsPBHovered(true)}
 								onMouseLeave={() => setIsPBHovered(false)}
 								onClick={setCurrentTime}

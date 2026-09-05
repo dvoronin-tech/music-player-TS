@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import './asideBar.scss';
+import styles from './asideBar.module.scss';
 import styled from 'styled-components';
 import { useAppSelector } from '@/hooks/useTypedRedux';
 import Button from '@/components/buttons/buttons';
@@ -178,7 +178,7 @@ const AsideBar: FC = () => {
 					content="Посмотреть всё"
 				/>
 			</FlexRow>
-			<div className="aside_liked_track_list">
+			<div className={styles.aside_liked_track_list}>
 				{renderLikedTrackList()}
 			</div>
 			<FlexRow style={{ marginTop: 10 }}>
@@ -194,7 +194,7 @@ const AsideBar: FC = () => {
 					style={{ borderRadius: 100 }}
 				/>
 			</FlexRow>
-			<div className="aside_artist_list">
+			<div className={styles.aside_artist_list}>
 				<ArtistsGridWrapper $isNoArtists={likedArtists.length === 0}>
 					{renderLikedArtists()}
 				</ArtistsGridWrapper>

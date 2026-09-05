@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import './CPLSelection.scss';
+import styles from './CPLSelection.module.scss';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import SmallTrackCard from '@/components/cards/smallTrackCard/smallTrackCard';
@@ -85,7 +85,7 @@ const CPLSelection: FC = () => {
 	return (
 		<>
 			<CPLSelectionComponent $isShow={showCurrentPlayList}>
-				<span className="title_span">Текущий плейлист</span>
+				<span className={styles.title_span}>Текущий плейлист</span>
 				<TrackListWrapper>{renderCPL()}</TrackListWrapper>
 			</CPLSelectionComponent>
 			<BlurBg

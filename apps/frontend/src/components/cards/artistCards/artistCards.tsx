@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import './artistCards.scss';
+import styles from './artistCards.module.scss';
 import { useNavigate } from '@tanstack/react-router';
 import styled from 'styled-components';
 
@@ -64,7 +64,7 @@ export const ArtistCard: FC<IProp> = ({img, name, type='big'}) => {
         return string;
     }
     return (
-        <ArtistHomeCard $type={type} className='artist_home_card' onClick={selectArtist}>
+        <ArtistHomeCard $type={type} className={styles.artist_home_card} onClick={selectArtist}>
             <ArtistImg $img={img} $type={type}></ArtistImg>
             <ArtistName $type={type}>{cutLongString(name)}</ArtistName>
         </ArtistHomeCard>

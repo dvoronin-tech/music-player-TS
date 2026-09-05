@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 
-import './homeTrackCards.scss';
+import styles from './homeTrackCards.module.scss';
 import {
 	AddToPlayList,
 	Cross,
@@ -113,15 +113,15 @@ export const HomeTrackCard: FC<IProp> = ({
 	};
 
 	return (
-		<div className="home_track_card">
-			<div className="home_track_card_wrapper">
+		<div className={styles.home_track_card}>
+			<div className={styles.home_track_card_wrapper}>
 				<button
 					onClick={playTrack}
 					style={{
 						opacity: currentTrackId === id ? 1 : isHovered ? 1 : 0,
 					}}
 					onMouseEnter={() => setIsHovered(true)}
-					className="home_track_card_play"
+					className={styles.home_track_card_play}
 				>
 					{currentTrackId === id ? (
 						isPlay ? (
@@ -136,7 +136,7 @@ export const HomeTrackCard: FC<IProp> = ({
 					) : (
 						<PlayOrPause
 							scale={30}
-							className="home_track_card_play_icon"
+							className={styles.home_track_card_play_icon}
 							type="idle"
 						/>
 					)}
@@ -150,12 +150,12 @@ export const HomeTrackCard: FC<IProp> = ({
 					alt="Фото трека"
 				/>
 			</div>
-			<div className="home_track_card_data">
-				<div className="home_track_card_info">
+			<div className={styles.home_track_card_data}>
+				<div className={styles.home_track_card_info}>
 					<span>{cutLongString(title)}</span>
 					<span>{cutLongString(artists)}</span>
 				</div>
-				<div className="home_track_card_buttons">
+				<div className={styles.home_track_card_buttons}>
 					{forFullScreen ? (
 						track.id !== trackId && (
 							<button onClick={deleteTrack}>

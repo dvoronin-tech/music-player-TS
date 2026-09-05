@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import './headers.scss';
+import styles from './headers.module.scss';
 import Button from '@/components/buttons/buttons';
 import { useLocation, useNavigate, useRouter } from '@tanstack/react-router';
 import styled from 'styled-components';
@@ -70,7 +70,7 @@ const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
 
 	if (type === 'main') {
 		return (
-			<header style={style} className={'main_header ' + className}>
+			<header style={style} className={`${styles.main_header} ${className ?? ''}`}>
 				<nav>
 					<Button
 						type="alternative"
@@ -96,14 +96,14 @@ const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
 				</nav>
 				<div
 					style={{ opacity: showUserData ? 0 : 1 }}
-					className="header_account"
+					className={styles.header_account}
 					onClick={toggleSUD}
 				>
-					<div className="header_account_info">
+					<div className={styles.header_account_info}>
 						<span>{username}</span>
 						<span>{email}</span>
 					</div>
-					<div className="account_photo">
+					<div className={styles.account_photo}>
 						{user_img ? (
 							<img src={user_img} alt="моё фото" />
 						) : (
@@ -115,7 +115,7 @@ const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
 		);
 	} else {
 		return (
-			<header style={style} className={'simple_header ' + className}>
+			<header style={style} className={`${styles.simple_header} ${className ?? ''}`}>
 				<span>BROOKLYN</span>
 			</header>
 		);

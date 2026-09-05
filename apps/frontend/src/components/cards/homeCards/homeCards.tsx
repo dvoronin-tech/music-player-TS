@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react';
 
-import './homeCards.scss';
+import css from './homeCards.module.scss';
 import Button from '@/components/buttons/buttons';
 import { PlayOrPause } from '@/components/icons and tags/icons';
 
@@ -16,7 +16,7 @@ interface IProp {
 }
 
 export const HomeCard: FC<IProp> = ({W, H=200, style, img, category, content, onClick, additionalContent}) => {
-    const [isHovered, setIsHovered] = useState<' home_card_hovered' | ''>('');
+    const [isHovered, setIsHovered] = useState(false);
     
     const styles: React.CSSProperties = {
         height: H,
@@ -29,11 +29,11 @@ export const HomeCard: FC<IProp> = ({W, H=200, style, img, category, content, on
     const card = useRef<null | HTMLDivElement>(null)
 
     const startHover = () => {
-        setIsHovered(' home_card_hovered');
+        setIsHovered(true);
     }
 
     const endHover = () => {
-        setIsHovered('');
+        setIsHovered(false);
     }
 
     const duration = 500;
@@ -85,14 +85,14 @@ export const HomeCard: FC<IProp> = ({W, H=200, style, img, category, content, on
     }, [isHovered]);
 
     return (
-        <div className={`home_card` + isHovered} ref={card} onMouseEnter={startHover} onMouseLeave={endHover} style={styles} onClick={onClick}>
-            <div className='home_card_wrapper'>
-                <div className='home_card_info'>
-                    <div className="home_card_info_data">
-                        <span className='home_card_category'>{category}</span>
-                        <span className='home_card_content'>{content}</span>
+        <div className={`${css.home_card}${isHovered ? ` ${css.home_card_hovered}` : ''}`} ref={card} onMouseEnter={startHover} onMouseLeave={endHover} style={styles} onClick={onClick}>
+            <div className={css.home_card_wrapper}>
+                <div className={css.home_card_info}>
+                    <div className={css.home_card_info_data}>
+                        <span className={css.home_card_category}>{category}</span>
+                        <span className={css.home_card_content}>{content}</span>
                     </div>
-                    <span className='home_card_additional'>{additionalContent}</span>
+                    <span className={css.home_card_additional}>{additionalContent}</span>
                 </div>
                 <Button W={isHovered ? 70 : 50} H={isHovered ? 70 : 50} 
                 type='alternative' onClick={onClick}

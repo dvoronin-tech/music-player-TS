@@ -50,6 +50,8 @@
     margin-top: 20px;
     box-sizing: border-box;
     padding: 0 40px;
+    display: flex;
+    flex-direction: column;
 }
 
 .artist_track_title {

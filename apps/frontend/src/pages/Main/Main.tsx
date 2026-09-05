@@ -1,5 +1,5 @@
 import { FC, MouseEventHandler, useEffect, useRef, useState } from 'react';
-import './Main.scss';
+import styles from './Main.module.scss';
 import Button from '@/components/buttons/buttons';
 import { HomeCard } from '@/components/cards/homeCards/homeCards';
 import { ArtistCard } from '@/components/cards/artistCards/artistCards';
@@ -168,10 +168,10 @@ const Main: FC = () => {
 
 	return (
 		<>
-			<div className="main">
+			<div className={styles.main}>
 				<main>
-					<div className="cards_wrapper">
-						<div className="cards">
+					<div className={styles.cards_wrapper}>
+						<div className={styles.cards}>
 							<HomeCard
 								onClick={setArtistOfMonthPlayList}
 								W={800}
@@ -189,7 +189,7 @@ const Main: FC = () => {
 								img="/img/home-card-2.webp"
 							/>
 						</div>
-						<div className="cards">
+						<div className={styles.cards}>
 							<HomeCard
 								onClick={setBestInCountry}
 								W={530}
@@ -207,14 +207,14 @@ const Main: FC = () => {
 								img="/img/home-card-4.webp"
 							/>
 						</div>
-						<div className="home_artists_line">
+						<div className={styles.home_artists_line}>
 							<span>Артисты</span>
 							{translateValue ? (
-								<div className="shade"></div>
+								<div className={styles.shade}></div>
 							) : null}
 							<div
 								ref={artistLineWrapper}
-								className="artists_line"
+								className={styles.artists_line}
 							>
 								{translateValue ? (
 									<Button
@@ -234,7 +234,7 @@ const Main: FC = () => {
 											? 'center'
 											: 'flex-start',
 									}}
-									className="artists_line_wrapper"
+									className={styles.artists_line_wrapper}
 									ref={artistLine}
 								>
 									{artistLoading ? (
@@ -257,8 +257,8 @@ const Main: FC = () => {
 							</div>
 						</div>
 					</div>
-					<div className="something_new">
-						<span className="something_new_title">
+					<div className={styles.something_new}>
+						<span className={styles.something_new_title}>
 							Что-то новое
 						</span>
 						<div
@@ -267,7 +267,7 @@ const Main: FC = () => {
 									? 'center'
 									: 'space-between',
 							}}
-							className="home_track_cards_wrapper"
+							className={styles.home_track_cards_wrapper}
 						>
 							{tracksLoading ? (
 								<div className="loader"></div>

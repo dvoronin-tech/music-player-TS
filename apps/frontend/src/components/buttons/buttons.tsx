@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import './buttons.scss';
+import styles from './buttons.module.scss';
 
 import { Link, LinkProps } from '@tanstack/react-router';
 
@@ -53,7 +53,7 @@ const Button: FC<IProp> = ({
 		return (
 			<button
 				type={actionType ? actionType : 'button'}
-				className={genericClassName + ` general_btn ${propClassList}`}
+				className={`${styles[genericClassName]} ${styles.general_btn} ${propClassList}`}
 				style={{
 					width: `${W}px`,
 					height: `${H}px`,
@@ -81,11 +81,10 @@ const Button: FC<IProp> = ({
 			genericClassName = 'disable';
 		}
 
-		genericClassName += ' link';
 		if (path) {
 			return (
 				<Link
-					className={genericClassName + ` general_link ${propClassList}`}
+					className={`${styles[genericClassName]} ${styles.general_link} ${propClassList}`}
 					style={{
 						width: `${W}px`,
 						height: `${H}px`,

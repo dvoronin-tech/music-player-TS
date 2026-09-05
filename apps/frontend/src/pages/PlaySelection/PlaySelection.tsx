@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, SyntheticEvent } from 'react';
 
-import './PlaySelection.scss';
+import styles from './PlaySelection.module.scss';
 
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import { showCurrentPlayListAction } from '@/store/current/actionsCurrent';
@@ -186,42 +186,42 @@ const PlaySelection: FC = () => {
 	return (
 		<>
 			{currentTrack && (
-				<div className="play_selection">
+				<div className={styles.play_selection}>
 					<div
-						className="left_elements"
+						className={styles.left_elements}
 						onClick={() => navigate({ to: '/home/fullscreen' })}
 					>
-						<div className="album_img_wrapper">
+						<div className={styles.album_img_wrapper}>
 							{pending ? (
 								<div className="loader"></div>
 							) : (
 								<img
-									className="album_img"
+									className={styles.album_img}
 									src={currentTrack.albumImg}
 									alt="album"
 								/>
 							)}
 						</div>
-						<div className="track_info">
+						<div className={styles.track_info}>
 							<span>{currentTrack.title}</span>
-							<span className="artists">
+							<span className={styles.artists}>
 								{currentTrack.artists}
 							</span>
 						</div>
 					</div>
-					<div className="right_elements">
-						<div className="music_controls">
-							<div className="left_controls">
+					<div className={styles.right_elements}>
+						<div className={styles.music_controls}>
+							<div className={styles.left_controls}>
 								<button
 									onClick={toggleIsLiked}
-									className="control"
+									className={styles.control}
 								>
 									<Like type={isLiked ? 'active' : 'idle'} />
 								</button>
 							</div>
-							<div className="center_controls">
+							<div className={styles.center_controls}>
 								<button
-									className="control"
+									className={styles.control}
 									onClick={toggleIsRandom}
 								>
 									<Random
@@ -234,13 +234,13 @@ const PlaySelection: FC = () => {
 										}
 									/>
 								</button>
-								<button className="control" onClick={prevTrack}>
+								<button className={styles.control} onClick={prevTrack}>
 									<Rewind
 										type={currentTrack ? 'idle' : 'disable'}
 									/>
 								</button>
 								<button
-									className="control"
+									className={styles.control}
 									onClick={toggleIsPlay}
 								>
 									<PlayOrPause
@@ -254,7 +254,7 @@ const PlaySelection: FC = () => {
 									/>
 								</button>
 								<button
-									className="control next_rewind"
+									className={`${styles.control} ${styles.next_rewind}`}
 									style={{ transform: 'rotate(180deg)' }}
 									onClick={nextTrack}
 								>
@@ -263,7 +263,7 @@ const PlaySelection: FC = () => {
 									/>
 								</button>
 								<button
-									className="control"
+									className={styles.control}
 									onClick={toggleIsRepeat}
 								>
 									<Repeat
@@ -277,9 +277,9 @@ const PlaySelection: FC = () => {
 									/>
 								</button>
 							</div>
-							<div className="right_controls">
+							<div className={styles.right_controls}>
 								<button
-									className="current_play_list_control"
+									className={styles.current_play_list_control}
 									onClick={toggleShowCurrentPlayList}
 								>
 									<CurrentPlayList
@@ -304,25 +304,25 @@ const PlaySelection: FC = () => {
 								</button>
 							</div>
 						</div>
-						<div className="additional_track_info">
+						<div className={styles.additional_track_info}>
 							{currentTrack && (
-								<span className="time">
+								<span className={styles.time}>
 									{humanizingNumbers(currentTime)}
 								</span>
 							)}
 							<div
-								className={'music_progress'}
+								className={styles.music_progress}
 								onClick={setCurrentTime}
 							>
 								<div
-									className="progress_bar"
+									className={styles.progress_bar}
 									style={{ width: currentWidth + '%' }}
 								>
-									<div className="target_circle"></div>
+									<div className={styles.target_circle}></div>
 								</div>
 							</div>
 							{currentTrack && (
-								<span className="time">
+								<span className={styles.time}>
 									{humanizingNumbers(duration)}
 								</span>
 							)}

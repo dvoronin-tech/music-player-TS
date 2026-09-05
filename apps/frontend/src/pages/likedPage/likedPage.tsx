@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 
-import './likedPage.scss';
+import styles from './likedPage.module.scss';
 import styled from 'styled-components';
 import { useAppSelector } from '@/hooks/useTypedRedux';
 import { Input } from '@/components/inputFields/inputFields';
@@ -144,7 +144,7 @@ const LikedPage: FC = () => {
 
 	return (
 		<div
-			className="liked_page"
+			className={styles.liked_page}
 			style={{ paddingBottom: trackId ? '40px' : 0 }}
 		>
 			<Background>
@@ -156,8 +156,8 @@ const LikedPage: FC = () => {
 						src='/video/liked-video.webm'
 					/>
 				</div>
-				<div className="liked_title_wrapper">
-					<span className="liked_title">Любимые треки</span>
+				<div className={styles.liked_title_wrapper}>
+					<span className={styles.liked_title}>Любимые треки</span>
 					<div>
 						<span>BROOKLYN</span>
 						<span>{likedTrackList.length} треков</span>
@@ -165,7 +165,7 @@ const LikedPage: FC = () => {
 				</div>
 			</Background>
 			<Container>
-				<div className="action_row">
+				<div className={styles.action_row}>
 					<Input
 						onChange={onSearch}
 						type="text"
@@ -173,7 +173,7 @@ const LikedPage: FC = () => {
 						H={40}
 						W={446}
 					/>
-					<div className="liked_btns_wrapper">
+					<div className={styles.liked_btns_wrapper}>
 						<Button
 							onClick={() => setIsPopular(false)}
 							type={isPopular ? 'simple' : 'accent'}

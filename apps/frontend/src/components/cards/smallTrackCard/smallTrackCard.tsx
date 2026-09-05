@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import './smallTrackCard.scss';
+import styles from './smallTrackCard.module.scss';
 import styled from 'styled-components';
 import { Cross, Like } from '@/components/icons and tags/icons';
 import { ITrack, toggleLike } from '@/store/likedPlayList/reducerLiked';
@@ -93,7 +93,7 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 		<TrackItemWrapper $isLiked={isLiked}>
 			<TrackInfoWrapper onClick={setCurrent}>
 				<ImgWrapper $img={track.albumImg}></ImgWrapper>
-				<div className="small_track_item_info">
+				<div className={styles.small_track_item_info}>
 					<span>{track.title}</span>
 					<span>{track.artists}</span>
 				</div>

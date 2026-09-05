@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { MdOutlineError } from "react-icons/md";
-import './artistsError.scss';
+import styles from './artistsError.module.scss';
 
 interface IProp {
     errorMessage: string
@@ -8,7 +8,7 @@ interface IProp {
 
 export const ArtistsError: FC<IProp> = ({errorMessage}) => {
     return (
-        <div className='artists_error'>
+        <div className={styles.artists_error}>
             <MdOutlineError style={{marginRight: 20}} />
             <span>{errorMessage}</span>
             <MdOutlineError />

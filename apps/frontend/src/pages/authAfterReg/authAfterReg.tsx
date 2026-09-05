@@ -1,5 +1,5 @@
 import { FC, MouseEventHandler } from 'react';
-import './authAfterReg.scss';
+import styles from './authAfterReg.module.scss';
 import styled from 'styled-components';
 import Button from '@/components/buttons/buttons';
 import { useAppDispatch } from '@/hooks/useTypedRedux';
@@ -65,7 +65,7 @@ const AuthAfterReg: FC = () => {
 					W={300}
 					H={50}
 					content={'Выйти из аккаунта'}
-					propClassList="logout_btn"
+					propClassList={styles.logout_btn}
 					fontS={1.8}
 					fontW={700}
 					onClick={logOut}

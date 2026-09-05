@@ -2,11 +2,11 @@ import { FC } from "react";
 import { FaUserAltSlash } from "react-icons/fa";
 import Button from "@/components/buttons/buttons";
 
-import './preRegErrorPage.scss';
+import styles from './preRegErrorPage.module.scss';
 
 const PreRegErrorPage: FC = () => {
     return (
-        <div className="auth_error_page">
+        <div className={styles.auth_error_page}>
             <main>
                 <div>
                     <span>Для прехода на данный ресурс необходимо авторизоваться</span>

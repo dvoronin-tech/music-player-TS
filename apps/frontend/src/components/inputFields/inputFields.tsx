@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import './inputFields.scss';
+import styles from './inputFields.module.scss';
 
 interface IProp {
     type: string,
@@ -25,11 +25,11 @@ export const Input: FC<IProp> = ({
 }) => {
     if (!required) {
         return <input type={type} onChange={onChange} id={id} name={name} placeholder={placeholder} 
-                    className={'input_field_component ' + className} 
+                    className={`${styles.input_field_component} ${className}`} 
                     style={{width: `${W}px`, height: `${H}px`, fontWeight: fontW, fontSize: `${fontS}rem`, ...style}} />
     } else {
         return <input type={type} onChange={onChange} id={id} name={name} placeholder={placeholder} 
-                    className={'input_field_component ' + className} required
+                    className={`${styles.input_field_component} ${className}`} required
                     style={{width: `${W}px`, height: `${H}px`, fontWeight: fontW, fontSize: `${fontS}rem`, ...style}} />
     }
 }

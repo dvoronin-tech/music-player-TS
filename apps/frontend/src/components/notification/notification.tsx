@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import './notification.scss';
+import styles from './notification.module.scss';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import { INotificationData } from '@/store/notificationQueue/reducerNotification';
 import { deleteNotification } from '@/store/notificationQueue/actionsNotification';
@@ -9,7 +9,7 @@ const Notification: FC = () => {
 	const notificationList = useAppSelector((state) => state.notification);
 
 	return (
-		<div className="notification_wrapper">
+		<div className={styles.notification_wrapper}>
 			{notificationList.map((item) => {
 				return (
 					<NotificationItem
@@ -74,19 +74,19 @@ const NotificationItem: FC<INotificationItemProps> = ({ notificationData }) => {
 			ref={notificationItem}
 			onMouseEnter={() => setIsDelete(true)}
 			onMouseLeave={() => setIsDelete(false)}
-			className="notification"
+			className={styles.notification}
 		>
 			{typeof img === 'string' ? (
 				<img src={img} alt="Фото" />
 			) : (
-				<div className="notification_icon">{img}</div>
+				<div className={styles.notification_icon}>{img}</div>
 			)}
 
-			<div className="notification_data">
-				<span className="notification_info">{info}</span>
+			<div className={styles.notification_data}>
+				<span className={styles.notification_info}>{info}</span>
 				<span
 					ref={additionalInfoSpan}
-					className="notification_additional_info"
+					className={styles.notification_additional_info}
 				>
 					{additionalInfo}
 				</span>
@@ -94,7 +94,7 @@ const NotificationItem: FC<INotificationItemProps> = ({ notificationData }) => {
 			<button
 				onClick={handleDelete}
 				style={{ opacity: deleteBtnOpacity }}
-				className="delete_notification"
+				className={styles.delete_notification}
 			>
 				<RxCross2 strokeWidth={1} />
 			</button>

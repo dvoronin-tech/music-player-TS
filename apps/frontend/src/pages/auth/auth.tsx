@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState, useRef } from 'react';
-import './auth.scss';
+import styles from './auth.module.scss';
 import Button from '@/components/buttons/buttons';
 import { LuInfo } from 'react-icons/lu';
 import { FaTelegramPlane } from 'react-icons/fa';
@@ -305,28 +305,28 @@ const Auth: FC = () => {
 			validationMessages;
 		setContent(
 			<form
-				className="auth_reg_form"
+				className={styles.auth_reg_form}
 				onSubmit={auth === 'reg' ? handleSubmitReg : handleSubmitAuth}
 			>
-				<div className="auth_reg_title">
+				<div className={styles.auth_reg_title}>
 					{auth === 'auth' ? (
 						<span>
 							Войти в{' '}
-							<span className="brooklyn_word">Brooklyn</span>
+							<span className={styles.brooklyn_word}>Brooklyn</span>
 						</span>
 					) : (
 						<span>
 							Зарегистрироваться в{' '}
-							<span className="brooklyn_word">Brooklyn</span>
+							<span className={styles.brooklyn_word}>Brooklyn</span>
 						</span>
 					)}
 				</div>
-				<div className="inputs_wrapper">
-					<div className="input_field">
-						<div className="label_icon_wrapper">
+				<div className={styles.inputs_wrapper}>
+					<div className={styles.input_field}>
+						<div className={styles.label_icon_wrapper}>
 							<label htmlFor="username">Имя пользователя</label>
 							<LuInfo
-								className="auth_error_icon"
+								className={styles.auth_error_icon}
 								style={{ opacity: usernameInvalid ? 1 : 0 }}
 							/>
 						</div>
@@ -340,16 +340,16 @@ const Auth: FC = () => {
 							required
 						/>
 						{usernameInvalid && (
-							<div className="validation_error">
+							<div className={styles.validation_error}>
 								{usernameInvalid}
 							</div>
 						)}
 					</div>
-					<div className="input_field">
-						<div className="label_icon_wrapper">
+					<div className={styles.input_field}>
+						<div className={styles.label_icon_wrapper}>
 							<label htmlFor="password">Пароль</label>
 							<LuInfo
-								className="auth_error_icon"
+								className={styles.auth_error_icon}
 								style={{ opacity: passwordInvalid ? 1 : 0 }}
 							/>
 						</div>
@@ -363,19 +363,19 @@ const Auth: FC = () => {
 							required
 						/>
 						{passwordInvalid && (
-							<div className="validation_error">
+							<div className={styles.validation_error}>
 								{passwordInvalid}
 							</div>
 						)}
 					</div>
 					{auth === 'reg' && (
-						<div className="input_field">
-							<div className="label_icon_wrapper">
+						<div className={styles.input_field}>
+							<div className={styles.label_icon_wrapper}>
 								<label htmlFor="email">
 									Адрес электронной почты
 								</label>
 								<LuInfo
-									className="auth_error_icon"
+									className={styles.auth_error_icon}
 									style={{ opacity: emailInvalid ? 1 : 0 }}
 								/>
 							</div>
@@ -389,7 +389,7 @@ const Auth: FC = () => {
 								required
 							/>
 							{emailInvalid && (
-								<div className="validation_error">
+								<div className={styles.validation_error}>
 									{emailInvalid}
 								</div>
 							)}
@@ -416,11 +416,11 @@ const Auth: FC = () => {
 							? 'submit'
 							: undefined
 					}
-					propClassList="submit_auth_btn"
+					propClassList={styles.submit_auth_btn}
 				/>
 				{prevAuth.current === auth && response && (
 					<div
-						className="response_message"
+						className={styles.response_message}
 						style={{
 							animation: 'reg-auth-data-fade-in 1s ease-out',
 							color: responseColor,
@@ -434,9 +434,9 @@ const Auth: FC = () => {
 		prevAuth.current = auth;
 	}, [auth, validationMessages, response, isLoading, responseColor]);
 	return (
-		<div className="auth">
-			<div className="auth_header">
-				<span className="auth_title">BROOKLYN</span>
+		<div className={styles.auth}>
+			<div className={styles.auth_header}>
+				<span className={styles.auth_title}>BROOKLYN</span>
 				<div>
 					<Button
 						H={42}
@@ -459,7 +459,7 @@ const Auth: FC = () => {
 					/>
 				</div>
 			</div>
-			<div className="auth_wrapper">{content}</div>
+			<div className={styles.auth_wrapper}>{content}</div>
 		</div>
 	);
 };
