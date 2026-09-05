@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+import { baseApi } from "@/api/baseApi";
 import likedReducer from "@/store/likedPlayList/reducerLiked";
 import currentPlayListReducer from "@/store/current/reducerCurrent";
 import userReducer from "@/store/user/reducerUser";
@@ -12,6 +13,7 @@ import trackStateReducer from "@/store/trackState/reducerTrackState";
 
 const store = configureStore({
     reducer: {
+        [baseApi.reducerPath]: baseApi.reducer,
         liked: likedReducer,
         current: currentPlayListReducer,
         user: userReducer,
@@ -22,6 +24,8 @@ const store = configureStore({
         likedArtists: likedArtistsReducer,
         trackState: trackStateReducer
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(baseApi.middleware),
     devTools: false,
 });
 
