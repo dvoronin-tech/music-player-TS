@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import { baseApi } from "@/api/baseApi";
+import uiReducer from "@/store/ui/reducerUi";
 import likedReducer from "@/store/likedPlayList/reducerLiked";
 import currentPlayListReducer from "@/store/current/reducerCurrent";
-import userReducer from "@/store/user/reducerUser";
 import trackListReducer from "@/store/tracks/reducerTrackList";
 import notificationQueueReducer from "@/store/notificationQueue/reducerNotification";
 import artistsTracksReducer from "@/store/artistsTracks/reducerArtistsTracks";
@@ -13,9 +13,9 @@ import trackStateReducer from "@/store/trackState/reducerTrackState";
 const store = configureStore({
     reducer: {
         [baseApi.reducerPath]: baseApi.reducer,
+        ui: uiReducer,
         liked: likedReducer,
         current: currentPlayListReducer,
-        user: userReducer,
         trackList: trackListReducer,
         notification: notificationQueueReducer,
         artistsTracks: artistsTracksReducer,

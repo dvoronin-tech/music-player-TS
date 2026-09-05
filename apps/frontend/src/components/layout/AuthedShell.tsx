@@ -20,7 +20,7 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 	const { trackId, showCurrentPlayList } = useAppSelector(
 		(state) => state.current,
 	);
-	const { showUserData } = useAppSelector((state) => state.user);
+	const { showUserData } = useAppSelector((state) => state.ui);
 
 	useEffect(() => {
 		if (showUserData && showCurrentPlayList) {

@@ -6,7 +6,8 @@ import { useLocation, useNavigate, useRouter } from '@tanstack/react-router';
 import styled from 'styled-components';
 import { HiHome } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
-import { toggleShowUserData } from '@/store/user/actionsUser';
+import { toggleShowUserData } from '@/store/ui/reducerUi';
+import { useGetMeQuery } from '@/api/rtk/user';
 import { UserIcon } from '@/components/icons and tags/icons';
 
 interface IHeadersProp {
@@ -44,10 +45,12 @@ const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
 	const location = useLocation();
 	const dispatch = useAppDispatch();
 
-	const { username, email, user_img } = useAppSelector(
-		(state) => state.user.data,
-	);
-	const { showUserData } = useAppSelector((state) => state.user);
+	const { data: user } = useGetMeQuery();
+	const { showUserData } = useAppSelector((state) => state.ui);
+
+	const username = user?.username ?? '';
+	const email = user?.email ?? '';
+	const userImg = user?.userImg ?? null;
 
 	const goBack = () => {
 		router.history.back();
@@ -102,8 +105,8 @@ const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
 						<span>{email}</span>
 					</div>
 					<div className={styles.account_photo}>
-						{user_img ? (
-							<img src={user_img} alt="моё фото" />
+						{userImg ? (
+							<img src={userImg} alt="моё фото" />
 						) : (
 							<UserIcon />
 						)}

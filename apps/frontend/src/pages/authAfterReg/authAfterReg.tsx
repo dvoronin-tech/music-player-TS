@@ -2,9 +2,9 @@ import { FC, MouseEventHandler } from 'react';
 import styles from './authAfterReg.module.scss';
 import styled from 'styled-components';
 import Button from '@/components/buttons/buttons';
-import { useAppDispatch } from '@/hooks/useTypedRedux';
-import { logoutUser } from '@/store/user/actionsUser';
-import { serverUrl } from '@/utils/constants';
+import { getAuthedClient } from '@/api/hono-client';
+import store from '@/store/store';
+import { baseApi } from '@/api/baseApi';
 
 const Main = styled.main`
 	padding-top: 100px;
@@ -31,14 +31,9 @@ const ButtonsWrapper = styled.div`
 		}
 	}
 `;
-export const logout = () => {
+export const logout = async () => {
 	try {
-		fetch(serverUrl + '/api/users/logout/', {
-			method: 'GET',
-			headers: {
-				Token: JSON.stringify(localStorage.getItem('Token')),
-			},
-		});
+		await getAuthedClient().api.auth.logout.$post();
 	} catch (err) {
 		if (err) {
 			const error = err as Error;
@@ -46,13 +41,12 @@ export const logout = () => {
 		}
 	}
 	localStorage.removeItem('Token');
+	store.dispatch(baseApi.util.resetApiState());
 };
 
 const AuthAfterReg: FC = () => {
-	const dispatch = useAppDispatch();
-	const logOut = () => {
-		dispatch(logoutUser());
-		logout();
+	const logOut = async () => {
+		await logout();
 		window.location.reload();
 	};
 

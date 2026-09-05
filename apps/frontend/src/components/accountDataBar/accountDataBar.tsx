@@ -3,14 +3,10 @@ import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import { Cross, UserIcon } from '@/components/icons and tags/icons';
 import Button from '@/components/buttons/buttons';
-import {
-	logoutUser,
-	setUserPhoto,
-	toggleShowUserData,
-} from '@/store/user/actionsUser';
+import { toggleShowUserData } from '@/store/ui/reducerUi';
+import { useGetMeQuery, useSetMyPhotoMutation } from '@/api/rtk/user';
 import { logout } from '@/pages/authAfterReg/authAfterReg';
 import { useNavigate } from '@tanstack/react-router';
-import { serverUrl } from '@/utils/constants';
 
 const AccountBar = styled.aside<{ $isShow: boolean }>`
 	width: 450px;
@@ -257,12 +253,14 @@ const FileImgWrapper = styled.div`
 `;
 const AccountDataBar: FC = () => {
 	const dispatch = useAppDispatch();
-	const {
-		showUserData,
-		data: { username, email, reg_date, user_img },
-	} = useAppSelector((state) => state.user);
+	const { showUserData } = useAppSelector((state) => state.ui);
+	const { data: user } = useGetMeQuery();
+	const [setMyPhoto, { isLoading: isUploadingPhoto }] = useSetMyPhotoMutation();
 
-	const regDate = new Date(reg_date);
+	const username = user?.username ?? '';
+	const email = user?.email ?? '';
+	const userImg = user?.userImg ?? null;
+	const regDate = user?.regDate ? new Date(user.regDate) : new Date();
 	const navigate = useNavigate();
 
 
@@ -284,7 +282,6 @@ const AccountDataBar: FC = () => {
 				const answer = confirm('Вы точно хотите выйти из аккаунта?');
 				if (answer) {
 					logout();
-					dispatch(logoutUser());
 					navigate({ to: '/auth' });
 				}
 			}
@@ -306,24 +303,12 @@ const AccountDataBar: FC = () => {
 	};
 
 	const submitImg = async () => {
-		const formData = new FormData();
 		if (file) {
-			formData.append('user_img', file);
 			try {
-				const response = await fetch(
-					serverUrl + '/api/users/setuserphoto/',
-					{
-						method: 'PUT',
-						body: formData,
-						headers: {
-							Token: localStorage.getItem('Token')!,
-						},
-					},
-				);
-				const data = await response.json();
-				data.user_img = serverUrl + data.user_img;
-				dispatch(setUserPhoto(data.user_img));
+				await setMyPhoto(file).unwrap();
 				setChangePhoto(false);
+				setFile(null);
+				setPreview('');
 			} catch (error) {
 				if (error) {
 					const err = error as Error;
@@ -388,8 +373,8 @@ const AccountDataBar: FC = () => {
 				<>
 					<AccountData>
 						<ImgWrapper>
-							{user_img ? (
-								<img width={'100%'} src={user_img} alt="" />
+							{userImg ? (
+								<img width={'100%'} src={userImg} alt="" />
 							) : (
 								<UserIcon scale={50} />
 							)}
