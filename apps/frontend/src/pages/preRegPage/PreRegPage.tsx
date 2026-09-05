@@ -109,15 +109,15 @@ const PreRegPage: FC = () => {
 					</ContentSelection>
 					<div className={styles.action_links}>
 						<Button
-							type="accent"
-							isLink
+							variant="accent"
 							W={300}
 							H={50}
-							fontS={1.8}
-							fontW={700}
-							content="Перейти к авторизации"
-							path="/auth"
-						/>
+							size="xl"
+							weight="bold"
+							to="/auth"
+						>
+							Перейти к авторизации
+						</Button>
 					</div>
 				</div>
 			</main>

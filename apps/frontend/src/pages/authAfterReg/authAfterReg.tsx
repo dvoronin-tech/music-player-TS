@@ -61,25 +61,26 @@ const AuthAfterReg: FC = () => {
 			<Info>Вы уже вошли в систему</Info>
 			<ButtonsWrapper>
 				<Button
-					type="accent"
+					variant="accent"
 					W={300}
 					H={50}
-					content={'Выйти из аккаунта'}
-					propClassList={styles.logout_btn}
-					fontS={1.8}
-					fontW={700}
+					className={styles.logout_btn}
+					size="xl"
+					weight="bold"
 					onClick={logOut}
-				/>
+				>
+					Выйти из аккаунта
+				</Button>
 				<Button
-					type="accent"
+					variant="accent"
 					W={300}
 					H={50}
-					content={'Вернуться на главную'}
-					fontS={1.8}
-					fontW={700}
-					isLink
-					path="/home"
-				/>
+					size="xl"
+					weight="bold"
+					to="/home"
+				>
+					Вернуться на главную
+				</Button>
 			</ButtonsWrapper>
 		</Main>
 	);

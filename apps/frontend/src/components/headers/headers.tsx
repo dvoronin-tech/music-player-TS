@@ -73,23 +73,25 @@ const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
 			<header style={style} className={`${styles.main_header} ${className ?? ''}`}>
 				<nav>
 					<Button
-						type="alternative"
+						variant="alternative"
 						H={40}
 						W={40}
-						content="<"
-						fontS={3.2}
-						fontW={400}
+						size="3xl"
+						weight="regular"
 						onClick={goBack}
-					/>
+					>
+						{'<'}
+					</Button>
 					<Button
-						type="alternative"
+						variant="alternative"
 						H={40}
 						W={40}
-						content=">"
-						fontS={3.2}
-						fontW={400}
+						size="3xl"
+						weight="regular"
 						onClick={goForward}
-					/>
+					>
+						{'>'}
+					</Button>
 					<GoHomeBtn onClick={goHome}>
 						<HiHome />
 					</GoHomeBtn>

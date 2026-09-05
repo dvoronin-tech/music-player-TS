@@ -170,13 +170,14 @@ const AsideBar: FC = () => {
 			<FlexRow>
 				<span>Любимые треки</span>
 				<Button
-					onClick={() => navigate({ to: '/home/liked' })}
-					type="alternative"
+					to="/home/liked"
+					variant="alternative"
 					W={135}
 					H={24}
-					fontS={1.2}
-					content="Посмотреть всё"
-				/>
+					size="s"
+				>
+					Посмотреть всё
+				</Button>
 			</FlexRow>
 			<div className={styles.aside_liked_track_list}>
 				{renderLikedTrackList()}
@@ -184,15 +185,16 @@ const AsideBar: FC = () => {
 			<FlexRow style={{ marginTop: 10 }}>
 				<span>Любимые артисты</span>
 				<Button
-					type={isPopular ? 'accent' : 'alternative'}
+					variant={isPopular ? 'accent' : 'alternative'}
 					onClick={() => setIsPopular(!isPopular)}
 					W={150}
 					H={24}
-					fontS={1.2}
-					fontW={isPopular ? 500 : 400}
-					content="Сначала популярные"
+					size="s"
+					weight={isPopular ? 'medium' : 'regular'}
 					style={{ borderRadius: 100 }}
-				/>
+				>
+					Сначала популярные
+				</Button>
 			</FlexRow>
 			<div className={styles.aside_artist_list}>
 				<ArtistsGridWrapper $isNoArtists={likedArtists.length === 0}>

@@ -95,10 +95,11 @@ export const HomeCard: FC<IProp> = ({W, H=200, style, img, category, content, on
                     <span className={css.home_card_additional}>{additionalContent}</span>
                 </div>
                 <Button W={isHovered ? 70 : 50} H={isHovered ? 70 : 50} 
-                type='alternative' onClick={onClick}
-                content={<PlayOrPause 
+                variant='alternative' onClick={onClick}>
+                    <PlayOrPause 
                             style={{transition: '0.5s all ease'}} 
-                            scale={isHovered ? 30 : 20} type='disable'/>}/>
+                            scale={isHovered ? 30 : 20} type='disable'/>
+                </Button>
             </div>
         </div>
     )

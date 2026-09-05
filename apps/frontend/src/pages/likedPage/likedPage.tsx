@@ -176,22 +176,24 @@ const LikedPage: FC = () => {
 					<div className={styles.liked_btns_wrapper}>
 						<Button
 							onClick={() => setIsPopular(false)}
-							type={isPopular ? 'simple' : 'accent'}
+							variant={isPopular ? 'simple' : 'accent'}
 							W={250}
 							H={40}
-							fontS={1.6}
-							fontW={600}
-							content="С начала новые"
-						/>
+							size="l"
+							weight="semibold"
+						>
+							С начала новые
+						</Button>
 						<Button
 							onClick={() => setIsPopular(true)}
-							type={isPopular ? 'accent' : 'simple'}
+							variant={isPopular ? 'accent' : 'simple'}
 							W={250}
 							H={40}
-							fontS={1.6}
-							fontW={600}
-							content="С начала популярные"
-						/>
+							size="l"
+							weight="semibold"
+						>
+							С начала популярные
+						</Button>
 					</div>
 				</div>
 				<GridContainer $isNoData={likedTrackList.length === 0}>

@@ -1,109 +1,85 @@
-import { FC } from 'react';
+import {
+	AnchorHTMLAttributes,
+	ButtonHTMLAttributes,
+	CSSProperties,
+} from 'react';
+import clsx from 'clsx';
 import styles from './buttons.module.scss';
 
 import { Link, LinkProps } from '@tanstack/react-router';
 
-interface IProp {
-	type: 'accent' | 'simple' | 'alternative' | 'disable';
-	isLink?: boolean;
-	path?: LinkProps['to'] | string;
+type ButtonVariant = 'accent' | 'simple' | 'alternative' | 'disable';
+type ButtonTextSize = 'xs' | 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl';
+type ButtonTextWeight = 'regular' | 'medium' | 'semibold' | 'bold';
+
+interface SharedProps {
+	variant: ButtonVariant;
 	W: number;
 	H: number;
-	content: string | React.ReactNode;
-	fontS?: number;
-	fontW?: number;
-	actionType?: undefined | 'submit';
-	propClassList?: string;
-	onClick?: any;
-	style?: React.CSSProperties;
-	rounded?: boolean;
-	onMouseDown?: any;
-	onMouseUp?: any;
+	size?: ButtonTextSize;
+	weight?: ButtonTextWeight;
+	className?: string;
+	style?: CSSProperties;
 }
 
-const Button: FC<IProp> = ({
-	type,
+type AsButtonProps = SharedProps &
+	Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof SharedProps> & {
+		to?: undefined;
+	};
+
+type AsLinkProps = SharedProps &
+	Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof SharedProps> & {
+		to: NonNullable<LinkProps['to']>;
+	};
+
+function Button(props: AsLinkProps): JSX.Element;
+function Button(props: AsButtonProps): JSX.Element;
+function Button({
+	variant,
 	W,
 	H,
-	content,
-	fontS,
-	fontW,
-	actionType,
-	propClassList = '',
-	onClick = () => {},
+	size,
+	weight,
+	className,
 	style,
-	isLink,
-	path,
-	onMouseDown = () => {},
-	onMouseUp = () => {},
-}) => {
-	if (!isLink) {
-		let genericClassName: typeof type = 'accent';
+	children,
+	...rest
+}: AsButtonProps | AsLinkProps) {
+	const classNames = clsx(
+		styles[variant],
+		'to' in rest && rest.to ? styles.general_link : styles.general_btn,
+		size && styles[`size_${size}`],
+		weight && styles[`weight_${weight}`],
+		className,
+	);
+	const mergedStyle = {
+		width: `${W}px`,
+		height: `${H}px`,
+		...style,
+	};
 
-		if (type === 'alternative') {
-			genericClassName = 'alternative';
-		} else if (type === 'simple') {
-			genericClassName = 'simple';
-		} else if (type === 'accent') {
-			genericClassName = 'accent';
-		} else {
-			genericClassName = 'disable';
-		}
+	if ('to' in rest && rest.to) {
+		const { to, ...linkRest } = rest;
 
 		return (
-			<button
-				type={actionType ? actionType : 'button'}
-				className={`${styles[genericClassName]} ${styles.general_btn} ${propClassList}`}
-				style={{
-					width: `${W}px`,
-					height: `${H}px`,
-					fontSize: `${fontS}rem`,
-					fontWeight: fontW,
-					...style,
-				}}
-				onClick={onClick}
-				onMouseDown={onMouseDown}
-				onMouseUp={onMouseUp}
-			>
-				{content}
-			</button>
+			<Link className={classNames} style={mergedStyle} to={to} {...linkRest}>
+				{children}
+			</Link>
 		);
-	} else {
-		let genericClassName: typeof type = 'accent';
-
-		if (type === 'alternative') {
-			genericClassName = 'alternative';
-		} else if (type === 'simple') {
-			genericClassName = 'simple';
-		} else if (type === 'accent') {
-			genericClassName = 'accent';
-		} else {
-			genericClassName = 'disable';
-		}
-
-		if (path) {
-			return (
-				<Link
-					className={`${styles[genericClassName]} ${styles.general_link} ${propClassList}`}
-					style={{
-						width: `${W}px`,
-						height: `${H}px`,
-						fontSize: `${fontS}rem`,
-						fontWeight: fontW,
-						...style,
-					}}
-					onClick={onClick}
-					to={path as any}
-				>
-					{content}
-				</Link>
-			);
-		} else {
-			throw new Error(
-				`Необходимо добавить path в ссылку (content: ${content})`,
-			);
-		}
 	}
-};
+
+	const { type = 'button', ...buttonRest } = rest;
+
+	return (
+		<button
+			type={type}
+			className={classNames}
+			style={mergedStyle}
+			{...buttonRest}
+		>
+			{children}
+		</button>
+	);
+}
 
 export default Button;

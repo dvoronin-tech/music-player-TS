@@ -347,39 +347,40 @@ const AccountDataBar: FC = () => {
 							<div>
 								<span>Ваша фотография</span>
 								<Button
-									type="accent"
+									variant="accent"
 									H={30}
 									W={191}
-									content={
-										<label htmlFor="user_img">
-											Изменить фото
-										</label>
-									}
-									fontS={1.6}
-									fontW={600}
-								/>
+									size="l"
+									weight="semibold"
+								>
+									<label htmlFor="user_img">
+										Изменить фото
+									</label>
+								</Button>
 							</div>
 						</FileImgWrapper>
 					)}
 					<ButtonsSelection>
 						<Button
 							onClick={submitImg}
-							type={file ? 'accent' : 'disable'}
+							variant={file ? 'accent' : 'disable'}
 							H={40}
 							W={410}
-							content="Отправить фото"
-							fontS={1.8}
-							fontW={600}
-						/>
+							size="xl"
+							weight="semibold"
+						>
+							Отправить фото
+						</Button>
 						<Button
 							onClick={() => setChangePhoto(false)}
-							type="simple"
+							variant="simple"
 							H={40}
 							W={410}
-							content="Назад"
-							fontS={1.8}
-							fontW={600}
-						/>
+							size="xl"
+							weight="semibold"
+						>
+							Назад
+						</Button>
 					</ButtonsSelection>
 				</form>
 			);
@@ -501,13 +502,14 @@ const AccountDataBar: FC = () => {
 					<ButtonsSelection>
 						<Button
 							onClick={() => setChangePhoto(true)}
-							type="accent"
+							variant="accent"
 							H={40}
 							W={410}
-							content="Изменить фото"
-							fontS={1.8}
-							fontW={600}
-						/>
+							size="xl"
+							weight="semibold"
+						>
+							Изменить фото
+						</Button>
 						<LogoutBtn
 							$isPressed={isPressed}
 							onMouseDown={onDown}

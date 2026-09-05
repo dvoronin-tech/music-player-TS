@@ -201,38 +201,39 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 					>
 						<ButtonsWrapper>
 							<Button
-								type="simple"
+								variant="simple"
 								W={70}
 								H={30}
-								fontS={1.1}
-								fontW={600}
-								content={<AddToPlayList />}
+								size="xs"
+								weight="semibold"
 								style={{ marginBottom: 10 }}
 								onClick={addToPlayList}
-							/>
+							>
+								<AddToPlayList />
+							</Button>
 							<Button
-								type="simple"
+								variant="simple"
 								W={70}
 								H={30}
-								fontS={1.1}
-								fontW={600}
-								content={
-									<Like type={isLiked ? 'active' : 'idle'} />
-								}
+								size="xs"
+								weight="semibold"
 								style={{ marginBottom: 10 }}
 								onClick={toggleIsLiked}
-							/>
+							>
+								<Like type={isLiked ? 'active' : 'idle'} />
+							</Button>
 						</ButtonsWrapper>
 						<Button
-							type="accent"
+							variant="accent"
 							style={{ borderRadius: 100 }}
 							onClick={setCurrentTrack}
 							W={150}
 							H={30}
-							fontS={1.4}
-							fontW={600}
-							content="Проиграть"
-						/>
+							size="m"
+							weight="semibold"
+						>
+							Проиграть
+						</Button>
 					</div>
 				</>
 			</TrackItemInfo>

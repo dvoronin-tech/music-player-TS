@@ -207,52 +207,50 @@ const Artist: FC = () => {
 					</div>
 					<div className={styles.artist_action_buttons}>
 						<Button
-							type="accent"
+							variant="accent"
 							W={70}
 							H={70}
 							style={{ borderRadius: 100 }}
 							onClick={setCurrentTrack}
-							content={
-								<PlayOrPause
-									scale={26}
-									style={{
-										color: '#E0DCEA',
-										position: 'relative',
-										top: 2,
-										left: 2,
-									}}
-								/>
-							}
-						/>
+						>
+							<PlayOrPause
+								scale={26}
+								style={{
+									color: '#E0DCEA',
+									position: 'relative',
+									top: 2,
+									left: 2,
+								}}
+							/>
+						</Button>
 						<Button
 							onClick={toggleIsFollowed}
-							type="simple"
+							variant="simple"
 							W={50}
 							H={50}
 							style={{ borderRadius: 100 }}
-							propClassList={styles.follow_artist_btn}
-							content={
-								isLikedArtist ? (
-									<UnFollow
-										scale={20}
-										style={{
-											position: 'relative',
-											top: 1,
-											left: 1,
-										}}
-									/>
-								) : (
-									<Follow
-										scale={20}
-										style={{
-											position: 'relative',
-											top: 1,
-											left: 1,
-										}}
-									/>
-								)
-							}
-						/>
+							className={styles.follow_artist_btn}
+						>
+							{isLikedArtist ? (
+								<UnFollow
+									scale={20}
+									style={{
+										position: 'relative',
+										top: 1,
+										left: 1,
+									}}
+								/>
+							) : (
+								<Follow
+									scale={20}
+									style={{
+										position: 'relative',
+										top: 1,
+										left: 1,
+									}}
+								/>
+							)}
+						</Button>
 					</div>
 				</ArtistBG>
 				<div className={styles.artist_tracks_wrapper}>

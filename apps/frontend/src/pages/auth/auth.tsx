@@ -399,25 +399,26 @@ const Auth: FC = () => {
 				<Button
 					W={auth === 'reg' ? 250 : 180}
 					H={50}
-					type={
+					variant={
 						usernameInvalid ||
 						passwordInvalid ||
 						(auth === 'reg' && emailInvalid)
 							? 'disable'
 							: 'accent'
 					}
-					fontS={1.8}
-					fontW={600}
-					content={auth === 'reg' ? 'Зарегистрироваться' : 'Войти'}
-					actionType={
+					size="xl"
+					weight="semibold"
+					type={
 						!usernameInvalid &&
 						!passwordInvalid &&
 						(auth === 'reg' || !emailInvalid)
 							? 'submit'
-							: undefined
+							: 'button'
 					}
-					propClassList={styles.submit_auth_btn}
-				/>
+					className={styles.submit_auth_btn}
+				>
+					{auth === 'reg' ? 'Зарегистрироваться' : 'Войти'}
+				</Button>
 				{prevAuth.current === auth && response && (
 					<div
 						className={styles.response_message}
@@ -441,22 +442,24 @@ const Auth: FC = () => {
 					<Button
 						H={42}
 						W={200}
-						type="simple"
-						fontS={2}
-						fontW={600}
-						content="Регистрация"
+						variant="simple"
+						size="2xl"
+						weight="semibold"
 						onClick={() => setAuth('reg')}
 						style={{ marginRight: '20px' }}
-					/>
+					>
+						Регистрация
+					</Button>
 					<Button
 						H={42}
 						W={150}
-						type="accent"
-						fontS={2}
-						fontW={600}
-						content="Войти"
+						variant="accent"
+						size="2xl"
+						weight="semibold"
 						onClick={() => setAuth('auth')}
-					/>
+					>
+						Войти
+					</Button>
 				</div>
 			</div>
 			<div className={styles.auth_wrapper}>{content}</div>

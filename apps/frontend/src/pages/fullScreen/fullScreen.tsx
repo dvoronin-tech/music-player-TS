@@ -435,14 +435,15 @@ const FullScreen: FC = () => {
 							>
 								{CPLTranslateValue ? (
 									<Button
-										type="alternative"
-										propClassList={styles.fullscreen_prev_button}
-										fontS={3}
-										content="<"
+										variant="alternative"
+										className={styles.fullscreen_prev_button}
+										size="3xl"
 										W={55}
 										H={55}
 										onClick={CPLTranslateToPrev}
-									/>
+									>
+										{'<'}
+									</Button>
 								) : null}
 
 								<CurrentPlayListLine
@@ -454,14 +455,15 @@ const FullScreen: FC = () => {
 
 								{isCPLLong && (
 									<Button
-										type="alternative"
-										propClassList={styles.fullscreen_next_button}
-										fontS={3}
-										content=">"
+										variant="alternative"
+										className={styles.fullscreen_next_button}
+										size="3xl"
 										W={55}
 										H={55}
 										onClick={CPLTranslateToNext}
-									/>
+									>
+										{'>'}
+									</Button>
 								)}
 							</CurrentPlayListSelection>
 							<div

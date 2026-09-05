@@ -31,14 +31,15 @@ const NotFoundPage: FC = () => {
 			<Info>Страница не найдена</Info>
 			<ButtonsWrapper>
 				<Button
-					type="accent"
+					variant="accent"
 					W={250}
 					H={40}
-					content="Перейти на главную"
-					fontS={1.8}
-					fontW={600}
+					size="xl"
+					weight="semibold"
 					onClick={() => navigate({ to: '/home' })}
-				/>
+				>
+					Перейти на главную
+				</Button>
 			</ButtonsWrapper>
 		</Main>
 	);

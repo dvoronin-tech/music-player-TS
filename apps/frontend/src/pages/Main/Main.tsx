@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import styles from './Main.module.scss';
 import Button from '@/components/buttons/buttons';
 import { HomeCard } from '@/components/cards/homeCards/homeCards';
@@ -53,7 +53,7 @@ const Main: FC = () => {
 		}
 	}, [artists.length, translateValue]);
 
-	const slideToNextArtistPage = (e: MouseEventHandler<HTMLButtonElement>) => {
+	const slideToNextArtistPage = () => {
 		setTranslateValue((prevState) => {
 			if (artistLineWrapper.current && artistLine.current) {
 				const newValue = prevState + 300;
@@ -219,12 +219,13 @@ const Main: FC = () => {
 								{translateValue ? (
 									<Button
 										onClick={slideToPrevArtistPage}
-										type="alternative"
+										variant="alternative"
 										W={50}
 										H={50}
-										fontS={3.2}
-										content="<"
-									/>
+										size="3xl"
+									>
+										{'<'}
+									</Button>
 								) : null}
 
 								<div
@@ -247,12 +248,13 @@ const Main: FC = () => {
 								{isButtonShow && (
 									<Button
 										onClick={slideToNextArtistPage}
-										type="alternative"
+										variant="alternative"
 										W={50}
 										H={50}
-										fontS={3.2}
-										content=">"
-									/>
+										size="3xl"
+									>
+										{'>'}
+									</Button>
 								)}
 							</div>
 						</div>
