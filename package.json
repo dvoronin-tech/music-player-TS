@@ -1,11 +1,11 @@
 {
-	"name": "music-player-ts",
+	"name": "@music-player/music-player-ts",
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
-		"dev": "pnpm -r --parallel --filter frontend --filter backend run dev",
-		"front": "pnpm --filter frontend",
-		"back": "pnpm --filter backend",
+		"dev": "pnpm -r --parallel --filter @music-player/frontend --filter @music-player/backend run dev",
+		"front": "pnpm --filter @music-player/frontend",
+		"back": "pnpm --filter @music-player/backend",
 		"db": "pnpm --filter @music-player/db"
 	},
 	"keywords": [],

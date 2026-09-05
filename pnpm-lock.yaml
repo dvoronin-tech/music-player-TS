@@ -51,6 +51,9 @@ importers:
 
   apps/frontend:
     dependencies:
+      '@music-player/backend':
+        specifier: workspace:*
+        version: link:../backend
       '@reduxjs/toolkit':
         specifier: ^2.2.0
         version: 2.12.0(react-redux@9.3.0(@types/react@18.2.55)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
@@ -60,6 +63,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      hono:
+        specifier: ^4.13.7
+        version: 4.13.7
       react:
         specifier: ^18.2.0
         version: 18.3.1

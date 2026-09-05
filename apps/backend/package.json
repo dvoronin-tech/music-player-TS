@@ -1,7 +1,12 @@
 {
-	"name": "backend",
+	"name": "@music-player/backend",
 	"version": "1.0.0",
 	"type": "module",
+	"exports": {
+        ".": {
+            "types": "./src/app.ts"
+        }
+    },
 	"scripts": {
 		"dev": "tsx watch src/index.ts",
 		"build": "pnpm --filter @music-player/db build && tsc && tsc-alias",
