@@ -170,8 +170,7 @@ const LikedPage: FC = () => {
 						onChange={onSearch}
 						type="text"
 						placeholder="Поиск"
-						H={40}
-						W={446}
+						className={styles.search}
 					/>
 					<div className={styles.liked_btns_wrapper}>
 						<Button

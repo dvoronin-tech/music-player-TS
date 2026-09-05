@@ -331,7 +331,6 @@ const Auth: FC = () => {
 							/>
 						</div>
 						<Input
-							H={40}
 							onChange={handleChange}
 							type="text"
 							id="username"
@@ -354,7 +353,6 @@ const Auth: FC = () => {
 							/>
 						</div>
 						<Input
-							H={40}
 							onChange={handleChange}
 							type="password"
 							id="password"
@@ -380,7 +378,6 @@ const Auth: FC = () => {
 								/>
 							</div>
 							<Input
-								H={40}
 								onChange={handleChange}
 								type="email"
 								id="email"
