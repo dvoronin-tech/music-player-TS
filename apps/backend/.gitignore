@@ -25,5 +25,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# uploads
+media/avatars/**
+!media/avatars/.gitkeep
+
 # misc
 .DS_Store

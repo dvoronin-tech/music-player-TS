@@ -1,7 +1,12 @@
 import { createFactory } from 'hono/factory';
 
 export type AppEnv = {
-	Variables: Record<string, never>;
+	Variables: {
+		userId: string;
+		token: string;
+	};
 };
 
-export const factory = createFactory<AppEnv>();
+export const factory = createFactory<AppEnv>({
+	defaultAppOptions: { strict: false },
+});
