@@ -4,6 +4,7 @@ import Button from '@/components/buttons/buttons';
 import { HomeCard } from '@/components/cards/homeCards/homeCards';
 import { ArtistCard } from '@/components/cards/artistCards/artistCards';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import { useGetArtistsQuery } from '@/api/rtk/artists';
 import { ArtistsError } from '@/components/errorMessages/artistsError';
 import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
 import {
@@ -18,10 +19,10 @@ const Main: FC = () => {
 	const dispatch = useAppDispatch();
 
 	const {
-		artists,
+		data: artists = [],
 		error: artistError,
-		loading: artistLoading,
-	} = useAppSelector((state) => state.artists);
+		isLoading: artistLoading,
+	} = useGetArtistsQuery();
 	const {
 		trackList,
 		error: tracksError,
@@ -90,14 +91,25 @@ const Main: FC = () => {
 	};
 
 	const renderArtists = () => {
-		if (artists) {
+		if (artists.length > 0) {
 			if (!artistError) {
 				return artists.map(({ name, artistImg, id }) => {
 					return <ArtistCard key={id} name={name} img={artistImg} />;
 				});
 			} else {
-				return <ArtistsError errorMessage={artistError} />;
+				const errorMessage =
+					artistError && 'data' in artistError && typeof artistError.data === 'string'
+						? artistError.data
+						: 'При получении артистов произошла ошибка';
+				return <ArtistsError errorMessage={errorMessage} />;
 			}
+		}
+		if (artistError) {
+			const errorMessage =
+				'data' in artistError && typeof artistError.data === 'string'
+					? artistError.data
+					: 'При получении артистов произошла ошибка';
+			return <ArtistsError errorMessage={errorMessage} />;
 		}
 	};
 

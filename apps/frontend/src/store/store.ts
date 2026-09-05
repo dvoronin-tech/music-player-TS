@@ -5,7 +5,6 @@ import likedReducer from "@/store/likedPlayList/reducerLiked";
 import currentPlayListReducer from "@/store/current/reducerCurrent";
 import userReducer from "@/store/user/reducerUser";
 import trackListReducer from "@/store/tracks/reducerTrackList";
-import artistsReducer from "@/store/artists/reducerArtists";
 import notificationQueueReducer from "@/store/notificationQueue/reducerNotification";
 import artistsTracksReducer from "@/store/artistsTracks/reducerArtistsTracks";
 import likedArtistsReducer from "@/store/likedArtists/reducerLikedArtists";
@@ -18,7 +17,6 @@ const store = configureStore({
         current: currentPlayListReducer,
         user: userReducer,
         trackList: trackListReducer,
-        artists: artistsReducer,
         notification: notificationQueueReducer,
         artistsTracks: artistsTracksReducer,
         likedArtists: likedArtistsReducer,

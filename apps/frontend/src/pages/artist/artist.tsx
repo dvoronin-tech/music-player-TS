@@ -11,6 +11,7 @@ import {
 	UnFollow,
 } from '@/components/icons and tags/icons';
 import ArtistTrackCard from '@/components/cards/artistTrackCards/artistTrackCards';
+import { useGetArtistsQuery } from '@/api/rtk/artists';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import { loadArtistTracks } from '@/store/artistsTracks/reducerArtistsTracks';
 import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
@@ -96,9 +97,8 @@ const Artist: FC = () => {
 		loading,
 		error,
 	} = useAppSelector((state) => state.artistsTracks);
-	const artist = useAppSelector((state) =>
-		state.artists.artists.find((artist) => artist.name === artistName),
-	);
+	const { data: artists = [] } = useGetArtistsQuery();
+	const artist = artists.find((item) => item.name === artistName);
 	const likedArtistList = useAppSelector(
 		(state) => state.likedArtists.likedArtists,
 	);
@@ -107,7 +107,7 @@ const Artist: FC = () => {
 
 	useEffect(() => {
 		if (artist) {
-			dispatch(loadArtistTracks(artist.tracks));
+			dispatch(loadArtistTracks(artist.trackIds));
 		}
 	}, [dispatch, artist]);
 
@@ -197,7 +197,7 @@ const Artist: FC = () => {
 	if (artist) {
 		return (
 			<main className={styles.artist}>
-				<ArtistBG id="bg" $big_img={artist.big_img}>
+				<ArtistBG id="bg" $big_img={artist.bigImg}>
 					<div className={styles.artist_info}>
 						<span className={styles.artist_name}>{artist.name}</span>
 						<div className={styles.additional_artist_info}>
