@@ -2,9 +2,7 @@ import { FC } from 'react';
 
 import './headers.scss';
 import Button from '@/components/buttons/buttons';
-import { IoIosSearch } from 'react-icons/io';
-import { Input } from '@/components/inputFields/inputFields';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useRouter } from '@tanstack/react-router';
 import styled from 'styled-components';
 import { HiHome } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
@@ -42,6 +40,7 @@ const GoHomeBtn = styled.button`
 
 const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
 	const navigate = useNavigate();
+	const router = useRouter();
 	const location = useLocation();
 	const dispatch = useAppDispatch();
 
@@ -51,18 +50,18 @@ const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
 	const { showUserData } = useAppSelector((state) => state.user);
 
 	const goBack = () => {
-		navigate(-1);
+		router.history.back();
 		if (location.pathname === '/' || location.pathname === '/auth') {
-			navigate(1);
+			router.history.forward();
 		}
 	};
 
 	const goForward = () => {
-		navigate(1);
+		router.history.forward();
 	};
 
 	const goHome = () => {
-		navigate('/home');
+		navigate({ to: '/home' });
 	};
 
 	const toggleSUD = () => {

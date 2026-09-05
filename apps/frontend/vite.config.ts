@@ -2,11 +2,15 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-	plugins: [react()],
+	plugins: [
+		tanstackRouter({ target: 'react', autoCodeSplitting: true }),
+		react(),
+	],
 	base: './',
 	resolve: {
 		alias: {
@@ -14,6 +18,6 @@ export default defineConfig({
 		},
 	},
 	server: {
-		port: 3000,
+		port: 4040,
 	},
 });

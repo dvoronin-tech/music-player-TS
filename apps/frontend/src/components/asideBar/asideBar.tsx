@@ -5,7 +5,7 @@ import { useAppSelector } from '@/hooks/useTypedRedux';
 import Button from '@/components/buttons/buttons';
 import SmallTrackCard from '@/components/cards/smallTrackCard/smallTrackCard';
 import { ArtistCard } from '@/components/cards/artistCards/artistCards';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 const AsideBarComponent = styled.aside<{
 	$isPlayList: boolean;
@@ -170,7 +170,7 @@ const AsideBar: FC = () => {
 			<FlexRow>
 				<span>Любимые треки</span>
 				<Button
-					onClick={() => navigate('/home/liked')}
+					onClick={() => navigate({ to: '/home/liked' })}
 					type="alternative"
 					W={135}
 					H={24}

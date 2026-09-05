@@ -27,7 +27,7 @@ import {
 import { addNotification } from '@/store/notificationQueue/actionsNotification';
 
 import { v4 as randomId } from 'uuid';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import { useTheme } from 'styled-components';
 
 export interface IKeyInfo {
@@ -189,7 +189,7 @@ const PlaySelection: FC = () => {
 				<div className="play_selection">
 					<div
 						className="left_elements"
-						onClick={() => navigate('/home/fullscreen')}
+						onClick={() => navigate({ to: '/home/fullscreen' })}
 					>
 						<div className="album_img_wrapper">
 							{pending ? (
@@ -293,7 +293,7 @@ const PlaySelection: FC = () => {
 									/>
 								</button>
 								<button
-									onClick={() => navigate('/home/fullscreen')}
+									onClick={() => navigate({ to: '/home/fullscreen' })}
 									style={{
 										display: 'flex',
 										justifyContent: 'center',

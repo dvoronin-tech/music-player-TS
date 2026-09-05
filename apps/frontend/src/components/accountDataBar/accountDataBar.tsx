@@ -9,7 +9,7 @@ import {
 	toggleShowUserData,
 } from '@/store/user/actionsUser';
 import { logout } from '@/pages/authAfterReg/authAfterReg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import { serverUrl } from '@/utils/constants';
 
 const AccountBar = styled.aside<{ $isShow: boolean }>`
@@ -280,7 +280,7 @@ const AccountDataBar: FC = () => {
 				if (answer) {
 					logout();
 					dispatch(logoutUser());
-					navigate('/auth');
+					navigate({ to: '/auth' });
 				}
 			}
 		}

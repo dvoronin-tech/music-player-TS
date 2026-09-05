@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import './artistCards.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import styled from 'styled-components';
 
 interface IProp {
@@ -54,7 +54,7 @@ export const ArtistCard: FC<IProp> = ({img, name, type='big'}) => {
     const navigate = useNavigate();
 
     const selectArtist = () => {
-        navigate('/artist/' + name);
+        navigate({ to: '/artist/$name', params: { name } });
     }
 
     const cutLongString = (string: string): string => {

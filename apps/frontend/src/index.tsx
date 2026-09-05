@@ -1,19 +1,16 @@
 import ReactDOM from 'react-dom/client';
 import './index.scss';
-import AppWrapper from '@/pages/app/App';
 import { Provider } from 'react-redux';
-import {HashRouter} from 'react-router-dom'
-
+import { RouterProvider } from '@tanstack/react-router';
+import { router } from '@/router';
 import store from '@/store/store';
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+	document.getElementById('root') as HTMLElement,
 );
 
 root.render(
-    <HashRouter >
-        <Provider store={store}>
-            <AppWrapper/>
-        </Provider>
-    </HashRouter>
+	<Provider store={store}>
+		<RouterProvider router={router} />
+	</Provider>,
 );

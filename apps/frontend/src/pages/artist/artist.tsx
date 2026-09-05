@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 
 import './artist.scss';
-import Headers from '@/components/headers/headers';
+import { useParams } from '@tanstack/react-router';
 
 import { styled } from 'styled-components';
 import Button from '@/components/buttons/buttons';
@@ -86,11 +86,10 @@ const ErrorBlock = styled.div`
 	}
 `;
 
-interface IProp {
-	artistName: string;
-}
-
-const Artist: FC<IProp> = ({ artistName }) => {
+const Artist: FC = () => {
+	const { name: artistName } = useParams({
+		from: '/artist/$name',
+	});
 	const dispatch = useAppDispatch();
 	const {
 		tracks: trackList,
@@ -281,7 +280,6 @@ const Artist: FC<IProp> = ({ artistName }) => {
 	} else {
 		return (
 			<main className="artist">
-				<Headers type="main" />
 				<ErrorBlock>
 					<span>Артист не найден</span>
 				</ErrorBlock>
