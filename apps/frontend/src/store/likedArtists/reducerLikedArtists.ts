@@ -1,9 +1,9 @@
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
-import { IArtist } from "@/store/artists/reducerArtists";
+import type { ApiArtist } from "@music-player/backend";
 import { serverUrl } from "@/utils/constants";
 
 interface IArtistsState {
-    likedArtists: IArtist[],
+    likedArtists: ApiArtist[],
     loading: boolean,
     error: string | undefined,
 }
@@ -14,7 +14,7 @@ const initialState: IArtistsState = {
     error: undefined,
 }
 
-export const loadLikedArtists = createAsyncThunk<IArtist[], undefined, {rejectValue: string}>(
+export const loadLikedArtists = createAsyncThunk<ApiArtist[], undefined, {rejectValue: string}>(
     '@@artists/LOAD_LIKED_ARTISTS',
     async (_, {rejectWithValue}) => {
         try {
@@ -26,11 +26,14 @@ export const loadLikedArtists = createAsyncThunk<IArtist[], undefined, {rejectVa
                 }
             })
             const data = await response.json();
-            return data.map((item: IArtist) => {
-                item.artistImg = serverUrl + item.artistImg;
-                item.big_img = serverUrl + item.big_img;
-                return item;
-            })
+            return data.map((item: any) => ({
+                id: item.id,
+                name: item.name,
+                artistImg: serverUrl + item.artistImg,
+                bigImg: serverUrl + (item.big_img || item.bigImg),
+                likes: item.likes,
+                trackIds: item.tracks || item.trackIds || [],
+            }));
         } catch (err) {
             if (err) {
                 const error = err as Error;
@@ -41,7 +44,7 @@ export const loadLikedArtists = createAsyncThunk<IArtist[], undefined, {rejectVa
     }
 )
 
-export const toggleArtist = createAsyncThunk<IArtist[], string | number, {rejectValue: string}>(
+export const toggleArtist = createAsyncThunk<ApiArtist[], string | number, {rejectValue: string}>(
     '@@artists/TOGGLE_ARTISTS',
     async (artistId, {rejectWithValue}) => {
         try {
@@ -54,11 +57,14 @@ export const toggleArtist = createAsyncThunk<IArtist[], string | number, {reject
                 body: JSON.stringify({'liked_artists': [artistId]})
             })
             const data = await response.json();
-            return data.map((item: IArtist) => {
-                item.artistImg = serverUrl + item.artistImg;
-                item.big_img = serverUrl + item.big_img;
-                return item;
-            })
+            return data.map((item: any) => ({
+                id: item.id,
+                name: item.name,
+                artistImg: serverUrl + item.artistImg,
+                bigImg: serverUrl + (item.big_img || item.bigImg),
+                likes: item.likes,
+                trackIds: item.tracks || item.trackIds || [],
+            }));
         } catch (err) {
             if (err) {
                 const error = err as Error;
