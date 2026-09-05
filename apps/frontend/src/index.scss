@@ -24,14 +24,13 @@
     --success-color: #4EBA3C;
 }
 
-body {
-  margin: 0;
-  font-family: "Rubik", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: var(--text-color);
-  caret-color: var(--text-second-color);
-  
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scrollbar-width: none;
 }
 
 html {
@@ -39,9 +38,58 @@ html {
     background-color: var(--main-bg-color);
 }
 
+body {
+    min-height: 100%;
+    font-family: "Rubik", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--text-color);
+    caret-color: var(--text-second-color);
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+img,
+picture,
+video,
+canvas {
+    display: block;
+    max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+input,
+textarea,
+select {
+    background: none;
+    border: none;
+    outline: none;
+}
+
 a {
     color: var(--text-color);
     text-decoration: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
 svg {
@@ -49,12 +97,8 @@ svg {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-* {
-    scrollbar-width: none;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
 }
 
 ::-webkit-scrollbar {
