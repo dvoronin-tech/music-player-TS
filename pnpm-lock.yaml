@@ -20,18 +20,15 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.9.1
         version: 0.9.1(hono@4.13.7)(zod@4.5.4)
+      '@music-player/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       dotenv:
         specifier: ^17.4.2
         version: 17.4.2
-      drizzle-orm:
-        specifier: ^0.45.2
-        version: 0.45.2(@types/pg@8.23.1)(pg@8.23.0)
       hono:
         specifier: ^4.13.7
         version: 4.13.7
-      pg:
-        specifier: ^8.23.0
-        version: 8.23.0
       zod:
         specifier: ^4.5.4
         version: 4.5.4
@@ -39,12 +36,6 @@ importers:
       '@types/node':
         specifier: ^26.1.1
         version: 26.4.1
-      '@types/pg':
-        specifier: ^8.23.1
-        version: 8.23.1
-      drizzle-kit:
-        specifier: ^0.31.10
-        version: 0.31.10
       tsc-alias:
         specifier: ^1.9.4
         version: 1.9.4
@@ -109,6 +100,31 @@ importers:
       vite:
         specifier: ^6.3.0
         version: 6.4.3(@types/node@20.19.43)(jiti@2.7.0)(sass@1.103.1)(terser@5.51.2)(tsx@4.23.13)
+
+  packages/db:
+    dependencies:
+      dotenv:
+        specifier: ^17.4.2
+        version: 17.4.2
+      drizzle-orm:
+        specifier: ^0.45.2
+        version: 0.45.2(@types/pg@8.23.1)(pg@8.23.0)
+      pg:
+        specifier: ^8.23.0
+        version: 8.23.0
+    devDependencies:
+      '@types/node':
+        specifier: ^26.1.1
+        version: 26.4.1
+      '@types/pg':
+        specifier: ^8.23.1
+        version: 8.23.1
+      drizzle-kit:
+        specifier: ^0.31.10
+        version: 0.31.10
+      typescript:
+        specifier: ^7.0.2
+        version: 7.0.2
 
 packages:
 

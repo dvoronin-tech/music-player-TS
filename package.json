@@ -3,15 +3,18 @@
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
-        "dev": "pnpm --filter frontend dev",
-		"front": "pnpm --filter frontend"
+		"dev": "pnpm -r --parallel --filter frontend --filter backend run dev",
+		"front": "pnpm --filter frontend",
+		"back": "pnpm --filter backend",
+		"db": "pnpm --filter @music-player/db"
 	},
 	"keywords": [],
 	"author": "Denis Voronin",
 	"license": "ISC",
 	"packageManager": "pnpm@10.28.0",
 	"workspaces": [
-		"apps/*"
+		"apps/*",
+		"packages/*"
 	],
 	"pnpm": {
 		"overrides": {

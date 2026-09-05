@@ -1,0 +1,33 @@
+{
+	"name": "@music-player/db",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": ["dist"],
+	"scripts": {
+		"build": "tsc",
+		"generate": "drizzle-kit generate",
+		"migrate": "drizzle-kit migrate",
+		"studio": "drizzle-kit studio"
+	},
+	"dependencies": {
+		"dotenv": "^17.4.2",
+		"drizzle-orm": "^0.45.2",
+		"pg": "^8.23.0"
+	},
+	"devDependencies": {
+		"@types/node": "^26.1.1",
+		"@types/pg": "^8.23.1",
+		"drizzle-kit": "^0.31.10",
+		"typescript": "^7.0.2"
+	}
+}
