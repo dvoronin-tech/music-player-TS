@@ -1,17 +1,14 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import styles from './Main.module.scss';
 import Button from '@/components/buttons/buttons';
-import { HomeCard } from '@/components/cards/homeCards/homeCards';
+import { HomeCard } from '@/components/cards/homeCard/HomeCard';
 import { ArtistCard } from '@/components/cards/artistCards/artistCards';
 import { useAppDispatch } from '@/hooks/useTypedRedux';
 import { useGetArtistsQuery } from '@/api/rtk/artists';
 import { useGetTracksQuery } from '@/api/rtk/tracks';
 import { ArtistsError } from '@/components/errorMessages/artistsError';
 import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
-import {
-	selectCurrentTrack,
-	selectPlayList,
-} from '@/store/slices/current';
+import { selectCurrentTrack, selectPlayList } from '@/store/slices/current';
 import type { ApiTrack } from '@music-player/backend';
 import { shuffle } from '@/pages/audioModule/audioModule';
 import { publicUrl } from '@/utils/constants';
@@ -99,7 +96,9 @@ const Main: FC = () => {
 				});
 			} else {
 				const errorMessage =
-					artistError && 'data' in artistError && typeof artistError.data === 'string'
+					artistError &&
+					'data' in artistError &&
+					typeof artistError.data === 'string'
 						? artistError.data
 						: 'При получении артистов произошла ошибка';
 				return <ArtistsError errorMessage={errorMessage} />;
@@ -167,11 +166,11 @@ const Main: FC = () => {
 		const tracks = trackList.filter((item) =>
 			item.artists.some(
 				(artist) =>
-					artist.name === 'Макс корж' ||
-					artist.name === 'Тима Белоруских',
+					artist.name === 'Макс Корж' ||
+					artist.name === 'Тима Белорусских',
 			),
 		);
-		if (tracks) {
+		if (tracks.length > 0) {
 			dispatch(selectPlayList(tracks));
 			dispatch(selectCurrentTrack(tracks[0].id));
 		}
@@ -195,7 +194,6 @@ const Main: FC = () => {
 						<div className={styles.cards}>
 							<HomeCard
 								onClick={setArtistOfMonthPlayList}
-								W={800}
 								category="Артист месяца"
 								content="Тринадцать карат"
 								additionalContent="242412 прослушиваний"
@@ -203,7 +201,6 @@ const Main: FC = () => {
 							/>
 							<HomeCard
 								onClick={setBestInBrooklyn}
-								W={530}
 								category="Лучшее"
 								content="в BROOKLYN"
 								additionalContent="Моргенштерн, Тринадцать карат ..."
@@ -213,7 +210,6 @@ const Main: FC = () => {
 						<div className={styles.cards}>
 							<HomeCard
 								onClick={setBestInCountry}
-								W={530}
 								category="ТОП"
 								content="в Стране"
 								additionalContent="Тима белорусских, Макс Корж ..."
@@ -221,7 +217,6 @@ const Main: FC = () => {
 							/>
 							<HomeCard
 								onClick={bestForYou}
-								W={800}
 								category="Подборка"
 								content="Для вас"
 								additionalContent="Nikitata, Тринадцать карат, Три дня до..."
