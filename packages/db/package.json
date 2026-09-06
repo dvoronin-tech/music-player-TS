@@ -17,7 +17,10 @@
 		"build": "tsc",
 		"generate": "drizzle-kit generate",
 		"migrate": "drizzle-kit migrate",
-		"studio": "drizzle-kit studio"
+		"studio": "drizzle-kit studio",
+		"clear": "tsx scripts/clear.ts",
+		"dump": "tsx scripts/dump.ts",
+		"seed": "tsx scripts/seed.ts"
 	},
 	"dependencies": {
 		"dotenv": "^17.4.2",
@@ -28,6 +31,7 @@
 		"@types/node": "^26.1.1",
 		"@types/pg": "^8.23.1",
 		"drizzle-kit": "^0.31.10",
+		"tsx": "^4.23.0",
 		"typescript": "^7.0.2"
 	}
 }
