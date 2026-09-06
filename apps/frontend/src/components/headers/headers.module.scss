@@ -4,9 +4,9 @@ header {
 
 .main_header {
     height: 80px;
-    width: calc(100% - 80px);
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     position: fixed;
     top: 0;
@@ -14,15 +14,6 @@ header {
     backdrop-filter: blur(40px);
     padding: 0 40px;
     z-index: 200;
-
-
-
-    nav {
-        display: flex;
-        align-items: center;
-        width: 140px;
-        justify-content: space-between;
-    }
 
     .header_search_panel {
         display: flex;
