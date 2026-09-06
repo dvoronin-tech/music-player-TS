@@ -10,16 +10,14 @@
     margin-bottom: 20px;
 }
 
-.cards {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+.home_cards_wrapper {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(min(100%, max(550px, calc((100% - 30px) / 2))), 1fr)
+    );
     gap: 30px;
-
-    &:not(:last-child) {
-        margin-bottom: 30px;
-    }
+    width: 100%;
 }
 
 .artists_line {

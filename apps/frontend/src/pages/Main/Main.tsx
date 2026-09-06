@@ -1,7 +1,7 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, memo, useEffect, useRef, useState } from 'react';
 import styles from './Main.module.scss';
 import Button from '@/components/buttons/buttons';
-import { HomeCard } from '@/components/cards/homeCard/HomeCard';
+import { HomeCard, HomeCardProps } from '@/components/cards/homeCard/HomeCard';
 import { ArtistCard } from '@/components/cards/artistCards/artistCards';
 import { useAppDispatch } from '@/hooks/useTypedRedux';
 import { useGetArtistsQuery } from '@/api/rtk/artists';
@@ -74,11 +74,6 @@ const Main: FC = () => {
 	};
 
 	const slideToPrevArtistPage = () => {
-		// if (artistLineWrapper.current) {
-		//     const newTranslateValue = translateValue - artistLineWrapper.current.clientWidth + 150
-		//     setTranslateValue(newTranslateValue);
-		// }
-
 		setTranslateValue((prevState) => {
 			const newValue = prevState - 300;
 			if (newValue <= 0) {
@@ -191,38 +186,41 @@ const Main: FC = () => {
 			<div className={styles.main}>
 				<main>
 					<div className={styles.cards_wrapper}>
-						<div className={styles.cards}>
-							<HomeCard
-								onClick={setArtistOfMonthPlayList}
-								category="Артист месяца"
-								content="Тринадцать карат"
-								additionalContent="242412 прослушиваний"
-								img="/img/home-card-1.webp"
-							/>
-							<HomeCard
-								onClick={setBestInBrooklyn}
-								category="Лучшее"
-								content="в BROOKLYN"
-								additionalContent="Моргенштерн, Тринадцать карат ..."
-								img="/img/home-card-2.webp"
-							/>
-						</div>
-						<div className={styles.cards}>
-							<HomeCard
-								onClick={setBestInCountry}
-								category="ТОП"
-								content="в Стране"
-								additionalContent="Тима белорусских, Макс Корж ..."
-								img="/img/home-card-3.webp"
-							/>
-							<HomeCard
-								onClick={bestForYou}
-								category="Подборка"
-								content="Для вас"
-								additionalContent="Nikitata, Тринадцать карат, Три дня до..."
-								img="/img/home-card-4.webp"
-							/>
-						</div>
+						<HomeCards
+							cards={[
+								{
+									onClick: setArtistOfMonthPlayList,
+									category: 'Артист месяца',
+									content: 'Тринадцать карат',
+									additionalContent: '242412 прослушиваний',
+									img: '/img/home-card-1.webp',
+								},
+								{
+									onClick: setBestInBrooklyn,
+									category: 'Лучшее',
+									content: 'в BROOKLYN',
+									additionalContent:
+										'Моргенштерн, Тринадцать карат ...',
+									img: '/img/home-card-2.webp',
+								},
+								{
+									onClick: setBestInCountry,
+									category: 'ТОП',
+									content: 'в Стране',
+									additionalContent:
+										'Тима белорусских, Макс Корж ...',
+									img: '/img/home-card-3.webp',
+								},
+								{
+									onClick: bestForYou,
+									category: 'Подборка',
+									content: 'Для вас',
+									additionalContent:
+										'Nikitata, Тринадцать карат, Три дня до...',
+									img: '/img/home-card-4.webp',
+								},
+							]}
+						/>
 						<div className={styles.home_artists_line}>
 							<span>Артисты</span>
 							{translateValue ? (
@@ -295,5 +293,19 @@ const Main: FC = () => {
 		</>
 	);
 };
+
+interface HomeCardsSectionProps {
+	cards: HomeCardProps[];
+}
+
+const HomeCards: FC<HomeCardsSectionProps> = memo(({ cards }) => {
+	return (
+		<div className={styles.home_cards_wrapper}>
+			{cards.map((card) => (
+				<HomeCard key={card.img} {...card} />
+			))}
+		</div>
+	);
+});
 
 export default Main;

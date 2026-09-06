@@ -5,23 +5,18 @@ import Button from '@/components/buttons/buttons';
 import { PlayOrPause } from '@/components/icons and tags/icons';
 import { FaPlay } from 'react-icons/fa';
 
-interface IProp  {
+export interface HomeCardProps {
 	img: string;
 	category: string;
 	content: string;
 	additionalContent: string;
-	onClick?: any;
-	style?: React.CSSProperties;
+	onClick: () => void;
 }
 
-export const HomeCard: FC<IProp> = memo(
-	({ style, img, category, content, onClick, additionalContent }) => {
+export const HomeCard: FC<HomeCardProps> = memo(
+	({ img, category, content, onClick, additionalContent }) => {
 		return (
-			<div
-				className={styles.home_card}
-				style={style}
-				onClick={onClick}
-			>
+			<div className={styles.home_card} onClick={onClick}>
 				<div className={styles.home_card_wrapper}>
 					<div className={styles.home_card_info}>
 						<div className={styles.home_card_info_data}>
@@ -36,7 +31,11 @@ export const HomeCard: FC<IProp> = memo(
 							{additionalContent}
 						</span>
 					</div>
-					<Button variant="alternative" onClick={onClick} className={styles.home_card_button}>
+					<Button
+						variant="alternative"
+						onClick={onClick}
+						className={styles.home_card_button}
+					>
 						<FaPlay />
 					</Button>
 				</div>
