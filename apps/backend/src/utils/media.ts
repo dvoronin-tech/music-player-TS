@@ -12,13 +12,7 @@ const AVATAR_TYPES: Record<string, string> = {
 export const MAX_AVATAR_BYTES = 2 * 1024 * 1024;
 
 export function toMediaUrl(value: string): string {
-	if (value.startsWith('http://') || value.startsWith('https://')) {
-		return value;
-	}
-
-	const base = env.PUBLIC_BASE_URL.replace(/\/$/, '');
-	const pathname = value.startsWith('/') ? value : `/${value}`;
-	return `${base}${pathname}`;
+	return `${env.MEDIA_URL}${value}`;
 }
 
 export function avatarExtension(mimeType: string): string | undefined {

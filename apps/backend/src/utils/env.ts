@@ -8,6 +8,7 @@ const envSchema = z.object({
 	DATABASE_URL: z.string().min(1),
 	PUBLIC_BASE_URL: z.url().default('http://localhost:4041'),
 	CORS_ORIGIN: z.string().default('http://localhost:4040'),
+    MEDIA_URL: z.url().min(1)
 });
 
 export const env = envSchema.parse(process.env);
