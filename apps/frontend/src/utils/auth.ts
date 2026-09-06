@@ -10,6 +10,11 @@ export const getAuthToken = (): string | null => {
 	return localStorage.getItem('Token');
 };
 
+export const clearSession = () => {
+	localStorage.removeItem('Token');
+	store.dispatch(baseApi.util.resetApiState());
+};
+
 export const requireAuth = () => {
 	const token = getAuthToken();
 	if (!token) {
@@ -18,12 +23,20 @@ export const requireAuth = () => {
 };
 
 export const prefetchAppData = async () => {
-	await Promise.all([
+	const results = await Promise.all([
 		store.dispatch(userApi.endpoints.getMe.initiate()),
 		store.dispatch(tracksApi.endpoints.getTracks.initiate()),
 		store.dispatch(likedApi.endpoints.getLikedTracks.initiate()),
 		store.dispatch(likedApi.endpoints.getLikedArtists.initiate()),
 	]);
+
+	const hasUnauthorized = results.some(
+		(res) => res.error && 'status' in res.error && res.error.status === 401,
+	);
+	if (hasUnauthorized) {
+		clearSession();
+		throw redirect({ to: '/auth' });
+	}
 };
 
 export const logout = async () => {
@@ -32,6 +45,5 @@ export const logout = async () => {
 	} catch {
 		// Local session still ends if the request fails.
 	}
-	localStorage.removeItem('Token');
-	store.dispatch(baseApi.util.resetApiState());
+	clearSession();
 };
