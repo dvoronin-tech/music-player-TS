@@ -1,3 +1,13 @@
+.home_cards_wrapper {
+	display: grid;
+	grid-template-columns: repeat(
+		auto-fill,
+		minmax(min(100%, max(550px, calc((100% - 30px) / 2))), 1fr)
+	);
+	gap: 30px;
+	width: 100%;
+}
+
 .home_card {
 	position: relative;
 	overflow: hidden;

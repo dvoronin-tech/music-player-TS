@@ -6,7 +6,7 @@ import { useAppSelector } from '@/hooks/useTypedRedux';
 import { useGetLikedTracksQuery } from '@/api/rtk/liked';
 import { Input } from '@/components/inputFields/inputFields';
 import Button from '@/components/buttons/buttons';
-import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
+import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import type { ApiTrack } from '@music-player/backend';
 import { publicUrl } from '@/utils/constants';
 

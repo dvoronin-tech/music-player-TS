@@ -8,7 +8,7 @@ import {
 	useToggleLikedTrackMutation,
 } from '@/api/rtk/liked';
 import { formatArtistNames } from '@/utils/formatArtists';
-import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
+import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import Button from '@/components/buttons/buttons';
 import {
 	CurrentPlayList,

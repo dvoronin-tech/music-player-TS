@@ -7,7 +7,8 @@ import styled from 'styled-components';
 interface IProp {
     img: string,
     name: string,
-    type?: 'small' | 'big'
+    type?: 'small' | 'big',
+    id: string
 }
 
 const ArtistHomeCard = styled.div<{$type: 'small' | 'big'}>`
@@ -50,11 +51,11 @@ const ArtistImg = styled.div<{$type: 'small' | 'big', $img: string}>`
     background-position: center;
 `;
 
-export const ArtistCard: FC<IProp> = ({img, name, type='big'}) => {
+export const ArtistCard: FC<IProp> = ({img, name, type='big', id}) => {
     const navigate = useNavigate();
 
     const selectArtist = () => {
-        navigate({ to: '/artist/$name', params: { name } });
+        navigate({ to: '/artist/$name', params: { name: id } });
     }
 
     const cutLongString = (string: string): string => {

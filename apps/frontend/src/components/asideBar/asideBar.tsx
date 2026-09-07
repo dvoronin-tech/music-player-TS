@@ -7,8 +7,8 @@ import {
 	useGetLikedArtistsQuery,
 } from '@/api/rtk/liked';
 import Button from '@/components/buttons/buttons';
-import SmallTrackCard from '@/components/cards/smallTrackCard/smallTrackCard';
-import { ArtistCard } from '@/components/cards/artistCards/artistCards';
+import SmallTrackCard from '@/components/smallTrackCard/smallTrackCard';
+import { ArtistCard } from '@/components/artistCards/artistCards';
 import { useNavigate } from '@tanstack/react-router';
 
 const AsideBarComponent = styled.aside<{

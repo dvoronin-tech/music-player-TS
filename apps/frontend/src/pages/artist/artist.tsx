@@ -10,14 +10,14 @@ import {
 	PlayOrPause,
 	UnFollow,
 } from '@/components/icons and tags/icons';
-import ArtistTrackCard from '@/components/cards/artistTrackCards/artistTrackCards';
+import ArtistTrackCard from '@/components/artistTrackCards/artistTrackCards';
 import { useGetArtistQuery, useGetArtistsQuery } from '@/api/rtk/artists';
 import {
 	useGetLikedArtistsQuery,
 	useToggleLikedArtistMutation,
 } from '@/api/rtk/liked';
 import { useAppDispatch } from '@/hooks/useTypedRedux';
-import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
+import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import {
 	selectCurrentTrack,
 	selectCurrentPlayList,
@@ -32,44 +32,6 @@ const PopularTrackListWrapper = styled.div`
 	align-items: center;
 	gap: 20px;
 	margin: 20px 0;
-`;
-
-const ArtistBG = styled.div<{ $big_img: string }>`
-	height: 350px;
-	width: 100%;
-	position: relative;
-	overflow: hidden;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	&::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 1;
-		background-repeat: no-repeat;
-		background-position: center;
-		background-size: cover;
-		background-image: url(${({ $big_img }) => $big_img});
-		filter: brightness(60%);
-	}
-	&::after {
-		content: '';
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		height: 143px;
-		z-index: 1;
-		background: linear-gradient(
-			180deg,
-			rgba(27, 26, 28, 0) 0%,
-			rgba(27, 26, 28, 1) 100%
-		);
-	}
 `;
 
 const MoreTracksWrapper = styled.div`
@@ -98,7 +60,7 @@ const Artist: FC = () => {
 	const { data: artists = [], isLoading: artistsLoading } =
 		useGetArtistsQuery();
 	const artistSummary = useMemo(
-		() => artists.find((item) => item.name === artistName),
+		() => artists.find((item) => item.id === Number(artistName)),
 		[artists, artistName],
 	);
 	const { data: artistDetail, isLoading } = useGetArtistQuery(
@@ -205,7 +167,12 @@ const Artist: FC = () => {
 	if (artist) {
 		return (
 			<main className={styles.artist}>
-				<ArtistBG id="bg" $big_img={artist.bigImg}>
+				<div className={styles.artist_bg} id="bg">
+					<img
+						className={styles.artist_bg_image}
+						src={artist.bigImg}
+						alt=""
+					/>
 					<div className={styles.artist_info}>
 						<span className={styles.artist_name}>
 							{artist.name}
@@ -258,7 +225,7 @@ const Artist: FC = () => {
 							)}
 						</Button>
 					</div>
-				</ArtistBG>
+				</div>
 				<div className={styles.artist_tracks_wrapper}>
 					<span className={styles.artist_track_title}>
 						Популярные треки

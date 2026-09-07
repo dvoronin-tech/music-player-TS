@@ -1,13 +1,12 @@
-import { FC, memo, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import styles from './Main.module.scss';
 import Button from '@/components/buttons/buttons';
-import { HomeCard, HomeCardProps } from '@/components/cards/homeCard/HomeCard';
-import { ArtistCard } from '@/components/cards/artistCards/artistCards';
+import { HomeCards } from '@/components/homeCard/HomeCards';
+import { HomeArtists } from '@/components/artistCards/HomeArtists';
 import { useAppDispatch } from '@/hooks/useTypedRedux';
 import { useGetArtistsQuery } from '@/api/rtk/artists';
 import { useGetTracksQuery } from '@/api/rtk/tracks';
-import { ArtistsError } from '@/components/errorMessages/artistsError';
-import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
+import { HomeTracks } from '@/components/homeTrackCards/HomeTracks';
 import {
 	selectCurrentPlayList,
 	selectCurrentTrack,
@@ -84,55 +83,6 @@ const Main: FC = () => {
 			}
 			return newValue;
 		});
-	};
-
-	const renderArtists = () => {
-		if (artists.length > 0) {
-			if (!artistError) {
-				return artists.map(({ name, artistImg, id }) => {
-					return <ArtistCard key={id} name={name} img={artistImg} />;
-				});
-			} else {
-				const errorMessage =
-					artistError &&
-					'data' in artistError &&
-					typeof artistError.data === 'string'
-						? artistError.data
-						: 'При получении артистов произошла ошибка';
-				return <ArtistsError errorMessage={errorMessage} />;
-			}
-		}
-		if (artistError) {
-			const errorMessage =
-				'data' in artistError && typeof artistError.data === 'string'
-					? artistError.data
-					: 'При получении артистов произошла ошибка';
-			return <ArtistsError errorMessage={errorMessage} />;
-		}
-	};
-
-	const renderTracks = () => {
-		if (trackList) {
-			if (!tracksError) {
-				return trackList.map((item) => {
-					return (
-						<HomeTrackCard
-							key={item.id}
-							track={item}
-							playList={trackList}
-						/>
-					);
-				});
-			} else {
-				const errorMessage =
-					tracksError &&
-					'data' in tracksError &&
-					typeof tracksError.data === 'string'
-						? tracksError.data
-						: 'При получении треков произошла ошибка';
-				return <ArtistsError errorMessage={errorMessage} />;
-			}
-		}
 	};
 
 	const setArtistOfMonthPlayList = () => {
@@ -246,7 +196,10 @@ const Main: FC = () => {
 						{artistLoading ? (
 							<div className="loader"></div>
 						) : (
-							renderArtists()
+							<HomeArtists
+								artists={artists}
+								error={artistError}
+							/>
 						)}
 					</div>
 
@@ -274,26 +227,15 @@ const Main: FC = () => {
 					{tracksLoading ? (
 						<div className="loader"></div>
 					) : (
-						renderTracks()
+						<HomeTracks
+							tracks={trackList}
+							error={tracksError}
+						/>
 					)}
 				</div>
 			</div>
 		</main>
 	);
 };
-
-interface HomeCardsSectionProps {
-	cards: HomeCardProps[];
-}
-
-const HomeCards: FC<HomeCardsSectionProps> = memo(({ cards }) => {
-	return (
-		<div className={styles.home_cards_wrapper}>
-			{cards.map((card) => (
-				<HomeCard key={card.img} {...card} />
-			))}
-		</div>
-	);
-});
 
 export default Main;
