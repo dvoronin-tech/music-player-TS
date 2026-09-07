@@ -18,7 +18,7 @@ interface AuthedShellProps {
 
 export default function AuthedShell({ children }: AuthedShellProps) {
 	const dispatch = useAppDispatch();
-	const { trackId, showCurrentPlayList } = useAppSelector(
+	const { currentTrack, showCurrentPlayList } = useAppSelector(
 		(state) => state.current,
 	);
 	const { showUserData, showFullScreen } = useAppSelector(
@@ -32,10 +32,10 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 	}, [dispatch, showCurrentPlayList, showUserData]);
 
 	useEffect(() => {
-		if (showFullScreen && !trackId) {
+		if (showFullScreen && !currentTrack) {
 			dispatch(toggleShowFullScreen(false));
 		}
-	}, [dispatch, showFullScreen, trackId]);
+	}, [currentTrack, dispatch, showFullScreen]);
 
 	if (showFullScreen) {
 		return <FullScreen />;
@@ -43,7 +43,7 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 
 	return (
 		<>
-			<div style={{ paddingBottom: trackId ? 50 : 0 }}>
+			<div style={{ paddingBottom: currentTrack ? 50 : 0 }}>
 				<Headers type="main" />
 				{children}
 			</div>

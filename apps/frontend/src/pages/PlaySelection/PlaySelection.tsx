@@ -13,9 +13,9 @@ export interface IKeyInfo {
 }
 
 const PlaySelection: FC = () => {
-	const trackId = useAppSelector(({ current }) => current.trackId);
+	const currentTrack = useAppSelector(({ current }) => current.currentTrack);
 
-	if (!trackId) return null;
+	if (!currentTrack) return null;
 
 	return (
 		<div className={styles.play_selection}>

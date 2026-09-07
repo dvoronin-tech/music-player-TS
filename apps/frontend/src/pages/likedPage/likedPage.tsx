@@ -84,7 +84,7 @@ const NoDataDiv = styled.div`
 
 const LikedPage: FC = () => {
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
-	const trackId = useAppSelector((state) => state.current.trackId);
+	const currentTrack = useAppSelector((state) => state.current.currentTrack);
 	const [dataArr, setDataArr] = useState<ApiTrack[]>([]);
 	const [searchStr, setSearchStr] = useState('');
 
@@ -146,7 +146,7 @@ const LikedPage: FC = () => {
 	return (
 		<div
 			className={styles.liked_page}
-			style={{ paddingBottom: trackId ? '40px' : 0 }}
+			style={{ paddingBottom: currentTrack ? '40px' : 0 }}
 		>
 			<Background>
 				<div className="video_wrapper">

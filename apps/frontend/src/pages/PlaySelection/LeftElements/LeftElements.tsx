@@ -1,4 +1,4 @@
-import { FC, memo, useMemo } from 'react';
+import { FC, memo } from 'react';
 import { shallowEqual } from 'react-redux';
 
 import { Loader } from '@/components/loader/Loader';
@@ -10,17 +10,12 @@ import styles from './LeftElements.module.scss';
 
 export const LeftElements: FC = memo(() => {
 	const dispatch = useAppDispatch();
-	const { currentPlayList, trackId, pending } = useAppSelector(
+	const { currentTrack, pending } = useAppSelector(
 		({ current, trackState }) => ({
-			currentPlayList: current.currentPlayList,
-			trackId: current.trackId,
+			currentTrack: current.currentTrack,
 			pending: trackState.pending,
 		}),
 		shallowEqual,
-	);
-	const currentTrack = useMemo(
-		() => currentPlayList.find((item) => item.id === trackId),
-		[currentPlayList, trackId],
 	);
 
 	if (!currentTrack) {

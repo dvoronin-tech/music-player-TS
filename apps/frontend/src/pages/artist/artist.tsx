@@ -20,7 +20,7 @@ import { useAppDispatch } from '@/hooks/useTypedRedux';
 import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
 import {
 	selectCurrentTrack,
-	selectPlayList,
+	selectCurrentPlayList,
 } from '@/store/slices/current';
 import { addNotification } from '@/store/slices/notification';
 import { skipToken } from '@reduxjs/toolkit/query/react';
@@ -174,8 +174,8 @@ const Artist: FC = () => {
 		const sortedTrackList = newTrackList.sort((a, b) => {
 			return b.auditions - a.auditions;
 		});
+		dispatch(selectCurrentPlayList(sortedTrackList));
 		dispatch(selectCurrentTrack(sortedTrackList[0].id));
-		dispatch(selectPlayList(sortedTrackList));
 	};
 
 	const toggleIsFollowed = () => {

@@ -3,7 +3,6 @@ import { FC, SyntheticEvent, useEffect, useRef, useState } from 'react';
 import styles from './fullScreen.module.scss';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
-import type { ApiTrack } from '@music-player/backend';
 import {
 	useGetLikedTracksQuery,
 	useToggleLikedTrackMutation,
@@ -174,7 +173,7 @@ const TrackImg = styled.img<{ $isShow: boolean }>`
 
 const FullScreen: FC = () => {
 	const dispatch = useAppDispatch();
-	const { trackId, currentPlayList, showCurrentPlayList, shuffledArr } =
+	const { currentTrack, currentPlayList, showCurrentPlayList, shuffledArr } =
 		useAppSelector((state) => state.current);
 	const {
 		isPlay,
@@ -186,9 +185,6 @@ const FullScreen: FC = () => {
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 
-	const [currentTrack, setCurrentTrack] = useState<ApiTrack | undefined>(
-		undefined,
-	); // Трек
 	const [spanTranslateValue, setSpanTranslateValue] = useState(0); //
 	const [isSpanHovered, setIsSpanHovered] = useState(false);
 	const [CPLTranslateValue, setCPLTranslateValue] = useState(0);
@@ -233,13 +229,15 @@ const FullScreen: FC = () => {
 	};
 
 	useEffect(() => {
-		const likedTrack = likedTrackList.find((track) => track.id === trackId);
+		const likedTrack = likedTrackList.find(
+			(track) => track.id === currentTrack?.id,
+		);
 		if (likedTrack) {
 			setIsLiked(true);
 		} else {
 			setIsLiked(false);
 		}
-	}, [likedTrackList, trackId]);
+	}, [likedTrackList, currentTrack?.id]);
 
 	useEffect(() => {
 		if (infoDiv.current && trackTitleSpan.current) {
@@ -269,14 +267,6 @@ const FullScreen: FC = () => {
 		CPLLineRef.current?.clientWidth,
 		CPLTranslateValue,
 	]);
-
-	useEffect(() => {
-		if (currentPlayList.length !== 0 && currentTrack?.id !== trackId) {
-			setCurrentTrack(
-				currentPlayList.find((item) => item.id === trackId),
-			);
-		}
-	}, [currentPlayList, currentTrack?.id, trackId]);
 
 	useEffect(() => {
 		if (currentPlayList.length === 1) {
@@ -346,8 +336,8 @@ const FullScreen: FC = () => {
 	};
 
 	const toggleIsLiked = () => {
-		if (trackId && currentTrack) {
-			toggleLikedTrack({ id: trackId, isLiked });
+		if (currentTrack) {
+			toggleLikedTrack({ id: currentTrack.id, isLiked });
 			dispatch(
 				addNotification({
 					notificationId: randomId(),

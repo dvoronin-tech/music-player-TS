@@ -33,10 +33,10 @@ import styles from './RightElements.module.scss';
 
 export const RightElements: FC = memo(() => {
 	const dispatch = useAppDispatch();
-	const { currentPlayList, trackId, showCurrentPlayList } = useAppSelector(
+	const { currentPlayList, currentTrack, showCurrentPlayList } = useAppSelector(
 		({ current }) => ({
 			currentPlayList: current.currentPlayList,
-			trackId: current.trackId,
+			currentTrack: current.currentTrack,
 			showCurrentPlayList: current.showCurrentPlayList,
 		}),
 		shallowEqual,
@@ -50,13 +50,14 @@ export const RightElements: FC = memo(() => {
 		trackTimeData: { currentTime, duration },
 	} = useAppSelector((state) => state.trackState);
 
-	const currentTrack = currentPlayList.find((item) => item.id === trackId);
-	const isLiked = likedTrackList.some((track) => track.id === trackId);
+	const isLiked = likedTrackList.some(
+		(track) => track.id === currentTrack?.id,
+	);
 	const currentWidth = duration ? (currentTime * 100) / duration : 0;
 
 	const toggleIsLiked = () => {
-		if (trackId && currentTrack) {
-			toggleLikedTrack({ id: trackId, isLiked });
+		if (currentTrack) {
+			toggleLikedTrack({ id: currentTrack.id, isLiked });
 			dispatch(
 				addNotification({
 					notificationId: randomId(),

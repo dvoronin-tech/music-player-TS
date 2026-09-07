@@ -9,8 +9,8 @@ import {
 } from '@/api/rtk/liked';
 import {
 	deleteCurrentTrack,
+	selectCurrentPlayList,
 	selectCurrentTrack,
-	selectPlayList,
 } from '@/store/slices/current';
 import { addNotification } from '@/store/slices/notification';
 import { formatArtistNames } from '@/utils/formatArtists';
@@ -58,7 +58,7 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 	isLiked = false,
 }) => {
 	const dispatch = useAppDispatch();
-	const currentTrackId = useAppSelector((state) => state.current.trackId);
+	const currentTrack = useAppSelector((state) => state.current.currentTrack);
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 	const [isLikedTrack, setIsLikedTrack] = useState(false);
@@ -91,8 +91,8 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 	};
 
 	const setCurrent = () => {
+		dispatch(selectCurrentPlayList(playList));
 		dispatch(selectCurrentTrack(track.id));
-		dispatch(selectPlayList(playList));
 	};
 
 	return (
@@ -104,7 +104,7 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 					<span>{formatArtistNames(track.artists)}</span>
 				</div>
 			</TrackInfoWrapper>
-			{!isLiked && currentTrackId !== track.id && (
+			{!isLiked && currentTrack?.id !== track.id && (
 				<button style={{ marginRight: 5 }} onClick={deleteCurrent}>
 					<Cross />
 				</button>

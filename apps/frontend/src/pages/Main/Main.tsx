@@ -8,7 +8,10 @@ import { useGetArtistsQuery } from '@/api/rtk/artists';
 import { useGetTracksQuery } from '@/api/rtk/tracks';
 import { ArtistsError } from '@/components/errorMessages/artistsError';
 import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
-import { selectCurrentTrack, selectPlayList } from '@/store/slices/current';
+import {
+	selectCurrentPlayList,
+	selectCurrentTrack,
+} from '@/store/slices/current';
 import type { ApiTrack } from '@music-player/backend';
 import { shuffle } from '@/pages/audioModule/audioModule';
 import { publicUrl } from '@/utils/constants';
@@ -138,7 +141,7 @@ const Main: FC = () => {
 		);
 		if (tracks) {
 			dispatch(
-				selectPlayList(
+				selectCurrentPlayList(
 					tracks.sort((a, b) => b.auditions - a.auditions),
 				),
 			);
@@ -153,7 +156,7 @@ const Main: FC = () => {
 		for (let i = 0; i <= 9; i++) {
 			currentArray.push(sortedArr[i]);
 		}
-		dispatch(selectPlayList(currentArray));
+		dispatch(selectCurrentPlayList(currentArray));
 		dispatch(selectCurrentTrack(currentArray[0].id));
 	};
 
@@ -166,7 +169,7 @@ const Main: FC = () => {
 			),
 		);
 		if (tracks.length > 0) {
-			dispatch(selectPlayList(tracks));
+			dispatch(selectCurrentPlayList(tracks));
 			dispatch(selectCurrentTrack(tracks[0].id));
 		}
 	};
@@ -177,7 +180,7 @@ const Main: FC = () => {
 		for (let i = 0; i <= 9; i++) {
 			currentArray.push(shuffledArr[i]);
 		}
-		dispatch(selectPlayList(currentArray));
+		dispatch(selectCurrentPlayList(currentArray));
 		dispatch(selectCurrentTrack(currentArray[0].id));
 	};
 

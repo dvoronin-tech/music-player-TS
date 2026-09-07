@@ -11,8 +11,8 @@ import {
 } from '@/api/rtk/liked';
 import {
 	addToCurrentPlayList,
+	selectCurrentPlayList,
 	selectCurrentTrack,
-	selectPlayList,
 } from '@/store/slices/current';
 import {
 	AddToPlayList,
@@ -24,6 +24,7 @@ import { formatArtistNames } from '@/utils/formatArtists';
 import type { ApiTrack } from '@music-player/backend';
 import { v4 as randomId } from 'uuid';
 import { MdErrorOutline } from 'react-icons/md';
+import { shallowEqual } from 'react-redux';
 
 interface IProp {
 	playList: ApiTrack[];
@@ -112,16 +113,21 @@ const PlayingTagWrapper = styled.div`
 const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const dispatch = useAppDispatch();
-	const { trackId } = useAppSelector((state) => state.current);
+	const { currentTrack, currentPlayList } = useAppSelector(
+		({ current }) => ({
+			currentTrack: current.currentTrack,
+			currentPlayList: current.currentPlayList,
+		}),
+		shallowEqual,
+	);
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 	const [isLiked, setIsLiked] = useState<boolean>(false);
-	const { currentPlayList } = useAppSelector((state) => state.current);
 
 	const { albumImg, id, title, auditions } = track;
 	const setCurrentTrack = () => {
+		dispatch(selectCurrentPlayList(playList));
 		dispatch(selectCurrentTrack(id));
-		dispatch(selectPlayList(playList));
 	};
 
 	useEffect(() => {
@@ -180,7 +186,7 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 				$isHover={isHovered}
 				onClick={setCurrentTrack}
 			>
-				{trackId === id && (
+				{currentTrack?.id === id && (
 					<PlayingTagWrapper>
 						<PlayingTrackTag height={50} />
 					</PlayingTagWrapper>
