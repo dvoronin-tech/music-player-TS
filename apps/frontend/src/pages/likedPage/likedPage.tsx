@@ -160,7 +160,7 @@ const LikedPage: FC = () => {
 				<div className={styles.liked_title_wrapper}>
 					<span className={styles.liked_title}>Любимые треки</span>
 					<div>
-						<span>BROOKLYN</span>
+						<span className={styles.liked_brooklyn}>BROOKLYN</span>
 						<span>{likedTrackList.length} треков</span>
 					</div>
 				</div>

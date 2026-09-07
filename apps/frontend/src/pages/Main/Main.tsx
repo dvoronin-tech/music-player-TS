@@ -182,115 +182,100 @@ const Main: FC = () => {
 	};
 
 	return (
-		<>
-			<div className={styles.main}>
-				<main>
-					<div className={styles.cards_wrapper}>
-						<HomeCards
-							cards={[
-								{
-									onClick: setArtistOfMonthPlayList,
-									category: 'Артист месяца',
-									content: 'Тринадцать карат',
-									additionalContent: '242412 прослушиваний',
-									img: '/img/home-card-1.webp',
-								},
-								{
-									onClick: setBestInBrooklyn,
-									category: 'Лучшее',
-									content: 'в BROOKLYN',
-									additionalContent:
-										'Моргенштерн, Тринадцать карат ...',
-									img: '/img/home-card-2.webp',
-								},
-								{
-									onClick: setBestInCountry,
-									category: 'ТОП',
-									content: 'в Стране',
-									additionalContent:
-										'Тима белорусских, Макс Корж ...',
-									img: '/img/home-card-3.webp',
-								},
-								{
-									onClick: bestForYou,
-									category: 'Подборка',
-									content: 'Для вас',
-									additionalContent:
-										'Nikitata, Тринадцать карат, Три дня до...',
-									img: '/img/home-card-4.webp',
-								},
-							]}
-						/>
-						<div className={styles.home_artists_line}>
-							<span>Артисты</span>
-							{translateValue ? (
-								<div className={styles.shade}></div>
-							) : null}
-							<div
-								ref={artistLineWrapper}
-								className={styles.artists_line}
-							>
-								{translateValue ? (
-									<Button
-										onClick={slideToPrevArtistPage}
-										variant="alternative"
-										size="3xl"
-									>
-										{'<'}
-									</Button>
-								) : null}
-
-								<div
-									style={{
-										transform: `translate(${-translateValue}px)`,
-										justifyContent: artistLoading
-											? 'center'
-											: 'flex-start',
-									}}
-									className={styles.artists_line_wrapper}
-									ref={artistLine}
-								>
-									{artistLoading ? (
-										<div className="loader"></div>
-									) : (
-										renderArtists()
-									)}
-								</div>
-
-								{isButtonShow && (
-									<Button
-										onClick={slideToNextArtistPage}
-										variant="alternative"
-										size="3xl"
-									>
-										{'>'}
-									</Button>
-								)}
-							</div>
-						</div>
-					</div>
-					<div className={styles.something_new}>
-						<span className={styles.something_new_title}>
-							Что-то новое
-						</span>
-						<div
-							style={{
-								justifyContent: tracksLoading
-									? 'center'
-									: 'space-between',
-							}}
-							className={styles.home_track_cards_wrapper}
+		<main className={styles.main}>
+			<HomeCards
+				cards={[
+					{
+						onClick: setArtistOfMonthPlayList,
+						category: 'Артист месяца',
+						content: 'Тринадцать карат',
+						additionalContent: '242412 прослушиваний',
+						img: '/img/home-card-1.webp',
+					},
+					{
+						onClick: setBestInBrooklyn,
+						category: 'Лучшее',
+						content: 'в BROOKLYN',
+						additionalContent: 'Моргенштерн, Тринадцать карат ...',
+						img: '/img/home-card-2.webp',
+					},
+					{
+						onClick: setBestInCountry,
+						category: 'ТОП',
+						content: 'в Стране',
+						additionalContent: 'Тима белорусских, Макс Корж ...',
+						img: '/img/home-card-3.webp',
+					},
+					{
+						onClick: bestForYou,
+						category: 'Подборка',
+						content: 'Для вас',
+						additionalContent:
+							'Nikitata, Тринадцать карат, Три дня до...',
+						img: '/img/home-card-4.webp',
+					},
+				]}
+			/>
+			<div className={styles.home_artists_line}>
+				<span>Артисты</span>
+				{translateValue ? <div className={styles.shade}></div> : null}
+				<div ref={artistLineWrapper} className={styles.artists_line}>
+					{translateValue ? (
+						<Button
+							onClick={slideToPrevArtistPage}
+							variant="alternative"
+							size="3xl"
 						>
-							{tracksLoading ? (
-								<div className="loader"></div>
-							) : (
-								renderTracks()
-							)}
-						</div>
+							{'<'}
+						</Button>
+					) : null}
+
+					<div
+						style={{
+							transform: `translate(${-translateValue}px)`,
+							justifyContent: artistLoading
+								? 'center'
+								: 'flex-start',
+						}}
+						className={styles.artists_line_wrapper}
+						ref={artistLine}
+					>
+						{artistLoading ? (
+							<div className="loader"></div>
+						) : (
+							renderArtists()
+						)}
 					</div>
-				</main>
+
+					{isButtonShow && (
+						<Button
+							onClick={slideToNextArtistPage}
+							variant="alternative"
+							size="3xl"
+						>
+							{'>'}
+						</Button>
+					)}
+				</div>
 			</div>
-		</>
+			<div className={styles.something_new}>
+				<span className={styles.something_new_title}>Что-то новое</span>
+				<div
+					style={{
+						justifyContent: tracksLoading
+							? 'center'
+							: 'space-between',
+					}}
+					className={styles.home_track_cards_wrapper}
+				>
+					{tracksLoading ? (
+						<div className="loader"></div>
+					) : (
+						renderTracks()
+					)}
+				</div>
+			</div>
+		</main>
 	);
 };
 
