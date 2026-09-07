@@ -28,7 +28,7 @@ import {
 	toggleRandom,
 	toggleRepeat,
 } from '@/store/slices/trackState';
-import { humanizingNumbers } from '@/pages/PlaySelection/PlaySelection';
+import { humanizingNumbers } from '@/utils/humanizingNumbers';
 import { addNotification } from '@/store/slices/notification';
 import { v4 as randomId } from 'uuid';
 import { showCurrentPlayListAction } from '@/store/slices/current';
