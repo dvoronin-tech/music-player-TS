@@ -43,7 +43,7 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 
 	return (
 		<>
-			<div style={{ paddingBottom: currentTrack ? 50 : 0 }}>
+			<div style={{ paddingBottom: currentTrack ? 'var(--play-selection-height)' : 0 }}>
 				<Headers type="main" />
 				{children}
 			</div>
