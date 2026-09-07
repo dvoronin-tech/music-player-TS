@@ -13,7 +13,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ArtistNameRouteImport } from './routes/artist/$name'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
-import { Route as HomeFullscreenRouteImport } from './routes/home/fullscreen'
 import { Route as HomeLikedRouteImport } from './routes/home/liked'
 
 const IndexRoute = IndexRouteImport.update({
@@ -36,11 +35,6 @@ const HomeIndexRoute = HomeIndexRouteImport.update({
   path: '/home/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const HomeFullscreenRoute = HomeFullscreenRouteImport.update({
-  id: '/home/fullscreen',
-  path: '/home/fullscreen',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const HomeLikedRoute = HomeLikedRouteImport.update({
   id: '/home/liked',
   path: '/home/liked',
@@ -51,7 +45,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/artist/$name': typeof ArtistNameRoute
-  '/home/fullscreen': typeof HomeFullscreenRoute
   '/home/liked': typeof HomeLikedRoute
   '/home/': typeof HomeIndexRoute
 }
@@ -59,7 +52,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/artist/$name': typeof ArtistNameRoute
-  '/home/fullscreen': typeof HomeFullscreenRoute
   '/home/liked': typeof HomeLikedRoute
   '/home': typeof HomeIndexRoute
 }
@@ -68,42 +60,21 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/artist/$name': typeof ArtistNameRoute
-  '/home/fullscreen': typeof HomeFullscreenRoute
   '/home/liked': typeof HomeLikedRoute
   '/home/': typeof HomeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/auth'
-    | '/artist/$name'
-    | '/home/fullscreen'
-    | '/home/liked'
-    | '/home/'
+  fullPaths: '/' | '/auth' | '/artist/$name' | '/home/liked' | '/home/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/auth'
-    | '/artist/$name'
-    | '/home/fullscreen'
-    | '/home/liked'
-    | '/home'
-  id:
-    | '__root__'
-    | '/'
-    | '/auth'
-    | '/artist/$name'
-    | '/home/fullscreen'
-    | '/home/liked'
-    | '/home/'
+  to: '/' | '/auth' | '/artist/$name' | '/home/liked' | '/home'
+  id: '__root__' | '/' | '/auth' | '/artist/$name' | '/home/liked' | '/home/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   ArtistNameRoute: typeof ArtistNameRoute
-  HomeFullscreenRoute: typeof HomeFullscreenRoute
   HomeLikedRoute: typeof HomeLikedRoute
   HomeIndexRoute: typeof HomeIndexRoute
 }
@@ -138,13 +109,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/home/fullscreen': {
-      id: '/home/fullscreen'
-      path: '/home/fullscreen'
-      fullPath: '/home/fullscreen'
-      preLoaderRoute: typeof HomeFullscreenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/home/liked': {
       id: '/home/liked'
       path: '/home/liked'
@@ -159,7 +123,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   ArtistNameRoute: ArtistNameRoute,
-  HomeFullscreenRoute: HomeFullscreenRoute,
   HomeLikedRoute: HomeLikedRoute,
   HomeIndexRoute: HomeIndexRoute,
 }

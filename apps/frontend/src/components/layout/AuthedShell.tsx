@@ -8,8 +8,9 @@ import PlaySelection from '@/pages/PlaySelection/PlaySelection';
 import AsideBar from '@/components/asideBar/asideBar';
 import CPLSelection from '@/components/CPLSelection/CPLSelection';
 import AccountDataBar from '@/components/accountDataBar/accountDataBar';
+import FullScreen from '@/pages/fullScreen/fullScreen';
 import { showCurrentPlayListAction } from '@/store/slices/current';
-import { shallowEqual } from 'react-redux';
+import { toggleShowFullScreen } from '@/store/slices/ui';
 
 interface AuthedShellProps {
 	children: ReactNode;
@@ -20,7 +21,9 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 	const { trackId, showCurrentPlayList } = useAppSelector(
 		(state) => state.current,
 	);
-	const { showUserData } = useAppSelector((state) => state.ui);
+	const { showUserData, showFullScreen } = useAppSelector(
+		(state) => state.ui,
+	);
 
 	useEffect(() => {
 		if (showUserData && showCurrentPlayList) {
@@ -28,12 +31,19 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 		}
 	}, [dispatch, showCurrentPlayList, showUserData]);
 
+	useEffect(() => {
+		if (showFullScreen && !trackId) {
+			dispatch(toggleShowFullScreen(false));
+		}
+	}, [dispatch, showFullScreen, trackId]);
+
+	if (showFullScreen) {
+		return <FullScreen />;
+	}
+
 	return (
 		<>
-			<div
-				className="app_wrapper"
-				style={{ paddingBottom: trackId ? 50 : 0 }}
-			>
+			<div style={{ paddingBottom: trackId ? 50 : 0 }}>
 				<Headers type="main" />
 				{children}
 			</div>
@@ -46,4 +56,3 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 		</>
 	);
 }
-

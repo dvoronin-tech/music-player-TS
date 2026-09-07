@@ -29,10 +29,9 @@ import {
 	toggleRepeat,
 } from '@/store/slices/trackState';
 import { addNotification } from '@/store/slices/notification';
+import { toggleShowFullScreen } from '@/store/slices/ui';
 
 import { v4 as randomId } from 'uuid';
-import { useNavigate } from '@tanstack/react-router';
-import { useTheme } from 'styled-components';
 
 export interface IKeyInfo {
 	keyCode: string;
@@ -87,7 +86,9 @@ const PlaySelection: FC = () => {
 
 	const [isLiked, setIsLiked] = useState(false);
 
-	const navigate = useNavigate();
+	const openFullScreen = () => {
+		dispatch(toggleShowFullScreen(true));
+	};
 
 	useEffect(() => {
 		const likedTrack = likedTrackList.find((track) => track.id === trackId);
@@ -194,7 +195,7 @@ const PlaySelection: FC = () => {
 				<div className={styles.play_selection}>
 					<div
 						className={styles.left_elements}
-						onClick={() => navigate({ to: '/home/fullscreen' })}
+						onClick={openFullScreen}
 					>
 						<div className={styles.album_img_wrapper}>
 							{pending ? (
@@ -298,7 +299,7 @@ const PlaySelection: FC = () => {
 									/>
 								</button>
 								<button
-									onClick={() => navigate({ to: '/home/fullscreen' })}
+									onClick={openFullScreen}
 									style={{
 										display: 'flex',
 										justifyContent: 'center',

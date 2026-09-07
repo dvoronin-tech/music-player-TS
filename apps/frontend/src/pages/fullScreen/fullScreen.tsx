@@ -32,7 +32,7 @@ import { humanizingNumbers } from '@/pages/PlaySelection/PlaySelection';
 import { addNotification } from '@/store/slices/notification';
 import { v4 as randomId } from 'uuid';
 import { showCurrentPlayListAction } from '@/store/slices/current';
-import { useNavigate, useRouter } from '@tanstack/react-router';
+import { toggleShowFullScreen } from '@/store/slices/ui';
 
 const Background = styled.div<{ $img: string }>`
 	height: calc(100svh - 70px);
@@ -202,8 +202,9 @@ const FullScreen: FC = () => {
 	const CPLSelectionRef = useRef<HTMLDivElement | null>(null);
 	const CPLLineRef = useRef<HTMLDivElement | null>(null);
 
-	const navigate = useNavigate();
-	const router = useRouter();
+	const closeFullScreen = () => {
+		dispatch(toggleShowFullScreen(false));
+	};
 
 	const renderCurrentPlayList = () => {
 		if (shuffledArr.length !== 0) {
@@ -230,12 +231,6 @@ const FullScreen: FC = () => {
 			});
 		}
 	};
-
-	useEffect(() => {
-		if (!trackId) {
-			navigate({ to: '/home' });
-		}
-	}, [trackId, navigate]);
 
 	useEffect(() => {
 		const likedTrack = likedTrackList.find((track) => track.id === trackId);
@@ -553,7 +548,7 @@ const FullScreen: FC = () => {
 										scale={35}
 									/>
 								</button>
-								<button onClick={() => router.history.back()}>
+								<button onClick={closeFullScreen}>
 									<FullScreenIcon type="active" scale={35} />
 								</button>
 							</div>
