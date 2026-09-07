@@ -91,7 +91,9 @@
 }
 
 .something_new {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .something_new_title {
@@ -101,7 +103,6 @@
 
 .home_track_cards_wrapper {
     width: 100%;
-    margin: 20px 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
