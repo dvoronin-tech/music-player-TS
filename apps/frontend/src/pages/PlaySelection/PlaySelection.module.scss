@@ -1,5 +1,5 @@
 .play_selection {
-	height: 50px;
+	height: var(--play-selection-height);
 	background-color: var(--second-bg-color-for-blur);
 	backdrop-filter: blur(20px);
 	display: flex;
@@ -14,7 +14,7 @@
 
 @keyframes play-selection-fade-in {
 	from {
-		bottom: -50px;
+		bottom: var(--play-selection-height);
 	}
 	to {
 		bottom: 0;

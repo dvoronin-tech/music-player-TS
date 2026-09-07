@@ -6,7 +6,7 @@ header {
     height: 80px;
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     position: fixed;
     top: 0;
@@ -14,6 +14,13 @@ header {
     backdrop-filter: blur(40px);
     padding: 0 40px;
     z-index: 200;
+
+    .header_home {
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        font-size: 2rem;
+    }
 
     .header_search_panel {
         display: flex;
