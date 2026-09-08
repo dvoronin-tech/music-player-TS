@@ -6,7 +6,7 @@ import { useAppSelector } from '@/hooks/useTypedRedux';
 import { useGetLikedTracksQuery } from '@/api/rtk/liked';
 import { Input } from '@/components/inputFields/inputFields';
 import Button from '@/components/buttons/buttons';
-import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
+import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import type { ApiTrack } from '@music-player/backend';
 import { publicUrl } from '@/utils/constants';
 
@@ -84,7 +84,7 @@ const NoDataDiv = styled.div`
 
 const LikedPage: FC = () => {
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
-	const trackId = useAppSelector((state) => state.current.trackId);
+	const currentTrack = useAppSelector((state) => state.current.currentTrack);
 	const [dataArr, setDataArr] = useState<ApiTrack[]>([]);
 	const [searchStr, setSearchStr] = useState('');
 
@@ -146,7 +146,7 @@ const LikedPage: FC = () => {
 	return (
 		<div
 			className={styles.liked_page}
-			style={{ paddingBottom: trackId ? '40px' : 0 }}
+			style={{ paddingBottom: currentTrack ? '40px' : 0 }}
 		>
 			<Background>
 				<div className="video_wrapper">
@@ -160,7 +160,7 @@ const LikedPage: FC = () => {
 				<div className={styles.liked_title_wrapper}>
 					<span className={styles.liked_title}>Любимые треки</span>
 					<div>
-						<span>BROOKLYN</span>
+						<span className={styles.liked_brooklyn}>BROOKLYN</span>
 						<span>{likedTrackList.length} треков</span>
 					</div>
 				</div>

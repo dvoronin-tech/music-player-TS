@@ -14,9 +14,9 @@ export const Route = createFileRoute('/')({
 
 function IndexPage() {
 	return (
-		<div className="app_wrapper">
+		<>
 			<Headers type="simple" />
 			<PreRegPage />
-		</div>
+		</>
 	);
 }

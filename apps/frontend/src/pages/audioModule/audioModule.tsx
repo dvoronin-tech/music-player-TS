@@ -43,15 +43,12 @@ const AudioModule: FC = () => {
 		rewind,
 		switchTrack,
 	} = useAppSelector((state) => state.trackState);
-	const { currentPlayList, trackId, shuffledArr } = useAppSelector(
+	const { currentPlayList, currentTrack, shuffledArr } = useAppSelector(
 		(state) => state.current,
 	);
 
 	const [audio] = useState(new Audio());
 
-	const [currentTrack, setCurrentTrack] = useState<ApiTrack | undefined>(
-		undefined,
-	);
 	const [playList, setPlayList] = useState<ApiTrack[]>([]);
 	const [playTrack] = usePlayTrackMutation();
 
@@ -160,12 +157,6 @@ const AudioModule: FC = () => {
 	}, [currentPlayList, shuffledArr]);
 
 	useEffect(() => {
-		if (playList.length !== 0 && currentTrack?.id !== trackId) {
-			setCurrentTrack(playList.find((item) => item.id === trackId));
-		}
-	}, [trackId, currentTrack, playList, dispatch]);
-
-	useEffect(() => {
 		if (isRandom) {
 			dispatch(selectShuffledPlayList(shuffle(playList)));
 			console.log('called');
@@ -238,10 +229,10 @@ const AudioModule: FC = () => {
 	}, [dispatch, switchTrack]);
 
 	useEffect(() => {
-		if (currentPlayList.length !== 0 && !trackId) {
+		if (currentPlayList.length !== 0 && !currentTrack) {
 			dispatch(selectCurrentTrack(currentPlayList[0].id));
 		}
-	}, [currentPlayList, trackId, dispatch]);
+	}, [currentPlayList, currentTrack, dispatch]);
 
 	useEffect(() => {
 		if (currentTrack) {

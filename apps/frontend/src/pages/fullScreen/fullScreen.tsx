@@ -3,13 +3,12 @@ import { FC, SyntheticEvent, useEffect, useRef, useState } from 'react';
 import styles from './fullScreen.module.scss';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
-import type { ApiTrack } from '@music-player/backend';
 import {
 	useGetLikedTracksQuery,
 	useToggleLikedTrackMutation,
 } from '@/api/rtk/liked';
 import { formatArtistNames } from '@/utils/formatArtists';
-import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
+import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import Button from '@/components/buttons/buttons';
 import {
 	CurrentPlayList,
@@ -28,11 +27,11 @@ import {
 	toggleRandom,
 	toggleRepeat,
 } from '@/store/slices/trackState';
-import { humanizingNumbers } from '@/pages/PlaySelection/PlaySelection';
+import { humanizingNumbers } from '@/utils/humanizingNumbers';
 import { addNotification } from '@/store/slices/notification';
 import { v4 as randomId } from 'uuid';
 import { showCurrentPlayListAction } from '@/store/slices/current';
-import { useNavigate, useRouter } from '@tanstack/react-router';
+import { toggleShowFullScreen } from '@/store/slices/ui';
 
 const Background = styled.div<{ $img: string }>`
 	height: calc(100svh - 70px);
@@ -174,7 +173,7 @@ const TrackImg = styled.img<{ $isShow: boolean }>`
 
 const FullScreen: FC = () => {
 	const dispatch = useAppDispatch();
-	const { trackId, currentPlayList, showCurrentPlayList, shuffledArr } =
+	const { currentTrack, currentPlayList, showCurrentPlayList, shuffledArr } =
 		useAppSelector((state) => state.current);
 	const {
 		isPlay,
@@ -186,9 +185,6 @@ const FullScreen: FC = () => {
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 
-	const [currentTrack, setCurrentTrack] = useState<ApiTrack | undefined>(
-		undefined,
-	); // Трек
 	const [spanTranslateValue, setSpanTranslateValue] = useState(0); //
 	const [isSpanHovered, setIsSpanHovered] = useState(false);
 	const [CPLTranslateValue, setCPLTranslateValue] = useState(0);
@@ -202,8 +198,9 @@ const FullScreen: FC = () => {
 	const CPLSelectionRef = useRef<HTMLDivElement | null>(null);
 	const CPLLineRef = useRef<HTMLDivElement | null>(null);
 
-	const navigate = useNavigate();
-	const router = useRouter();
+	const closeFullScreen = () => {
+		dispatch(toggleShowFullScreen(false));
+	};
 
 	const renderCurrentPlayList = () => {
 		if (shuffledArr.length !== 0) {
@@ -232,19 +229,15 @@ const FullScreen: FC = () => {
 	};
 
 	useEffect(() => {
-		if (!trackId) {
-			navigate({ to: '/home' });
-		}
-	}, [trackId, navigate]);
-
-	useEffect(() => {
-		const likedTrack = likedTrackList.find((track) => track.id === trackId);
+		const likedTrack = likedTrackList.find(
+			(track) => track.id === currentTrack?.id,
+		);
 		if (likedTrack) {
 			setIsLiked(true);
 		} else {
 			setIsLiked(false);
 		}
-	}, [likedTrackList, trackId]);
+	}, [likedTrackList, currentTrack?.id]);
 
 	useEffect(() => {
 		if (infoDiv.current && trackTitleSpan.current) {
@@ -274,14 +267,6 @@ const FullScreen: FC = () => {
 		CPLLineRef.current?.clientWidth,
 		CPLTranslateValue,
 	]);
-
-	useEffect(() => {
-		if (currentPlayList.length !== 0 && currentTrack?.id !== trackId) {
-			setCurrentTrack(
-				currentPlayList.find((item) => item.id === trackId),
-			);
-		}
-	}, [currentPlayList, currentTrack?.id, trackId]);
 
 	useEffect(() => {
 		if (currentPlayList.length === 1) {
@@ -351,8 +336,8 @@ const FullScreen: FC = () => {
 	};
 
 	const toggleIsLiked = () => {
-		if (trackId && currentTrack) {
-			toggleLikedTrack({ id: trackId, isLiked });
+		if (currentTrack) {
+			toggleLikedTrack({ id: currentTrack.id, isLiked });
 			dispatch(
 				addNotification({
 					notificationId: randomId(),
@@ -553,7 +538,7 @@ const FullScreen: FC = () => {
 										scale={35}
 									/>
 								</button>
-								<button onClick={() => router.history.back()}>
+								<button onClick={closeFullScreen}>
 									<FullScreenIcon type="active" scale={35} />
 								</button>
 							</div>

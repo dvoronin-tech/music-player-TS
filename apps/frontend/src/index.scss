@@ -22,6 +22,8 @@
     --error-color: #C84141;
     --error-color-hover: #ab3939;
     --success-color: #4EBA3C;
+
+    --play-selection-height: 80px;
 }
 
 *,
@@ -109,10 +111,6 @@ code {
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: var(--second-bg-color);
-}
-
-.app_wrapper {
     background-color: var(--main-bg-color);
 }
 

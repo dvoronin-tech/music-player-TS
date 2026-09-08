@@ -3,7 +3,7 @@ import { FC } from 'react';
 import styles from './CPLSelection.module.scss';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
-import SmallTrackCard from '@/components/cards/smallTrackCard/smallTrackCard';
+import SmallTrackCard from '@/components/smallTrackCard/smallTrackCard';
 import { showCurrentPlayListAction } from '@/store/slices/current';
 
 const CPLSelectionComponent = styled.aside<{ $isShow: boolean }>`

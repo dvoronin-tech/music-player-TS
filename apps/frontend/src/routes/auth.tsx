@@ -12,9 +12,5 @@ export const Route = createFileRoute('/auth')({
 });
 
 function AuthRouteComponent() {
-	return (
-		<div className="app_wrapper">
-			<Auth />
-		</div>
-	);
+	return <Auth />;
 }

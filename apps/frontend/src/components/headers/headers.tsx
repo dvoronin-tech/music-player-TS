@@ -1,14 +1,12 @@
 import { FC } from 'react';
+import { FaHome } from 'react-icons/fa';
 
 import styles from './headers.module.scss';
-import Button from '@/components/buttons/buttons';
-import { useLocation, useNavigate, useRouter } from '@tanstack/react-router';
-import styled from 'styled-components';
-import { HiHome } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import { toggleShowUserData } from '@/store/slices/ui';
 import { useGetMeQuery } from '@/api/rtk/user';
 import { UserIcon } from '@/components/icons and tags/icons';
+import Button from '@/components/buttons/buttons';
 
 interface IHeadersProp {
 	type: 'simple' | 'main';
@@ -16,33 +14,7 @@ interface IHeadersProp {
 	style?: React.CSSProperties;
 }
 
-const GoHomeBtn = styled.button`
-	width: 40px;
-	height: 40px;
-	border-radius: 100px;
-	background-color: ${({ theme }) => theme.inputsBg};
-	cursor: pointer;
-
-	svg {
-		position: relative;
-		top: 1px;
-		color: ${({ theme }) => theme.textDisable};
-	}
-
-	@media (hover: hover) {
-		&:hover {
-			svg {
-				color: ${({ theme }) => theme.text};
-			}
-			transform: scale(1.02);
-		}
-	}
-`;
-
 const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
-	const navigate = useNavigate();
-	const router = useRouter();
-	const location = useLocation();
 	const dispatch = useAppDispatch();
 
 	const { data: user } = useGetMeQuery();
@@ -52,49 +24,25 @@ const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
 	const email = user?.email ?? '';
 	const userImg = user?.userImg ?? null;
 
-	const goBack = () => {
-		router.history.back();
-		if (location.pathname === '/' || location.pathname === '/auth') {
-			router.history.forward();
-		}
-	};
-
-	const goForward = () => {
-		router.history.forward();
-	};
-
-	const goHome = () => {
-		navigate({ to: '/home' });
-	};
-
 	const toggleSUD = () => {
 		dispatch(toggleShowUserData(true));
 	};
 
 	if (type === 'main') {
 		return (
-			<header style={style} className={`${styles.main_header} ${className ?? ''}`}>
-				<nav>
-					<Button
-						variant="alternative"
-						size="3xl"
-						weight="regular"
-						onClick={goBack}
-					>
-						{'<'}
-					</Button>
-					<Button
-						variant="alternative"
-						size="3xl"
-						weight="regular"
-						onClick={goForward}
-					>
-						{'>'}
-					</Button>
-					<GoHomeBtn onClick={goHome}>
-						<HiHome />
-					</GoHomeBtn>
-				</nav>
+			<header
+				style={style}
+				className={`${styles.main_header} ${className ?? ''}`}
+			>
+				<Button
+					to="/home"
+					variant="alternative"
+					className={styles.header_home}
+					aria-label="На главную"
+					title="На главную"
+				>
+					<FaHome />
+				</Button>
 				<div
 					style={{ opacity: showUserData ? 0 : 1 }}
 					className={styles.header_account}
@@ -116,7 +64,10 @@ const Headers: FC<IHeadersProp> = ({ type, className, style }) => {
 		);
 	} else {
 		return (
-			<header style={style} className={`${styles.simple_header} ${className ?? ''}`}>
+			<header
+				style={style}
+				className={`${styles.simple_header} ${className ?? ''}`}
+			>
 				<span>BROOKLYN</span>
 			</header>
 		);

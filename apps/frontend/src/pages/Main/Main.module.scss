@@ -1,6 +1,10 @@
 .main {
     padding: 80px 40px 40px 40px;
     background-color: var(--main-bg-color);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
 }
 
 .cards_wrapper {
@@ -8,18 +12,6 @@
     flex-direction: column;
     width: 100%;
     margin-bottom: 20px;
-}
-
-.cards {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    gap: 30px;
-
-    &:not(:last-child) {
-        margin-bottom: 30px;
-    }
 }
 
 .artists_line {
@@ -89,7 +81,9 @@
 }
 
 .something_new {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .something_new_title {
@@ -99,11 +93,6 @@
 
 .home_track_cards_wrapper {
     width: 100%;
-    // display: flex;
-    // flex-wrap: wrap;
-    // justify-content: space-between;
-    // gap: 20px;
-    margin: 20px 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;

@@ -1,16 +1,15 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import styles from './Main.module.scss';
 import Button from '@/components/buttons/buttons';
-import { HomeCard } from '@/components/cards/homeCards/homeCards';
-import { ArtistCard } from '@/components/cards/artistCards/artistCards';
+import { HomeCards } from '@/components/homeCard/HomeCards';
+import { HomeArtists } from '@/components/artistCards/HomeArtists';
 import { useAppDispatch } from '@/hooks/useTypedRedux';
 import { useGetArtistsQuery } from '@/api/rtk/artists';
 import { useGetTracksQuery } from '@/api/rtk/tracks';
-import { ArtistsError } from '@/components/errorMessages/artistsError';
-import { HomeTrackCard } from '@/components/cards/homeTrackCards/homeTrackCards';
+import { HomeTracks } from '@/components/homeTrackCards/HomeTracks';
 import {
+	selectCurrentPlayList,
 	selectCurrentTrack,
-	selectPlayList,
 } from '@/store/slices/current';
 import type { ApiTrack } from '@music-player/backend';
 import { shuffle } from '@/pages/audioModule/audioModule';
@@ -77,11 +76,6 @@ const Main: FC = () => {
 	};
 
 	const slideToPrevArtistPage = () => {
-		// if (artistLineWrapper.current) {
-		//     const newTranslateValue = translateValue - artistLineWrapper.current.clientWidth + 150
-		//     setTranslateValue(newTranslateValue);
-		// }
-
 		setTranslateValue((prevState) => {
 			const newValue = prevState - 300;
 			if (newValue <= 0) {
@@ -91,60 +85,13 @@ const Main: FC = () => {
 		});
 	};
 
-	const renderArtists = () => {
-		if (artists.length > 0) {
-			if (!artistError) {
-				return artists.map(({ name, artistImg, id }) => {
-					return <ArtistCard key={id} name={name} img={artistImg} />;
-				});
-			} else {
-				const errorMessage =
-					artistError && 'data' in artistError && typeof artistError.data === 'string'
-						? artistError.data
-						: 'При получении артистов произошла ошибка';
-				return <ArtistsError errorMessage={errorMessage} />;
-			}
-		}
-		if (artistError) {
-			const errorMessage =
-				'data' in artistError && typeof artistError.data === 'string'
-					? artistError.data
-					: 'При получении артистов произошла ошибка';
-			return <ArtistsError errorMessage={errorMessage} />;
-		}
-	};
-
-	const renderTracks = () => {
-		if (trackList) {
-			if (!tracksError) {
-				return trackList.map((item) => {
-					return (
-						<HomeTrackCard
-							key={item.id}
-							track={item}
-							playList={trackList}
-						/>
-					);
-				});
-			} else {
-				const errorMessage =
-					tracksError &&
-					'data' in tracksError &&
-					typeof tracksError.data === 'string'
-						? tracksError.data
-						: 'При получении треков произошла ошибка';
-				return <ArtistsError errorMessage={errorMessage} />;
-			}
-		}
-	};
-
 	const setArtistOfMonthPlayList = () => {
 		const tracks = trackList.filter((item) =>
 			item.artists.some((artist) => artist.name === 'Тринадцать карат'),
 		);
 		if (tracks) {
 			dispatch(
-				selectPlayList(
+				selectCurrentPlayList(
 					tracks.sort((a, b) => b.auditions - a.auditions),
 				),
 			);
@@ -159,7 +106,7 @@ const Main: FC = () => {
 		for (let i = 0; i <= 9; i++) {
 			currentArray.push(sortedArr[i]);
 		}
-		dispatch(selectPlayList(currentArray));
+		dispatch(selectCurrentPlayList(currentArray));
 		dispatch(selectCurrentTrack(currentArray[0].id));
 	};
 
@@ -167,12 +114,12 @@ const Main: FC = () => {
 		const tracks = trackList.filter((item) =>
 			item.artists.some(
 				(artist) =>
-					artist.name === 'Макс корж' ||
-					artist.name === 'Тима Белоруских',
+					artist.name === 'Макс Корж' ||
+					artist.name === 'Тима Белорусских',
 			),
 		);
-		if (tracks) {
-			dispatch(selectPlayList(tracks));
+		if (tracks.length > 0) {
+			dispatch(selectCurrentPlayList(tracks));
 			dispatch(selectCurrentTrack(tracks[0].id));
 		}
 	};
@@ -183,121 +130,111 @@ const Main: FC = () => {
 		for (let i = 0; i <= 9; i++) {
 			currentArray.push(shuffledArr[i]);
 		}
-		dispatch(selectPlayList(currentArray));
+		dispatch(selectCurrentPlayList(currentArray));
 		dispatch(selectCurrentTrack(currentArray[0].id));
 	};
 
 	return (
-		<>
-			<div className={styles.main}>
-				<main>
-					<div className={styles.cards_wrapper}>
-						<div className={styles.cards}>
-							<HomeCard
-								onClick={setArtistOfMonthPlayList}
-								W={800}
-								category="Артист месяца"
-								content="Тринадцать карат"
-								additionalContent="242412 прослушиваний"
-								img="/img/home-card-1.webp"
-							/>
-							<HomeCard
-								onClick={setBestInBrooklyn}
-								W={530}
-								category="Лучшее"
-								content="в BROOKLYN"
-								additionalContent="Моргенштерн, Тринадцать карат ..."
-								img="/img/home-card-2.webp"
-							/>
-						</div>
-						<div className={styles.cards}>
-							<HomeCard
-								onClick={setBestInCountry}
-								W={530}
-								category="ТОП"
-								content="в Стране"
-								additionalContent="Тима белорусских, Макс Корж ..."
-								img="/img/home-card-3.webp"
-							/>
-							<HomeCard
-								onClick={bestForYou}
-								W={800}
-								category="Подборка"
-								content="Для вас"
-								additionalContent="Nikitata, Тринадцать карат, Три дня до..."
-								img="/img/home-card-4.webp"
-							/>
-						</div>
-						<div className={styles.home_artists_line}>
-							<span>Артисты</span>
-							{translateValue ? (
-								<div className={styles.shade}></div>
-							) : null}
-							<div
-								ref={artistLineWrapper}
-								className={styles.artists_line}
-							>
-								{translateValue ? (
-									<Button
-										onClick={slideToPrevArtistPage}
-										variant="alternative"
-										size="3xl"
-									>
-										{'<'}
-									</Button>
-								) : null}
-
-								<div
-									style={{
-										transform: `translate(${-translateValue}px)`,
-										justifyContent: artistLoading
-											? 'center'
-											: 'flex-start',
-									}}
-									className={styles.artists_line_wrapper}
-									ref={artistLine}
-								>
-									{artistLoading ? (
-										<div className="loader"></div>
-									) : (
-										renderArtists()
-									)}
-								</div>
-
-								{isButtonShow && (
-									<Button
-										onClick={slideToNextArtistPage}
-										variant="alternative"
-										size="3xl"
-									>
-										{'>'}
-									</Button>
-								)}
-							</div>
-						</div>
-					</div>
-					<div className={styles.something_new}>
-						<span className={styles.something_new_title}>
-							Что-то новое
-						</span>
-						<div
-							style={{
-								justifyContent: tracksLoading
-									? 'center'
-									: 'space-between',
-							}}
-							className={styles.home_track_cards_wrapper}
+		<main className={styles.main}>
+			<HomeCards
+				cards={[
+					{
+						onClick: setArtistOfMonthPlayList,
+						category: 'Артист месяца',
+						content: 'Тринадцать карат',
+						additionalContent: '242412 прослушиваний',
+						img: '/img/home-card-1.webp',
+					},
+					{
+						onClick: setBestInBrooklyn,
+						category: 'Лучшее',
+						content: 'в BROOKLYN',
+						additionalContent: 'Моргенштерн, Тринадцать карат ...',
+						img: '/img/home-card-2.webp',
+					},
+					{
+						onClick: setBestInCountry,
+						category: 'ТОП',
+						content: 'в Стране',
+						additionalContent: 'Тима белорусских, Макс Корж ...',
+						img: '/img/home-card-3.webp',
+					},
+					{
+						onClick: bestForYou,
+						category: 'Подборка',
+						content: 'Для вас',
+						additionalContent:
+							'Nikitata, Тринадцать карат, Три дня до...',
+						img: '/img/home-card-4.webp',
+					},
+				]}
+			/>
+			<div className={styles.home_artists_line}>
+				<span>Артисты</span>
+				{translateValue ? <div className={styles.shade}></div> : null}
+				<div ref={artistLineWrapper} className={styles.artists_line}>
+					{translateValue ? (
+						<Button
+							onClick={slideToPrevArtistPage}
+							variant="alternative"
+							size="3xl"
 						>
-							{tracksLoading ? (
-								<div className="loader"></div>
-							) : (
-								renderTracks()
-							)}
-						</div>
+							{'<'}
+						</Button>
+					) : null}
+
+					<div
+						style={{
+							transform: `translate(${-translateValue}px)`,
+							justifyContent: artistLoading
+								? 'center'
+								: 'flex-start',
+						}}
+						className={styles.artists_line_wrapper}
+						ref={artistLine}
+					>
+						{artistLoading ? (
+							<div className="loader"></div>
+						) : (
+							<HomeArtists
+								artists={artists}
+								error={artistError}
+							/>
+						)}
 					</div>
-				</main>
+
+					{isButtonShow && (
+						<Button
+							onClick={slideToNextArtistPage}
+							variant="alternative"
+							size="3xl"
+						>
+							{'>'}
+						</Button>
+					)}
+				</div>
 			</div>
-		</>
+			<div className={styles.something_new}>
+				<span className={styles.something_new_title}>Что-то новое</span>
+				<div
+					style={{
+						justifyContent: tracksLoading
+							? 'center'
+							: 'space-between',
+					}}
+					className={styles.home_track_cards_wrapper}
+				>
+					{tracksLoading ? (
+						<div className="loader"></div>
+					) : (
+						<HomeTracks
+							tracks={trackList}
+							error={tracksError}
+						/>
+					)}
+				</div>
+			</div>
+		</main>
 	);
 };
 

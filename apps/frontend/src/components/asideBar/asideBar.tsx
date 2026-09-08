@@ -7,8 +7,8 @@ import {
 	useGetLikedArtistsQuery,
 } from '@/api/rtk/liked';
 import Button from '@/components/buttons/buttons';
-import SmallTrackCard from '@/components/cards/smallTrackCard/smallTrackCard';
-import { ArtistCard } from '@/components/cards/artistCards/artistCards';
+import SmallTrackCard from '@/components/smallTrackCard/smallTrackCard';
+import { ArtistCard } from '@/components/artistCards/artistCards';
 import { useNavigate } from '@tanstack/react-router';
 
 const AsideBarComponent = styled.aside<{
@@ -75,7 +75,7 @@ const ArtistsGridWrapper = styled.div<{ $isNoArtists: boolean }>`
 `;
 
 const AsideBar: FC = () => {
-	const { trackId, currentPlayList } = useAppSelector(
+	const { currentTrack, currentPlayList } = useAppSelector(
 		(state) => state.current,
 	);
 	const { data: likedTrackList = [], isLoading: tracksLoading } =
@@ -90,12 +90,12 @@ const AsideBar: FC = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (trackId && currentPlayList.length > 0) {
+		if (currentTrack && currentPlayList.length > 0) {
 			setShowPlayList(true);
 		} else {
 			setShowPlayList(false);
 		}
-	}, [currentPlayList.length, trackId]);
+	}, [currentPlayList.length, currentTrack]);
 
 	const renderLikedTrackList = () => {
 		if (!tracksLoading) {

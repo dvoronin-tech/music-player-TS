@@ -1,0 +1,126 @@
+.right_elements {
+	flex: 1 1 500px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	animation: fade-out 1s ease;
+
+	button {
+		background: transparent;
+		padding: 0;
+		border: none;
+		width: 20px;
+		height: 20px;
+		transition: 0.2s all ease;
+		color: var(--text-color);
+
+		svg {
+			width: 20px;
+			height: 20px;
+		}
+
+		&:not(:first-child) {
+			margin-left: 5px;
+		}
+	}
+}
+
+.music_controls {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.next_rewind {
+	transform: rotate(180deg);
+}
+
+.center_controls {
+	flex: 0 0 160px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.right_controls {
+	@extend .center_controls;
+	justify-content: flex-end;
+}
+
+.left_controls {
+	@extend .center_controls;
+	justify-content: flex-start;
+}
+
+.music_progress {
+	flex: 0 0 92%;
+	height: 4px;
+	border-radius: 5px;
+	background-color: var(--text-disable-color);
+	cursor: pointer;
+	transition: 0.5s ease all;
+
+	@media (hover: hover) {
+		&:hover .target_circle {
+			opacity: 1;
+		}
+	}
+}
+
+.progress_bar {
+	height: 100%;
+	background-color: var(--accent-color);
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	transition: 0.3s ease all;
+}
+
+.target_circle {
+	position: relative;
+	left: 5px;
+	width: 10px;
+	height: 10px;
+	background-color: var(--text-color);
+	border-radius: 100px;
+	opacity: 0;
+	transition: 0.15s all ease;
+}
+
+.control {
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+}
+
+.current_play_list_control {
+	cursor: pointer;
+}
+
+.additional_track_info {
+	display: flex;
+	justify-content: space-between;
+	align-items: end;
+	width: 100%;
+	height: 12px;
+}
+
+.time {
+	font-size: 1rem;
+	flex: 0 0 30px;
+	position: relative;
+	top: 3px;
+	font-weight: 500;
+}
+
+@keyframes fade-out {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
