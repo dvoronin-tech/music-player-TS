@@ -2,20 +2,21 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { baseApi } from '@/api/baseApi';
 import uiReducer from '@/store/slices/ui';
-import currentReducer from '@/store/slices/current';
 import notificationReducer from '@/store/slices/notification';
-import trackStateReducer from '@/store/slices/trackState';
+import playerReducer from '@/store/slices/player';
+import { createPlayerMiddleware } from '@/store/middleware/player';
+
+const playerMiddleware = createPlayerMiddleware();
 
 const store = configureStore({
 	reducer: {
 		[baseApi.reducerPath]: baseApi.reducer,
 		ui: uiReducer,
-		current: currentReducer,
 		notification: notificationReducer,
-		trackState: trackStateReducer,
+		player: playerReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(baseApi.middleware),
+		getDefaultMiddleware().concat(playerMiddleware, baseApi.middleware),
 	devTools: false,
 });
 

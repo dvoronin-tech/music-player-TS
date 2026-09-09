@@ -10,10 +10,11 @@ import {
 	useToggleLikedTrackMutation,
 } from '@/api/rtk/liked';
 import {
-	addToCurrentPlayList,
-	selectCurrentPlayList,
+	addTrackToQueue,
 	selectCurrentTrack,
-} from '@/store/slices/current';
+	selectPlayerQueue,
+	startTrack,
+} from '@/store/slices/player';
 import {
 	AddToPlayList,
 	Like,
@@ -114,9 +115,9 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const dispatch = useAppDispatch();
 	const { currentTrack, currentPlayList } = useAppSelector(
-		({ current }) => ({
-			currentTrack: current.currentTrack,
-			currentPlayList: current.currentPlayList,
+		(state) => ({
+			currentTrack: selectCurrentTrack(state),
+			currentPlayList: selectPlayerQueue(state),
 		}),
 		shallowEqual,
 	);
@@ -126,8 +127,7 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 
 	const { albumImg, id, title, auditions } = track;
 	const setCurrentTrack = () => {
-		dispatch(selectCurrentPlayList(playList));
-		dispatch(selectCurrentTrack(id));
+		dispatch(startTrack({ queue: playList, trackId: id }));
 	};
 
 	useEffect(() => {
@@ -151,7 +151,7 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 	const addToPlayList = () => {
 		const arrOfId = currentPlayList.map((item) => item.id);
 		if (!arrOfId.includes(id)) {
-			dispatch(addToCurrentPlayList(track));
+			dispatch(addTrackToQueue(track));
 			dispatch(
 				addNotification({
 					notificationId: randomId(),
@@ -174,12 +174,19 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 		}
 	};
 
+	const handleMouseEnter = () => {
+		setIsHovered(true);
+	};
+	const handleMouseLeave = () => {
+		setIsHovered(false);
+	};
+
 	return (
 		<div
 			style={{ flexBasis: isHovered ? '60%' : '35%' }}
 			className={styles.popular_track_item}
-			onMouseEnter={() => setIsHovered(true)}
-			onMouseLeave={() => setIsHovered(false)}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
 		>
 			<BackgroundImg
 				$albumImg={albumImg}

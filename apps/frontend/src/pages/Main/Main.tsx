@@ -7,13 +7,10 @@ import { useAppDispatch } from '@/hooks/useTypedRedux';
 import { useGetArtistsQuery } from '@/api/rtk/artists';
 import { useGetTracksQuery } from '@/api/rtk/tracks';
 import { HomeTracks } from '@/components/homeTrackCards/HomeTracks';
-import {
-	selectCurrentPlayList,
-	selectCurrentTrack,
-} from '@/store/slices/current';
 import type { ApiTrack } from '@music-player/backend';
-import { shuffle } from '@/pages/audioModule/audioModule';
 import { publicUrl } from '@/utils/constants';
+import { startTrack } from '@/store/slices/player';
+import { shuffle } from '@/utils/shuffle';
 
 const Main: FC = () => {
 	const dispatch = useAppDispatch();
@@ -89,25 +86,19 @@ const Main: FC = () => {
 		const tracks = trackList.filter((item) =>
 			item.artists.some((artist) => artist.name === 'Тринадцать карат'),
 		);
-		if (tracks) {
-			dispatch(
-				selectCurrentPlayList(
-					tracks.sort((a, b) => b.auditions - a.auditions),
-				),
-			);
-			dispatch(selectCurrentTrack(tracks[0].id));
+		if (tracks.length > 0) {
+			const queue = tracks.sort((a, b) => b.auditions - a.auditions);
+			dispatch(startTrack({ queue, trackId: queue[0].id }));
 		}
 	};
 
 	const setBestInBrooklyn = () => {
 		const oldArr = [...trackList];
 		const sortedArr = oldArr.sort((a, b) => a.auditions - b.auditions);
-		const currentArray: ApiTrack[] = [];
-		for (let i = 0; i <= 9; i++) {
-			currentArray.push(sortedArr[i]);
+		const queue: ApiTrack[] = sortedArr.slice(0, 10);
+		if (queue.length > 0) {
+			dispatch(startTrack({ queue, trackId: queue[0].id }));
 		}
-		dispatch(selectCurrentPlayList(currentArray));
-		dispatch(selectCurrentTrack(currentArray[0].id));
 	};
 
 	const setBestInCountry = () => {
@@ -119,19 +110,15 @@ const Main: FC = () => {
 			),
 		);
 		if (tracks.length > 0) {
-			dispatch(selectCurrentPlayList(tracks));
-			dispatch(selectCurrentTrack(tracks[0].id));
+			dispatch(startTrack({ queue: tracks, trackId: tracks[0].id }));
 		}
 	};
 
 	const bestForYou = () => {
-		const shuffledArr = shuffle(trackList);
-		const currentArray: ApiTrack[] = [];
-		for (let i = 0; i <= 9; i++) {
-			currentArray.push(shuffledArr[i]);
+		const queue = shuffle(trackList).slice(0, 10);
+		if (queue.length > 0) {
+			dispatch(startTrack({ queue, trackId: queue[0].id }));
 		}
-		dispatch(selectCurrentPlayList(currentArray));
-		dispatch(selectCurrentTrack(currentArray[0].id));
 	};
 
 	return (

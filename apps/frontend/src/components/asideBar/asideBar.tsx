@@ -10,6 +10,10 @@ import Button from '@/components/buttons/buttons';
 import SmallTrackCard from '@/components/smallTrackCard/smallTrackCard';
 import { ArtistCard } from '@/components/artistCards/artistCards';
 import { useNavigate } from '@tanstack/react-router';
+import {
+	selectCurrentTrack,
+	selectPlayerQueue,
+} from '@/store/slices/player';
 
 const AsideBarComponent = styled.aside<{
 	$isPlayList: boolean;
@@ -75,9 +79,8 @@ const ArtistsGridWrapper = styled.div<{ $isNoArtists: boolean }>`
 `;
 
 const AsideBar: FC = () => {
-	const { currentTrack, currentPlayList } = useAppSelector(
-		(state) => state.current,
-	);
+	const currentTrack = useAppSelector(selectCurrentTrack);
+	const currentPlayList = useAppSelector(selectPlayerQueue);
 	const { data: likedTrackList = [], isLoading: tracksLoading } =
 		useGetLikedTracksQuery();
 	const { data: likedArtists = [], isLoading: artistsLoading } =
@@ -136,6 +139,7 @@ const AsideBar: FC = () => {
 						return (
 							<ArtistCard
 								key={item.id}
+								id={item.id}
 								name={item.name}
 								img={item.artistImg}
 								type="small"
@@ -147,6 +151,7 @@ const AsideBar: FC = () => {
 						return (
 							<ArtistCard
 								key={item.id}
+								id={item.id}
 								name={item.name}
 								img={item.artistImg}
 								type="small"

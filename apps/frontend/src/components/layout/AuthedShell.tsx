@@ -2,15 +2,17 @@ import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import Notification from '@/components/notification/notification';
-import AudioModule from '@/pages/audioModule/audioModule';
 import Headers from '@/components/headers/headers';
 import PlaySelection from '@/pages/PlaySelection/PlaySelection';
 import AsideBar from '@/components/asideBar/asideBar';
 import CPLSelection from '@/components/CPLSelection/CPLSelection';
 import AccountDataBar from '@/components/accountDataBar/accountDataBar';
 import FullScreen from '@/pages/fullScreen/fullScreen';
-import { showCurrentPlayListAction } from '@/store/slices/current';
-import { toggleShowFullScreen } from '@/store/slices/ui';
+import {
+	setCurrentPlayListOpen,
+	toggleShowFullScreen,
+} from '@/store/slices/ui';
+import { selectCurrentTrack } from '@/store/slices/player';
 
 interface AuthedShellProps {
 	children: ReactNode;
@@ -18,16 +20,14 @@ interface AuthedShellProps {
 
 export default function AuthedShell({ children }: AuthedShellProps) {
 	const dispatch = useAppDispatch();
-	const { currentTrack, showCurrentPlayList } = useAppSelector(
-		(state) => state.current,
-	);
-	const { showUserData, showFullScreen } = useAppSelector(
+	const currentTrack = useAppSelector(selectCurrentTrack);
+	const { showUserData, showFullScreen, showCurrentPlayList } = useAppSelector(
 		(state) => state.ui,
 	);
 
 	useEffect(() => {
 		if (showUserData && showCurrentPlayList) {
-			dispatch(showCurrentPlayListAction(false));
+			dispatch(setCurrentPlayListOpen(false));
 		}
 	}, [dispatch, showCurrentPlayList, showUserData]);
 
@@ -52,7 +52,6 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 			<CPLSelection />
 			<AccountDataBar />
 			<Notification />
-			<AudioModule />
 		</>
 	);
 }

@@ -5,15 +5,19 @@ import { Loader } from '@/components/loader/Loader';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import { toggleShowFullScreen } from '@/store/slices/ui';
 import { formatArtistNames } from '@/utils/formatArtists';
+import {
+	selectCurrentTrack,
+	selectIsLoading,
+} from '@/store/slices/player';
 
 import styles from './LeftElements.module.scss';
 
 export const LeftElements: FC = memo(() => {
 	const dispatch = useAppDispatch();
 	const { currentTrack, pending } = useAppSelector(
-		({ current, trackState }) => ({
-			currentTrack: current.currentTrack,
-			pending: trackState.pending,
+		(state) => ({
+			currentTrack: selectCurrentTrack(state),
+			pending: selectIsLoading(state),
 		}),
 		shallowEqual,
 	);

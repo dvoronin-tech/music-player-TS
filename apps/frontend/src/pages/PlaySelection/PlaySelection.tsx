@@ -6,6 +6,7 @@ import { useAppSelector } from '@/hooks/useTypedRedux';
 
 import { LeftElements } from './LeftElements/LeftElements';
 import { RightElements } from './RightElements/RightElements';
+import { selectCurrentTrack } from '@/store/slices/player';
 
 export interface IKeyInfo {
 	keyCode: string;
@@ -13,7 +14,7 @@ export interface IKeyInfo {
 }
 
 const PlaySelection: FC = () => {
-	const currentTrack = useAppSelector(({ current }) => current.currentTrack);
+	const currentTrack = useAppSelector(selectCurrentTrack);
 
 	if (!currentTrack) return null;
 

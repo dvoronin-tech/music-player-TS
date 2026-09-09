@@ -4,7 +4,8 @@ import styles from './CPLSelection.module.scss';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import SmallTrackCard from '@/components/smallTrackCard/smallTrackCard';
-import { showCurrentPlayListAction } from '@/store/slices/current';
+import { setCurrentPlayListOpen } from '@/store/slices/ui';
+import { selectPlayerQueue, selectPlayQueue } from '@/store/slices/player';
 
 const CPLSelectionComponent = styled.aside<{ $isShow: boolean }>`
 	position: fixed;
@@ -49,43 +50,30 @@ const BlurBg = styled.div<{ $isShow: boolean }>`
 `;
 
 const CPLSelection: FC = () => {
-	const { shuffledArr, currentPlayList, showCurrentPlayList } =
-		useAppSelector((state) => state.current);
+	const currentPlayList = useAppSelector(selectPlayerQueue);
+	const playQueue = useAppSelector(selectPlayQueue);
+	const showCurrentPlayList = useAppSelector(
+		(state) => state.ui.showCurrentPlayList,
+	);
 	const dispatch = useAppDispatch();
 
 	const setDefaultShowCPL = () => {
-		dispatch(showCurrentPlayListAction(false));
-	};
-
-	const renderCPL = () => {
-		if (shuffledArr.length !== 0) {
-			return shuffledArr.map((item) => {
-				return (
-					<SmallTrackCard
-						key={item.id}
-						track={item}
-						playList={shuffledArr}
-					/>
-				);
-			});
-		} else {
-			return currentPlayList.map((item) => {
-				return (
-					<SmallTrackCard
-						key={item.id}
-						track={item}
-						playList={currentPlayList}
-					/>
-				);
-			});
-		}
+		dispatch(setCurrentPlayListOpen(false));
 	};
 
 	return (
 		<>
 			<CPLSelectionComponent $isShow={showCurrentPlayList}>
 				<span className={styles.title_span}>Текущий плейлист</span>
-				<TrackListWrapper>{renderCPL()}</TrackListWrapper>
+				<TrackListWrapper>
+					{playQueue.map((item) => (
+						<SmallTrackCard
+							key={item.id}
+							track={item}
+							playList={currentPlayList}
+						/>
+					))}
+				</TrackListWrapper>
 			</CPLSelectionComponent>
 			<BlurBg
 				onClick={setDefaultShowCPL}

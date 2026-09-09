@@ -16,39 +16,46 @@ import {
 	Rewind,
 } from '@/components/icons and tags/icons';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
-import { showCurrentPlayListAction } from '@/store/slices/current';
 import { addNotification } from '@/store/slices/notification';
 import {
-	setPause,
-	setPlay,
-	setRewindCurrentTime,
-	switchTrackAction,
-	toggleRandom,
+	nextTrack,
+	previousTrack,
+	seekTo,
+	selectCurrentTrack,
+	selectPlayerQueue,
+	togglePlayback,
+	toggleShuffle,
 	toggleRepeat,
-} from '@/store/slices/trackState';
-import { toggleShowFullScreen } from '@/store/slices/ui';
+} from '@/store/slices/player';
+import {
+	setCurrentPlayListOpen,
+	toggleShowFullScreen,
+} from '@/store/slices/ui';
 import { formatArtistNames } from '@/utils/formatArtists';
 import { humanizingNumbers } from '@/utils/humanizingNumbers';
 import styles from './RightElements.module.scss';
 
 export const RightElements: FC = memo(() => {
 	const dispatch = useAppDispatch();
-	const { currentPlayList, currentTrack, showCurrentPlayList } = useAppSelector(
-		({ current }) => ({
-			currentPlayList: current.currentPlayList,
-			currentTrack: current.currentTrack,
-			showCurrentPlayList: current.showCurrentPlayList,
-		}),
-		shallowEqual,
-	);
+	const { currentPlayList, currentTrack, showCurrentPlayList } =
+		useAppSelector(
+			(state) => ({
+				currentPlayList: selectPlayerQueue(state),
+				currentTrack: selectCurrentTrack(state),
+				showCurrentPlayList: state.ui.showCurrentPlayList,
+			}),
+			shallowEqual,
+		);
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 	const {
-		isRandom,
-		isPlay,
-		isRepeat,
-		trackTimeData: { currentTime, duration },
-	} = useAppSelector((state) => state.trackState);
+		status,
+		shuffleEnabled: isRandom,
+		repeatEnabled: isRepeat,
+		currentTime,
+		duration,
+	} = useAppSelector((state) => state.player);
+	const isPlay = status === 'playing';
 
 	const isLiked = likedTrackList.some(
 		(track) => track.id === currentTrack?.id,
@@ -73,44 +80,32 @@ export const RightElements: FC = memo(() => {
 
 	const toggleIsPlay = () => {
 		if (currentTrack) {
-			if (isPlay) {
-				dispatch(setPause());
-			} else {
-				dispatch(setPlay());
-			}
+			dispatch(togglePlayback());
 		}
 	};
 
 	const toggleShowCurrentPlayList = () => {
-		if (currentPlayList) {
-			dispatch(showCurrentPlayListAction(!showCurrentPlayList));
+		if (currentPlayList.length > 0) {
+			dispatch(setCurrentPlayListOpen(!showCurrentPlayList));
 		}
 	};
 
 	const toggleIsRepeat = () => {
-		if (isRepeat) {
-			dispatch(toggleRepeat(false));
-		} else {
-			dispatch(toggleRepeat(true));
-		}
+		dispatch(toggleRepeat());
 	};
 
 	const toggleIsRandom = () => {
 		if (currentTrack) {
-			if (isRandom) {
-				dispatch(toggleRandom(false));
-			} else {
-				dispatch(toggleRandom(true));
-			}
+			dispatch(toggleShuffle());
 		}
 	};
 
 	const prevTrack = () => {
-		dispatch(switchTrackAction('back'));
+		dispatch(previousTrack());
 	};
 
-	const nextTrack = () => {
-		dispatch(switchTrackAction('forward'));
+	const playNextTrack = () => {
+		dispatch(nextTrack());
 	};
 
 	const setCurrentTime = (e: SyntheticEvent<HTMLDivElement, MouseEvent>) => {
@@ -121,7 +116,7 @@ export const RightElements: FC = memo(() => {
 			const newTime =
 				((offsetX > maxOffsetX ? maxOffsetX : offsetX) / clientWidth) *
 				duration;
-			dispatch(setRewindCurrentTime(newTime));
+			dispatch(seekTo(newTime));
 		}
 	};
 
@@ -151,7 +146,7 @@ export const RightElements: FC = memo(() => {
 					</button>
 					<button
 						className={`${styles.control} ${styles.next_rewind}`}
-						onClick={nextTrack}
+						onClick={playNextTrack}
 					>
 						<Rewind type="idle" />
 					</button>

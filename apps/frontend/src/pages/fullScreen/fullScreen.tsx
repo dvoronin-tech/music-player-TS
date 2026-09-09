@@ -20,18 +20,23 @@ import {
 	FullScreen as FullScreenIcon,
 } from '@/components/icons and tags/icons';
 import {
-	setPause,
-	setPlay,
-	setRewindCurrentTime,
-	switchTrackAction,
-	toggleRandom,
+	nextTrack as nextTrackAction,
+	previousTrack as previousTrackAction,
+	seekTo,
+	selectCurrentTrack,
+	selectPlayerQueue,
+	selectPlayQueue,
+	togglePlayback,
+	toggleShuffle,
 	toggleRepeat,
-} from '@/store/slices/trackState';
+} from '@/store/slices/player';
 import { humanizingNumbers } from '@/utils/humanizingNumbers';
 import { addNotification } from '@/store/slices/notification';
 import { v4 as randomId } from 'uuid';
-import { showCurrentPlayListAction } from '@/store/slices/current';
-import { toggleShowFullScreen } from '@/store/slices/ui';
+import {
+	setCurrentPlayListOpen,
+	toggleShowFullScreen,
+} from '@/store/slices/ui';
 
 const Background = styled.div<{ $img: string }>`
 	height: calc(100svh - 70px);
@@ -173,15 +178,21 @@ const TrackImg = styled.img<{ $isShow: boolean }>`
 
 const FullScreen: FC = () => {
 	const dispatch = useAppDispatch();
-	const { currentTrack, currentPlayList, showCurrentPlayList, shuffledArr } =
-		useAppSelector((state) => state.current);
+	const currentTrack = useAppSelector(selectCurrentTrack);
+	const currentPlayList = useAppSelector(selectPlayerQueue);
+	const playQueue = useAppSelector(selectPlayQueue);
+	const showCurrentPlayList = useAppSelector(
+		(state) => state.ui.showCurrentPlayList,
+	);
 	const {
-		isPlay,
-		isRandom,
-		isRepeat,
-		pending,
-		trackTimeData: { currentTime, duration },
-	} = useAppSelector((state) => state.trackState);
+		status,
+		shuffleEnabled: isRandom,
+		repeatEnabled: isRepeat,
+		currentTime,
+		duration,
+	} = useAppSelector((state) => state.player);
+	const isPlay = status === 'playing';
+	const pending = status === 'loading';
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 
@@ -191,7 +202,7 @@ const FullScreen: FC = () => {
 	const [isCPLLong, setIsCPLLong] = useState(false);
 	const [isPBHovered, setIsPBHovered] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
-	const [currentWidth, setCurrentWidth] = useState(0);
+	const currentWidth = duration ? (currentTime * 100) / duration : 0;
 
 	const infoDiv = useRef<HTMLDivElement | null>(null);
 	const trackTitleSpan = useRef<HTMLSpanElement | null>(null);
@@ -203,29 +214,14 @@ const FullScreen: FC = () => {
 	};
 
 	const renderCurrentPlayList = () => {
-		if (shuffledArr.length !== 0) {
-			return shuffledArr.map((item) => {
-				return (
-					<HomeTrackCard
-						key={item.id}
-						forFullScreen
-						playList={currentPlayList}
-						track={item}
-					/>
-				);
-			});
-		} else {
-			return currentPlayList.map((item) => {
-				return (
-					<HomeTrackCard
-						key={item.id}
-						forFullScreen
-						playList={currentPlayList}
-						track={item}
-					/>
-				);
-			});
-		}
+		return playQueue.map((item) => (
+			<HomeTrackCard
+				key={item.id}
+				forFullScreen
+				playList={currentPlayList}
+				track={item}
+			/>
+		));
 	};
 
 	useEffect(() => {
@@ -268,36 +264,19 @@ const FullScreen: FC = () => {
 		CPLTranslateValue,
 	]);
 
-	useEffect(() => {
-		if (currentPlayList.length === 1) {
-			dispatch(toggleRepeat(true));
-		}
-	}, [currentPlayList, dispatch]);
-
-	useEffect(() => {
-		setCurrentWidth((currentTime * 100) / duration);
-	}, [currentTime, duration]);
-
 	// Ивенты
 	useEffect(() => {
 		if (currentTrack) {
-			let trackIndex;
-			if (shuffledArr.length !== 0) {
-				trackIndex = shuffledArr.findIndex(
-					(item) => item.id === currentTrack.id,
-				);
-			} else {
-				trackIndex = currentPlayList.findIndex(
-					(item) => item.id === currentTrack.id,
-				);
-			}
+			const trackIndex = playQueue.findIndex(
+				(item) => item.id === currentTrack.id,
+			);
 			if (trackIndex !== 0) {
 				setCPLTranslateValue(260 * (trackIndex - 1));
 			} else {
 				setCPLTranslateValue(260 * trackIndex);
 			}
 		}
-	}, [currentPlayList, currentTrack, shuffledArr]);
+	}, [currentTrack, playQueue]);
 
 	const CPLTranslateToNext = () => {
 		setCPLTranslateValue((prevState) => {
@@ -353,57 +332,43 @@ const FullScreen: FC = () => {
 
 	const toggleIsPlay = () => {
 		if (currentTrack) {
-			if (isPlay) {
-				dispatch(setPause());
-			} else {
-				dispatch(setPlay());
-			}
+			dispatch(togglePlayback());
 		}
 	};
 
 	const toggleShowCurrentPlayList = () => {
-		if (currentPlayList) {
-			dispatch(showCurrentPlayListAction(!showCurrentPlayList));
+		if (currentPlayList.length > 0) {
+			dispatch(setCurrentPlayListOpen(!showCurrentPlayList));
 		}
 	};
 
 	const toggleIsRepeat = () => {
-		if (isRepeat) {
-			dispatch(toggleRepeat(false));
-		} else {
-			dispatch(toggleRepeat(true));
-		}
+		dispatch(toggleRepeat());
 	};
 
 	const toggleIsRandom = () => {
 		if (currentTrack) {
-			if (isRandom) {
-				dispatch(toggleRandom(false));
-			} else {
-				dispatch(toggleRandom(true));
-			}
+			dispatch(toggleShuffle());
 		}
 	};
 
 	const prevTrack = () => {
-		dispatch(switchTrackAction('back'));
+		dispatch(previousTrackAction());
 	};
 
 	const nextTrack = () => {
-		dispatch(switchTrackAction('forward'));
+		dispatch(nextTrackAction());
 	};
 
 	const setCurrentTime = (e: SyntheticEvent<HTMLDivElement, MouseEvent>) => {
 		const offsetX = e.nativeEvent.offsetX;
-		const clientWidth = document.querySelector(
-			'.progress_bar_wrapper',
-		)?.clientWidth;
+		const clientWidth = e.currentTarget.clientWidth;
 		if (clientWidth && duration) {
 			const maxOffsetX = clientWidth - 1;
 			const newTime =
 				((offsetX > maxOffsetX ? maxOffsetX : offsetX) / clientWidth) *
 				duration;
-			dispatch(setRewindCurrentTime(newTime));
+			dispatch(seekTo(newTime));
 		}
 	};
 

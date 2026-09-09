@@ -9,6 +9,7 @@ import Button from '@/components/buttons/buttons';
 import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import type { ApiTrack } from '@music-player/backend';
 import { publicUrl } from '@/utils/constants';
+import { selectCurrentTrack } from '@/store/slices/player';
 
 const Background = styled.div`
 	height: 333px;
@@ -84,7 +85,7 @@ const NoDataDiv = styled.div`
 
 const LikedPage: FC = () => {
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
-	const currentTrack = useAppSelector((state) => state.current.currentTrack);
+	const currentTrack = useAppSelector(selectCurrentTrack);
 	const [dataArr, setDataArr] = useState<ApiTrack[]>([]);
 	const [searchStr, setSearchStr] = useState('');
 

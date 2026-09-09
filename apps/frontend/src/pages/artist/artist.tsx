@@ -18,13 +18,10 @@ import {
 } from '@/api/rtk/liked';
 import { useAppDispatch } from '@/hooks/useTypedRedux';
 import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
-import {
-	selectCurrentTrack,
-	selectCurrentPlayList,
-} from '@/store/slices/current';
 import { addNotification } from '@/store/slices/notification';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import { v4 as randomId } from 'uuid';
+import { startTrack } from '@/store/slices/player';
 
 const PopularTrackListWrapper = styled.div`
 	display: flex;
@@ -136,8 +133,14 @@ const Artist: FC = () => {
 		const sortedTrackList = newTrackList.sort((a, b) => {
 			return b.auditions - a.auditions;
 		});
-		dispatch(selectCurrentPlayList(sortedTrackList));
-		dispatch(selectCurrentTrack(sortedTrackList[0].id));
+		if (sortedTrackList.length > 0) {
+			dispatch(
+				startTrack({
+					queue: sortedTrackList,
+					trackId: sortedTrackList[0].id,
+				}),
+			);
+		}
 	};
 
 	const toggleIsFollowed = () => {

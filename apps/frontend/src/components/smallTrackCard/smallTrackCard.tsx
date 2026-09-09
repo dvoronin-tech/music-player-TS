@@ -8,10 +8,10 @@ import {
 	useToggleLikedTrackMutation,
 } from '@/api/rtk/liked';
 import {
-	deleteCurrentTrack,
-	selectCurrentPlayList,
+	removeTrackFromQueue,
 	selectCurrentTrack,
-} from '@/store/slices/current';
+	startTrack,
+} from '@/store/slices/player';
 import { addNotification } from '@/store/slices/notification';
 import { formatArtistNames } from '@/utils/formatArtists';
 import type { ApiTrack } from '@music-player/backend';
@@ -58,7 +58,7 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 	showRemoveButton = true,
 }) => {
 	const dispatch = useAppDispatch();
-	const currentTrack = useAppSelector((state) => state.current.currentTrack);
+	const currentTrack = useAppSelector(selectCurrentTrack);
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 	const [isLikedTrack, setIsLikedTrack] = useState(false);
@@ -87,12 +87,11 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 	}, [likedTrackList, track.id]);
 
 	const deleteCurrent = () => {
-		dispatch(deleteCurrentTrack(track.id));
+		dispatch(removeTrackFromQueue(track.id));
 	};
 
 	const setCurrent = () => {
-		dispatch(selectCurrentPlayList(playList));
-		dispatch(selectCurrentTrack(track.id));
+		dispatch(startTrack({ queue: playList, trackId: track.id }));
 	};
 
 	return (
