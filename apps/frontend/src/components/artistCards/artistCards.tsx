@@ -8,7 +8,7 @@ interface IProp {
     img: string,
     name: string,
     type?: 'small' | 'big',
-    id: string
+    id: number
 }
 
 const ArtistHomeCard = styled.div<{$type: 'small' | 'big'}>`
@@ -55,7 +55,7 @@ export const ArtistCard: FC<IProp> = ({img, name, type='big', id}) => {
     const navigate = useNavigate();
 
     const selectArtist = () => {
-        navigate({ to: '/artist/$name', params: { name: id } });
+        navigate({ to: '/artist/$artistId', params: { artistId: String(id) } });
     }
 
     const cutLongString = (string: string): string => {

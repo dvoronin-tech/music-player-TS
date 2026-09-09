@@ -53,15 +53,15 @@ const ErrorBlock = styled.div`
 `;
 
 const Artist: FC = () => {
-	const { name: artistName } = useParams({
-		from: '/artist/$name',
+	const { artistId } = useParams({
+		from: '/artist/$artistId',
 	});
 	const dispatch = useAppDispatch();
 	const { data: artists = [], isLoading: artistsLoading } =
 		useGetArtistsQuery();
 	const artistSummary = useMemo(
-		() => artists.find((item) => item.id === Number(artistName)),
-		[artists, artistName],
+		() => artists.find((item) => item.id === Number(artistId)),
+		[artists, artistId],
 	);
 	const { data: artistDetail, isLoading } = useGetArtistQuery(
 		artistSummary?.id ?? skipToken,
@@ -75,14 +75,14 @@ const Artist: FC = () => {
 
 	useEffect(() => {
 		const isLikedArtist = likedArtistList.find(
-			(item) => item.name === artistName,
+			(item) => item.name === artistId,
 		);
 		if (isLikedArtist) {
 			setIsLikedArtist(true);
 		} else {
 			setIsLikedArtist(false);
 		}
-	}, [artistName, likedArtistList]);
+	}, [artistId, likedArtistList]);
 
 	const renderBetterTracks = (isBetter: boolean) => {
 		if (trackList.length !== 0) {

@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as ArtistNameRouteImport } from './routes/artist/$name'
+import { Route as ArtistArtistIdRouteImport } from './routes/artist/$artistId'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
 import { Route as HomeLikedRouteImport } from './routes/home/liked'
 
@@ -25,9 +25,9 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ArtistNameRoute = ArtistNameRouteImport.update({
-  id: '/artist/$name',
-  path: '/artist/$name',
+const ArtistArtistIdRoute = ArtistArtistIdRouteImport.update({
+  id: '/artist/$artistId',
+  path: '/artist/$artistId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HomeIndexRoute = HomeIndexRouteImport.update({
@@ -44,14 +44,14 @@ const HomeLikedRoute = HomeLikedRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/artist/$name': typeof ArtistNameRoute
+  '/artist/$artistId': typeof ArtistArtistIdRoute
   '/home/liked': typeof HomeLikedRoute
   '/home/': typeof HomeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/artist/$name': typeof ArtistNameRoute
+  '/artist/$artistId': typeof ArtistArtistIdRoute
   '/home/liked': typeof HomeLikedRoute
   '/home': typeof HomeIndexRoute
 }
@@ -59,22 +59,23 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/artist/$name': typeof ArtistNameRoute
+  '/artist/$artistId': typeof ArtistArtistIdRoute
   '/home/liked': typeof HomeLikedRoute
   '/home/': typeof HomeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/artist/$name' | '/home/liked' | '/home/'
+  fullPaths: '/' | '/auth' | '/artist/$artistId' | '/home/liked' | '/home/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/artist/$name' | '/home/liked' | '/home'
-  id: '__root__' | '/' | '/auth' | '/artist/$name' | '/home/liked' | '/home/'
+  to: '/' | '/auth' | '/artist/$artistId' | '/home/liked' | '/home'
+  id:
+    '__root__' | '/' | '/auth' | '/artist/$artistId' | '/home/liked' | '/home/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
-  ArtistNameRoute: typeof ArtistNameRoute
+  ArtistArtistIdRoute: typeof ArtistArtistIdRoute
   HomeLikedRoute: typeof HomeLikedRoute
   HomeIndexRoute: typeof HomeIndexRoute
 }
@@ -95,11 +96,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/artist/$name': {
-      id: '/artist/$name'
-      path: '/artist/$name'
-      fullPath: '/artist/$name'
-      preLoaderRoute: typeof ArtistNameRouteImport
+    '/artist/$artistId': {
+      id: '/artist/$artistId'
+      path: '/artist/$artistId'
+      fullPath: '/artist/$artistId'
+      preLoaderRoute: typeof ArtistArtistIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/home/': {
@@ -122,7 +123,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
-  ArtistNameRoute: ArtistNameRoute,
+  ArtistArtistIdRoute: ArtistArtistIdRoute,
   HomeLikedRoute: HomeLikedRoute,
   HomeIndexRoute: HomeIndexRoute,
 }

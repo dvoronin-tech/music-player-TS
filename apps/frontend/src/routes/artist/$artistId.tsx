@@ -3,7 +3,7 @@ import { prefetchAppData, requireAuth } from '@/utils/auth';
 import AuthedShell from '@/components/layout/AuthedShell';
 import Artist from '@/pages/artist/artist';
 
-export const Route = createFileRoute('/artist/$name')({
+export const Route = createFileRoute('/artist/$artistId')({
 	beforeLoad: () => {
 		requireAuth();
 	},
