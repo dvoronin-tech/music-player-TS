@@ -105,9 +105,9 @@ const AsideBar: FC = () => {
 				return likedTrackList.map((item) => {
 					return (
 						<SmallTrackCard
-							isLiked
 							track={item}
 							playList={likedTrackList}
+							showRemoveButton={false}
 							key={item.id}
 						/>
 					);

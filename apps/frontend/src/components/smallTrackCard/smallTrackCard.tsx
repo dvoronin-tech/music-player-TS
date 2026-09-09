@@ -20,12 +20,12 @@ import { v4 as randomId } from 'uuid';
 interface ISmallTrackListProps {
 	track: ApiTrack;
 	playList: ApiTrack[];
-	isLiked?: boolean;
+	showRemoveButton?: boolean;
 }
 
-const TrackItemWrapper = styled.div<{ $isLiked: boolean }>`
+const TrackItemWrapper = styled.div`
 	box-sizing: border-box;
-	width: ${({ $isLiked }) => ($isLiked ? '360px' : '410px')};
+	width: 100%;
 	height: 60px;
 	display: flex;
 	justify-content: space-between;
@@ -55,7 +55,7 @@ const TrackInfoWrapper = styled.div`
 const SmallTrackCard: FC<ISmallTrackListProps> = ({
 	track,
 	playList,
-	isLiked = false,
+	showRemoveButton = true,
 }) => {
 	const dispatch = useAppDispatch();
 	const currentTrack = useAppSelector((state) => state.current.currentTrack);
@@ -96,7 +96,7 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 	};
 
 	return (
-		<TrackItemWrapper $isLiked={isLiked}>
+		<TrackItemWrapper>
 			<TrackInfoWrapper onClick={setCurrent}>
 				<ImgWrapper $img={track.albumImg}></ImgWrapper>
 				<div className={styles.small_track_item_info}>
@@ -104,7 +104,7 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 					<span>{formatArtistNames(track.artists)}</span>
 				</div>
 			</TrackInfoWrapper>
-			{!isLiked && currentTrack?.id !== track.id && (
+			{showRemoveButton && currentTrack?.id !== track.id && (
 				<button style={{ marginRight: 5 }} onClick={deleteCurrent}>
 					<Cross />
 				</button>

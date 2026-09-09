@@ -1,5 +1,5 @@
 .aside_liked_track_list {
-    width: 360px;
+    width: 100%;
     flex: 0 1 360px;
     background-color: var(--main-bg-color-for-blur);
     border-radius: 10px;
@@ -7,7 +7,6 @@
     overflow: scroll;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 

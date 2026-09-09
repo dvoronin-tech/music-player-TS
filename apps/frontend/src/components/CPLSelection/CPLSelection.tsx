@@ -32,7 +32,6 @@ const TrackListWrapper = styled.div`
 	overflow: scroll;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 `;
 
 const BlurBg = styled.div<{ $isShow: boolean }>`
