@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import Notification from '@/components/notification/notification';
-import Headers from '@/components/headers/headers';
+import MainHeader from '@/components/headers/MainHeader';
 import PlaySelection from '@/pages/PlaySelection/PlaySelection';
 import AsideBar from '@/components/asideBar/asideBar';
 import CPLSelection from '@/components/CPLSelection/CPLSelection';
@@ -44,7 +44,7 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 	return (
 		<>
 			<div style={{ paddingBottom: currentTrack ? 'var(--play-selection-height)' : 0 }}>
-				<Headers type="main" />
+				<MainHeader />
 				{children}
 			</div>
 			<PlaySelection />

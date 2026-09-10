@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { getAuthToken } from '@/utils/auth';
-import Headers from '@/components/headers/headers';
+import SimpleHeader from '@/components/headers/SimpleHeader';
 import PreRegPage from '@/pages/preRegPage/PreRegPage';
 
 export const Route = createFileRoute('/')({
@@ -15,7 +15,7 @@ export const Route = createFileRoute('/')({
 function IndexPage() {
 	return (
 		<>
-			<Headers type="simple" />
+			<SimpleHeader />
 			<PreRegPage />
 		</>
 	);

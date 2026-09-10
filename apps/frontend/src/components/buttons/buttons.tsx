@@ -2,6 +2,7 @@ import {
 	AnchorHTMLAttributes,
 	ButtonHTMLAttributes,
 	CSSProperties,
+    memo,
 } from 'react';
 import clsx from 'clsx';
 import styles from './buttons.module.scss';
@@ -73,4 +74,4 @@ function Button({
 	);
 }
 
-export default Button;
+export default memo(Button);
