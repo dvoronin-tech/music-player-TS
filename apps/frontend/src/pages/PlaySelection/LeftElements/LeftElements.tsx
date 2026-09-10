@@ -1,10 +1,12 @@
 import { FC, memo } from 'react';
 import { shallowEqual } from 'react-redux';
+import { useNavigate } from '@tanstack/react-router';
+import type { ApiArtistRef } from '@music-player/backend';
 
 import { Loader } from '@/components/loader/Loader';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import { toggleShowFullScreen } from '@/store/slices/ui';
-import { formatArtistNames } from '@/utils/formatArtists';
+import { ArtistButtons } from '@/utils/formatArtists';
 import {
 	selectCurrentTrack,
 	selectIsLoading,
@@ -14,6 +16,7 @@ import styles from './LeftElements.module.scss';
 
 export const LeftElements: FC = memo(() => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const { currentTrack, pending } = useAppSelector(
 		(state) => ({
 			currentTrack: selectCurrentTrack(state),
@@ -28,6 +31,17 @@ export const LeftElements: FC = memo(() => {
 
 	const handleToggleFullScreen = () => {
 		dispatch(toggleShowFullScreen(true));
+	};
+
+	const handleArtistClick = (
+		artist: ApiArtistRef,
+		event: React.MouseEvent<HTMLButtonElement>,
+	) => {
+		event.stopPropagation();
+		navigate({
+			to: '/artist/$artistId',
+			params: { artistId: String(artist.id) },
+		});
 	};
 
 	return (
@@ -45,9 +59,12 @@ export const LeftElements: FC = memo(() => {
 			</div>
 			<div className={styles.track_info}>
 				<span>{currentTrack.title}</span>
-				<span className={styles.artists}>
-					{formatArtistNames(currentTrack.artists)}
-				</span>
+				<ArtistButtons
+					artists={currentTrack.artists}
+					className={styles.artists_wrapper}
+					buttonClassName={styles.artists}
+					onClick={handleArtistClick}
+				/>
 			</div>
 		</div>
 	);
