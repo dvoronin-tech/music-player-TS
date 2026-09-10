@@ -1,0 +1,253 @@
+.account_bar {
+	width: 450px;
+	padding: 20px;
+	position: fixed;
+	top: 90px;
+	right: -452px;
+	transition: 0.7s ease all;
+	backdrop-filter: blur(20px);
+	background-color: var(--second-bg-color-for-blur);
+	border: 1px solid var(--stroke-light);
+	border-radius: 15px;
+	z-index: 20;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.account_bar_show {
+	right: 40px;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.title {
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--text-color);
+}
+
+.back_btn {
+	width: 30px;
+	height: 30px;
+	border-radius: 100px;
+	background-color: var(--main-bg-color-for-blur);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+
+	svg {
+		color: var(--text-second-color);
+	}
+
+	&:hover {
+		svg {
+			color: var(--accent-color);
+		}
+	}
+}
+
+.account_data {
+	width: 100%;
+	height: 140px;
+	border-radius: 10px;
+	background-color: var(--main-bg-color-for-blur);
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
+}
+
+.img_wrapper {
+	width: 100px;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 100px;
+	background-color: var(--second-bg-color-for-blur);
+	margin-right: 20px;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+	}
+
+	svg:hover {
+		color: var(--text-color);
+	}
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.file_input {
+	position: absolute;
+	width: 0;
+	height: 0;
+	opacity: 0;
+	pointer-events: none;
+}
+
+button.file_picker {
+	width: 100%;
+	max-width: 100%;
+	height: 200px;
+	padding: 0;
+	font-size: 2.2rem;
+	font-weight: 700;
+	background-color: var(--main-bg-color-for-blur);
+	border: 1px solid var(--stroke-light);
+	border-radius: 10px;
+	color: var(--text-color);
+	cursor: pointer;
+	transition: 0.2s ease all;
+
+	@media (hover: hover) {
+		&:hover {
+			background-color: var(--main-bg-color-for-blur);
+			color: var(--accent-color);
+			font-size: 2.3rem;
+		}
+	}
+}
+
+.file_img_wrapper {
+	width: 100%;
+	height: 200px;
+	padding: 20px;
+	border-radius: 10px;
+	background-color: var(--main-bg-color-for-blur);
+	border: 1px solid var(--stroke-light);
+	display: flex;
+	gap: 10px;
+
+	img {
+		height: 160px;
+		width: 160px;
+		border-radius: 7px;
+		object-fit: cover;
+	}
+
+	span {
+		font-size: 1.6rem;
+		font-weight: 600;
+	}
+}
+
+.file_img_wrapper_content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex: 1 0;
+	gap: 10px;
+}
+
+.file_img_wrapper_content button {
+	width: 100%;
+}
+
+.account_info {
+	width: 100%;
+	border-radius: 10px;
+	background-color: var(--main-bg-color-for-blur);
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 10px 20px;
+}
+
+.info_label {
+	margin-right: 10px;
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--text-color);
+}
+
+.info_value {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--text-disable-color);
+}
+
+.user_data {
+	display: flex;
+	flex-direction: column;
+}
+
+.username {
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--text-color);
+}
+
+.email {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--text-disable-color);
+}
+
+.buttons_selection {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	button,
+	a {
+		height: 50px;
+		width: 100%;
+	}
+}
+
+.logout_btn {
+	width: 100%;
+	border: 1px solid var(--text-color);
+	border-radius: 10px;
+	font-size: 1.8rem;
+	font-weight: 600;
+	font-family: 'Rubik';
+	cursor: pointer;
+	position: relative;
+	transition: 0.3s ease all;
+
+	span {
+		position: relative;
+		z-index: 1;
+	}
+
+	&:hover {
+		transform: scale(1.02);
+	}
+
+	&::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		border-radius: 10px;
+		transition: 0.4s linear all;
+		width: 0;
+		background-color: var(--error-color);
+		z-index: 0;
+	}
+}
+
+.logout_btn_logging_out {
+	border-color: transparent !important;
+	background-color: transparent !important;
+	color: var(--text-color) !important;
+
+	&::after {
+		width: 100%;
+		transition: 1s linear all;
+	}
+}
