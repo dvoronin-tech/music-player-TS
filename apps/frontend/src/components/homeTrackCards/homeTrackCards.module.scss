@@ -14,11 +14,6 @@
         cursor: pointer;
         width: 100%;
         transition: 0.5s ease all;
-        
-        &:hover {
-            transform: scale(1.1);
-            filter: blur(4px);
-        }
     }
 
     box-shadow: 0 6px 8px 0 var(--second-bg-color);
@@ -39,35 +34,23 @@
     background-color: var(--main-bg-color-for-blur);
     backdrop-filter: blur(10px);
     z-index: 2;
+    opacity: 0;
+    pointer-events: none;
     transition: 0.5s ease all;
-    cursor: pointer;
 
     svg {
         color: var(--accent-color);
-    }
-
-    &:hover {
-        & ~ img {
-            transform: scale(1.1);
-            filter: blur(4px);
-        }
-
-        svg {
-            fill: var(--accent-color-hover);
-        }
+        position: relative;
+        left: 3px;
     }
 
     &_icon {
         fill: var(--text-second-color);
     }
-
-    svg {
-        position: relative;
-        left: 3px;
-    }
 }
 
 .home_track_card_wrapper {
+    position: relative;
     min-width: 240px;
     height: 240px;
     display: flex;
@@ -76,6 +59,17 @@
     overflow: hidden;
     border-radius: 8px;
 
+    &:hover,
+    &.home_track_card_wrapper_current {
+        .home_track_card_play {
+            opacity: 1;
+        }
+
+        img {
+            transform: scale(1.1);
+            filter: blur(4px);
+        }
+    }
 }
 
 .home_track_card_data {

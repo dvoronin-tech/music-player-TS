@@ -1,4 +1,5 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useMemo } from 'react';
+import clsx from 'clsx';
 
 import styles from './homeTrackCards.module.scss';
 import {
@@ -31,19 +32,17 @@ import { shallowEqual } from 'react-redux';
 interface IProp {
 	track: ApiTrack;
 	playList: ApiTrack[];
-	forFullScreen?: boolean;
+	renderedInFullScreen?: boolean;
 }
 
 export const HomeTrackCard: FC<IProp> = ({
 	track,
 	playList,
-	forFullScreen,
+	renderedInFullScreen,
 }) => {
-	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const dispatch = useAppDispatch();
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const [toggleLikedTrack] = useToggleLikedTrackMutation();
-	const [isLiked, setIsLiked] = useState<boolean>(false);
 	const { id, title, albumImg, artists } = track;
 	const { currentTrack, currentPlayList, isPlay } = useAppSelector(
 		(state) => ({
@@ -54,14 +53,12 @@ export const HomeTrackCard: FC<IProp> = ({
 		shallowEqual,
 	);
 
-	useEffect(() => {
-		const likedTrack = likedTrackList.find((track) => track.id === id);
-		if (likedTrack) {
-			setIsLiked(true);
-		} else {
-			setIsLiked(false);
-		}
-	}, [likedTrackList, id]);
+	const isCurrent = currentTrack?.id === id;
+
+	const isLiked = useMemo(
+		() => likedTrackList.some((track) => track.id === id),
+		[likedTrackList, id],
+	);
 
 	const cutLongString = (string: string): string => {
 		if (string.length > 17) {
@@ -72,11 +69,6 @@ export const HomeTrackCard: FC<IProp> = ({
 
 	const playTrack = () => {
 		dispatch(startTrack({ queue: playList, trackId: id }));
-	};
-
-	const imgHoverStyles: React.CSSProperties = {
-		transform: currentTrack?.id === id ? 'scale(1.1)' : '',
-		filter: currentTrack?.id === id ? 'blur(4px)' : '',
 	};
 
 	const toggleIsLiked = () => {
@@ -125,42 +117,13 @@ export const HomeTrackCard: FC<IProp> = ({
 
 	return (
 		<div className={styles.home_track_card}>
-			<div className={styles.home_track_card_wrapper}>
-				<button
-					onClick={playTrack}
-					style={{
-						opacity:
-							currentTrack?.id === id ? 1 : isHovered ? 1 : 0,
-					}}
-					onMouseEnter={() => setIsHovered(true)}
-					className={styles.home_track_card_play}
-				>
-					{currentTrack?.id === id ? (
-						isPlay ? (
-							<PlayingTrackTag />
-						) : (
-							<PlayOrPause
-								style={{ position: 'relative', left: '0' }}
-								scale={25}
-								type="active"
-							/>
-						)
-					) : (
-						<PlayOrPause
-							scale={30}
-							className={styles.home_track_card_play_icon}
-							type="idle"
-						/>
-					)}
-				</button>
-				<img
-					style={imgHoverStyles}
-					onClick={playTrack}
-					onMouseEnter={() => setIsHovered(true)}
-					onMouseLeave={() => setIsHovered(false)}
-					src={albumImg}
-					alt="Фото трека"
-				/>
+			<div
+				className={clsx(styles.home_track_card_wrapper, {
+					[styles.home_track_card_wrapper_current]: isCurrent,
+				})}
+			>
+				<PlayButton isCurrent={isCurrent} isPlaying={isPlay} />
+				<img onClick={playTrack} src={albumImg} alt="Фото трека" />
 			</div>
 			<div className={styles.home_track_card_data}>
 				<div className={styles.home_track_card_info}>
@@ -168,7 +131,7 @@ export const HomeTrackCard: FC<IProp> = ({
 					<span>{cutLongString(formatArtistNames(artists))}</span>
 				</div>
 				<div className={styles.home_track_card_buttons}>
-					{forFullScreen ? (
+					{renderedInFullScreen ? (
 						track.id !== currentTrack?.id && (
 							<button onClick={deleteTrack}>
 								<Cross />
@@ -185,5 +148,32 @@ export const HomeTrackCard: FC<IProp> = ({
 				</div>
 			</div>
 		</div>
+	);
+};
+
+const PlayButton: FC<{ isCurrent: boolean; isPlaying: boolean }> = ({
+	isCurrent,
+	isPlaying,
+}) => {
+	return (
+		<button className={styles.home_track_card_play}>
+			{isCurrent ? (
+				isPlaying ? (
+					<PlayingTrackTag />
+				) : (
+					<PlayOrPause
+						style={{ position: 'relative', left: '0' }}
+						scale={25}
+						type="active"
+					/>
+				)
+			) : (
+				<PlayOrPause
+					scale={30}
+					className={styles.home_track_card_play_icon}
+					type="idle"
+				/>
+			)}
+		</button>
 	);
 };

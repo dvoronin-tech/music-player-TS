@@ -304,6 +304,7 @@ export const selectPlayQueue = createSelector(
 		});
 	},
 );
+
 export const selectIsPlaying = (state: PlayerRootState) =>
 	state.player.status === 'playing';
 export const selectIsLoading = (state: PlayerRootState) =>

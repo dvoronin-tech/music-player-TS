@@ -217,7 +217,7 @@ const FullScreen: FC = () => {
 		return playQueue.map((item) => (
 			<HomeTrackCard
 				key={item.id}
-				forFullScreen
+				renderedInFullScreen
 				playList={currentPlayList}
 				track={item}
 			/>
