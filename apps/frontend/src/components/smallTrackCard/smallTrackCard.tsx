@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react';
 import styles from './smallTrackCard.module.scss';
-import styled from 'styled-components';
 import { Cross, Like } from '@/components/icons and tags/icons';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
@@ -22,35 +21,6 @@ interface ISmallTrackListProps {
 	playList: ApiTrack[];
 	showRemoveButton?: boolean;
 }
-
-const TrackItemWrapper = styled.div`
-	box-sizing: border-box;
-	width: 100%;
-	height: 60px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 10px;
-	cursor: pointer;
-	button {
-		cursor: pointer;
-	}
-`;
-
-const ImgWrapper = styled.div<{ $img: string }>`
-	width: 40px;
-	height: 40px;
-	background-image: url(${({ $img }) => $img});
-	background-position: center;
-	background-size: cover;
-	border-radius: 5px;
-`;
-
-const TrackInfoWrapper = styled.div`
-	flex: 1 0 200px;
-	display: flex;
-	align-items: center;
-`;
 
 const SmallTrackCard: FC<ISmallTrackListProps> = ({
 	track,
@@ -95,14 +65,17 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 	};
 
 	return (
-		<TrackItemWrapper>
-			<TrackInfoWrapper onClick={setCurrent}>
-				<ImgWrapper $img={track.albumImg}></ImgWrapper>
+		<div className={styles.track_item_wrapper}>
+			<div className={styles.track_info_wrapper} onClick={setCurrent}>
+				<div
+					className={styles.img_wrapper}
+					style={{ backgroundImage: `url(${track.albumImg})` }}
+				></div>
 				<div className={styles.small_track_item_info}>
 					<span>{track.title}</span>
 					<span>{formatArtistNames(track.artists)}</span>
 				</div>
-			</TrackInfoWrapper>
+			</div>
 			{showRemoveButton && currentTrack?.id !== track.id && (
 				<button style={{ marginRight: 5 }} onClick={deleteCurrent}>
 					<Cross />
@@ -111,7 +84,7 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 			<button onClick={deleteLike}>
 				<Like type={isLikedTrack ? 'active' : 'idle'} />
 			</button>
-		</TrackItemWrapper>
+		</div>
 	);
 };
 

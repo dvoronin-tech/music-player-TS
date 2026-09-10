@@ -1,3 +1,32 @@
+.track_item_wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+
+    button {
+        cursor: pointer;
+    }
+}
+
+.img_wrapper {
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 5px;
+}
+
+.track_info_wrapper {
+    flex: 1 0 200px;
+    display: flex;
+    align-items: center;
+}
+
 .small_track_item_info {
     display: flex;
     flex-direction: column;
