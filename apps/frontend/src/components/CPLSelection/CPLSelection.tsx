@@ -1,53 +1,10 @@
 import { FC } from 'react';
-
+import clsx from 'clsx';
 import styles from './CPLSelection.module.scss';
-import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import SmallTrackCard from '@/components/smallTrackCard/smallTrackCard';
 import { setCurrentPlayListOpen } from '@/store/slices/ui';
 import { selectPlayerQueue, selectPlayQueue } from '@/store/slices/player';
-
-const CPLSelectionComponent = styled.aside<{ $isShow: boolean }>`
-	position: fixed;
-	width: 450px;
-	border-radius: 15px;
-	height: calc(100svh - 180px);
-	top: 90px;
-	right: ${({ $isShow }) => ($isShow ? '40px' : '-455px')};
-	background-color: ${({ theme }) => theme.secondBgBlur};
-	backdrop-filter: blur(20px);
-	border: 1px solid ${({ theme }) => theme.border};
-	z-index: 900;
-	box-sizing: border-box;
-	padding: 20px;
-	display: flex;
-	flex-direction: column;
-	transition: 0.7s ease all;
-`;
-
-const TrackListWrapper = styled.div`
-	width: 100%;
-	flex: 1 1 360px;
-	background-color: ${({ theme }) => theme.mainBgBlur};
-	border-radius: 10px;
-	overflow: scroll;
-	display: flex;
-	flex-direction: column;
-`;
-
-const BlurBg = styled.div<{ $isShow: boolean }>`
-	position: fixed;
-	top: 80px;
-	left: 0;
-	width: 100svw;
-	height: calc(100svh - 160px);
-	backdrop-filter: blur(12px);
-	z-index: 899;
-	filter: brightness(60%);
-	opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
-	pointer-events: ${({ $isShow }) => ($isShow ? 'click' : 'none')};
-	transition: 0.7s ease all;
-`;
 
 const CPLSelection: FC = () => {
 	const currentPlayList = useAppSelector(selectPlayerQueue);
@@ -63,9 +20,16 @@ const CPLSelection: FC = () => {
 
 	return (
 		<>
-			<CPLSelectionComponent $isShow={showCurrentPlayList}>
+			<aside
+				className={clsx(
+					styles.cpl_selection,
+					showCurrentPlayList
+						? styles.cpl_visible
+						: styles.cpl_hidden,
+				)}
+			>
 				<span className={styles.title_span}>Текущий плейлист</span>
-				<TrackListWrapper>
+				<div className={styles.track_list_wrapper}>
 					{playQueue.map((item) => (
 						<SmallTrackCard
 							key={item.id}
@@ -73,12 +37,17 @@ const CPLSelection: FC = () => {
 							playList={currentPlayList}
 						/>
 					))}
-				</TrackListWrapper>
-			</CPLSelectionComponent>
-			<BlurBg
+				</div>
+			</aside>
+			<div
+				className={clsx(
+					styles.blur_bg,
+					showCurrentPlayList
+						? styles.blur_visible
+						: styles.blur_hidden,
+				)}
 				onClick={setDefaultShowCPL}
-				$isShow={showCurrentPlayList}
-			></BlurBg>
+			></div>
 		</>
 	);
 };

@@ -1,3 +1,60 @@
+.cpl_selection {
+    position: fixed;
+    width: 450px;
+    border-radius: 15px;
+    height: calc(100svh - 180px);
+    top: 90px;
+    background-color: var(--second-bg-color-for-blur);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--stroke-light);
+    z-index: 900;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: 0.7s ease all;
+}
+
+.cpl_visible {
+    right: 40px;
+}
+
+.cpl_hidden {
+    right: -455px;
+}
+
+.track_list_wrapper {
+    width: 100%;
+    flex: 1 1 360px;
+    background-color: var(--main-bg-color-for-blur);
+    border-radius: 10px;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+.blur_bg {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100svw;
+    height: calc(100svh - 160px);
+    backdrop-filter: blur(12px);
+    z-index: 899;
+    filter: brightness(60%);
+    transition: 0.7s ease all;
+}
+
+.blur_visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.blur_hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .title_span {
     font-size: 2rem;
     font-weight: 700;

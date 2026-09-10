@@ -1,3 +1,82 @@
+.aside_bar {
+    width: 400px;
+    background-color: var(--second-bg-color-for-blur);
+    backdrop-filter: blur(20px);
+    position: fixed;
+    top: 90px;
+    height: calc(100svh - 110px);
+    border-radius: 15px;
+    transition: 500ms ease all;
+    z-index: 100;
+    border: 1px solid var(--stroke-light);
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+    &::before {
+        content: '';
+        width: 42px;
+        height: calc(100svh - 110px);
+        position: absolute;
+        top: 0;
+        left: -42px;
+    }
+}
+
+.with_playlist {
+    height: calc(100svh - 190px);
+
+    &::before {
+        height: calc(100svh - 190px);
+    }
+}
+
+.visible {
+    left: 40px;
+    opacity: 1;
+}
+
+.hidden {
+    left: -398px;
+    opacity: 0;
+}
+
+.flex_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+        font-size: 2rem;
+        font-weight: 700;
+    }
+}
+
+.no_data_span {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--text-second-color);
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.artists_grid {
+    width: 100%;
+}
+
+.artists_grid_flex {
+    display: flex;
+    justify-content: center;
+}
+
+.artists_grid_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 100px));
+    gap: 20px;
+}
+
 .aside_liked_track_list {
     width: 100%;
     flex: 0 1 360px;

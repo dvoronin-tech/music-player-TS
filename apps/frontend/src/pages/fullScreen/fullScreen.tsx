@@ -1,7 +1,6 @@
 import { FC, SyntheticEvent, useEffect, useRef, useState } from 'react';
-
+import clsx from 'clsx';
 import styles from './fullScreen.module.scss';
-import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
 	useGetLikedTracksQuery,
@@ -38,144 +37,6 @@ import {
 	toggleShowFullScreen,
 } from '@/store/slices/ui';
 
-const Background = styled.div<{ $img: string }>`
-	height: calc(100svh - 70px);
-	width: 100%;
-	position: relative;
-	box-sizing: border-box;
-	padding: 70px 70px 0px 70px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-
-	&::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-image: url(${({ $img }) => $img});
-		background-size: cover;
-		background-position: center;
-		filter: blur(50px);
-		opacity: 0.5;
-		z-index: 1;
-		pointer-events: none;
-	}
-`;
-
-const CurrentPlayListSelection = styled.div<{
-	$translateValue: number;
-	$isCPLLong: boolean;
-	$showCPL: boolean;
-}>`
-	flex: 0 0 320px;
-	width: 100%;
-	background-color: ${({ theme }) => theme.mainBgBlur};
-	border-radius: 10px;
-	display: flex;
-	align-items: center;
-	box-sizing: border-box;
-	padding: 0 10px;
-	overflow: hidden;
-	position: relative;
-	top: 0;
-	right: ${({ $showCPL }) => ($showCPL ? 0 : '-400px')};
-	opacity: ${({ $showCPL }) => ($showCPL ? 1 : 0)};
-	pointer-events: ${({ $showCPL }) => ($showCPL ? '' : 'none')};
-	transition: 0.8s ease all;
-
-	&::after {
-		content: '';
-		position: absolute;
-		right: -1px;
-		top: 0;
-		height: 100%;
-		width: 70px;
-		pointer-events: none;
-		background: linear-gradient(
-			90deg,
-			rgba(43, 42, 45, 0) 0%,
-			rgba(43, 42, 45, 1) 100%
-		);
-		z-index: 2;
-		opacity: ${({ $isCPLLong }) => ($isCPLLong ? 1 : 0)};
-		transition: 0.5s ease all;
-	}
-
-	&::before {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 0;
-		height: 100%;
-		width: 70px;
-		pointer-events: none;
-		background: linear-gradient(
-			270deg,
-			rgba(43, 42, 45, 0) 0%,
-			rgba(43, 42, 45, 1) 100%
-		);
-		z-index: 2;
-		opacity: ${({ $translateValue }) => ($translateValue ? 1 : 0)};
-		transition: 0.5s ease all;
-	}
-`;
-
-const CurrentPlayListLine = styled.div<{ $translateValue: number }>`
-	width: max-content;
-	display: flex;
-	align-items: center;
-	transition: 1s ease all;
-	transform: translate(${({ $translateValue }) => -$translateValue}px);
-
-	> div {
-		margin-right: 10px;
-	}
-`;
-
-const TrackTitle = styled.span<{ $translate: number }>`
-	font-size: 6.4rem;
-	font-weight: 700;
-	width: max-content;
-	position: relative;
-	transition: 2s ease all;
-	left: ${({ $translate }) => $translate}px;
-	cursor: default;
-`;
-
-const ProgressBar = styled.div<{ $progress: number; $isHovered: boolean }>`
-	height: 7px;
-	width: ${({ $progress }) => $progress}%;
-	background-color: ${({ theme }) => theme.accent};
-	border-radius: 100px;
-	position: relative;
-	transition: 0.5s ease all;
-
-	&::after {
-		content: '';
-		position: absolute;
-		top: -3px;
-		right: -6px;
-		width: 13px;
-		height: 13px;
-		background-color: ${({ theme }) => theme.text};
-		border-radius: 100px;
-		transition: 0.2s ease all;
-		opacity: ${({ $isHovered }) => ($isHovered ? 1 : 0)};
-	}
-`;
-
-const TrackImg = styled.img<{ $isShow: boolean }>`
-	flex: 0 0 ${({ $isShow }) => ($isShow ? '500px' : '200px')};
-	height: ${({ $isShow }) => ($isShow ? '500px' : '200px')};
-	border-radius: 20px;
-	margin-right: 20px;
-	transition: 0.8s ease all;
-`;
-
 const FullScreen: FC = () => {
 	const dispatch = useAppDispatch();
 	const currentTrack = useAppSelector(selectCurrentTrack);
@@ -196,7 +57,7 @@ const FullScreen: FC = () => {
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const [toggleLikedTrack] = useToggleLikedTrackMutation();
 
-	const [spanTranslateValue, setSpanTranslateValue] = useState(0); //
+	const [spanTranslateValue, setSpanTranslateValue] = useState(0);
 	const [isSpanHovered, setIsSpanHovered] = useState(false);
 	const [CPLTranslateValue, setCPLTranslateValue] = useState(0);
 	const [isCPLLong, setIsCPLLong] = useState(false);
@@ -264,7 +125,6 @@ const FullScreen: FC = () => {
 		CPLTranslateValue,
 	]);
 
-	// Ивенты
 	useEffect(() => {
 		if (currentTrack) {
 			const trackIndex = playQueue.findIndex(
@@ -375,18 +235,39 @@ const FullScreen: FC = () => {
 	return (
 		<>
 			{currentTrack && currentPlayList && (
-				<Background $img={currentTrack.albumImg}>
+				<div
+					className={styles.background}
+					style={
+						{
+							'--bg-image': `url(${currentTrack.albumImg})`,
+						} as React.CSSProperties
+					}
+				>
 					<div className={styles.fullscreen_top_elements}>
-						<TrackImg
-							$isShow={showCurrentPlayList}
+						<img
+							className={clsx(
+								styles.track_img,
+								showCurrentPlayList
+									? styles.track_img_large
+									: styles.track_img_small,
+							)}
 							src={currentTrack.albumImg}
 							alt="фото альбома"
 						/>
 						<div className={styles.fullscreen_info}>
-							<CurrentPlayListSelection
-								$showCPL={showCurrentPlayList}
-								$isCPLLong={isCPLLong}
-								$translateValue={CPLTranslateValue}
+							<div
+								className={clsx(
+									styles.cpl_selection,
+									showCurrentPlayList
+										? styles.cpl_visible
+										: styles.cpl_hidden,
+									isCPLLong
+										? styles.cpl_gradient_end_visible
+										: styles.cpl_gradient_end_hidden,
+									CPLTranslateValue
+										? styles.cpl_gradient_start_visible
+										: styles.cpl_gradient_start_hidden,
+								)}
 								ref={CPLSelectionRef}
 							>
 								{CPLTranslateValue ? (
@@ -400,12 +281,15 @@ const FullScreen: FC = () => {
 									</Button>
 								) : null}
 
-								<CurrentPlayListLine
-									$translateValue={CPLTranslateValue}
+								<div
+									className={styles.cpl_line}
+									style={{
+										transform: `translate(-${CPLTranslateValue}px)`,
+									}}
 									ref={CPLLineRef}
 								>
 									{renderCurrentPlayList()}
-								</CurrentPlayListLine>
+								</div>
 
 								{isCPLLong && (
 									<Button
@@ -417,19 +301,20 @@ const FullScreen: FC = () => {
 										{'>'}
 									</Button>
 								)}
-							</CurrentPlayListSelection>
+							</div>
 							<div
 								ref={infoDiv}
 								className={styles.fullscreen_track_info}
 							>
-								<TrackTitle
-									$translate={spanTranslateValue}
+								<span
+									className={styles.track_title}
+									style={{ left: spanTranslateValue }}
 									onMouseEnter={() => setIsSpanHovered(true)}
 									onMouseLeave={() => setIsSpanHovered(false)}
 									ref={trackTitleSpan}
 								>
 									{currentTrack.title}
-								</TrackTitle>
+								</span>
 								<span className={styles.fullscreen_artist}>
 									{formatArtistNames(currentTrack.artists)}
 								</span>
@@ -519,14 +404,19 @@ const FullScreen: FC = () => {
 								onMouseLeave={() => setIsPBHovered(false)}
 								onClick={setCurrentTime}
 							>
-								<ProgressBar
-									$isHovered={isPBHovered}
-									$progress={currentWidth}
+								<div
+									className={clsx(
+										styles.progress_bar,
+										isPBHovered
+											? styles.progress_bar_hovered
+											: styles.progress_bar_idle,
+									)}
+									style={{ width: `${currentWidth}%` }}
 								/>
 							</div>
 						</div>
 					</div>
-				</Background>
+				</div>
 			)}
 		</>
 	);
