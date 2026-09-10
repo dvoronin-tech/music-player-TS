@@ -1,15 +1,23 @@
 import { ChangeEvent, FC, useRef, useState } from 'react';
+import { MdErrorOutline } from 'react-icons/md';
+import { v4 as randomId } from 'uuid';
+import { useSetMyPhotoMutation } from '@/api/rtk/user';
 import Button from '@/components/buttons/buttons';
+import { useAppDispatch } from '@/hooks/useTypedRedux';
+import { addNotification } from '@/store/slices/notification';
 import styles from './accountDataBar.module.scss';
+
 
 type ChangePhotoFormProps = {
 	onBack: () => void;
 };
 
 const ChangePhotoForm: FC<ChangePhotoFormProps> = ({ onBack }) => {
+	const dispatch = useAppDispatch();
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [file, setFile] = useState<File | null>(null);
 	const [preview, setPreview] = useState('');
+	const [setMyPhoto, { isLoading }] = useSetMyPhotoMutation();
 
 	const openFilePicker = () => {
 		fileInputRef.current?.click();
@@ -34,16 +42,27 @@ const ChangePhotoForm: FC<ChangePhotoFormProps> = ({ onBack }) => {
 		fileReader.readAsDataURL(selectedFile);
 	};
 
-	const submitImg = () => {
-		if (!file) return;
-		onBack();
+	const submitImg = async () => {
+		if (!file || isLoading) return;
+
+		try {
+			const res = await setMyPhoto(file).unwrap();
+			console.log(res);
+			onBack();
+		} catch {
+			dispatch(
+				addNotification({
+					notificationId: randomId(),
+					img: <MdErrorOutline style={{ color: '#C84141' }} />,
+					info: 'Фотография профиля',
+					additionalInfo: 'Не удалось <span>загрузить фото</span>',
+				}),
+			);
+		}
 	};
 
 	return (
-		<form
-			className={styles.form}
-			onSubmit={(e) => e.preventDefault()}
-		>
+		<form className={styles.form} onSubmit={(e) => e.preventDefault()}>
 			<input
 				ref={fileInputRef}
 				className={styles.file_input}
@@ -80,12 +99,12 @@ const ChangePhotoForm: FC<ChangePhotoFormProps> = ({ onBack }) => {
 			<div className={styles.buttons_selection}>
 				<Button
 					onClick={submitImg}
-					disabled={!file}
-					variant={file ? 'accent' : 'disable'}
+					disabled={!file || isLoading}
+					variant={file && !isLoading ? 'accent' : 'disable'}
 					size="xl"
 					weight="semibold"
 				>
-					Отправить фото
+					{isLoading ? 'Загрузка...' : 'Отправить фото'}
 				</Button>
 				<Button
 					onClick={onBack}

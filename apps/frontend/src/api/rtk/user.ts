@@ -14,8 +14,6 @@ export const userApi = baseApi.injectEndpoints({
 		}),
 		setMyPhoto: build.mutation<ApiUser, File>({
 			async queryFn(file) {
-				const form = new FormData();
-				form.append('userImg', file);
 				const res = await getAuthedClient().api.me.photo.$put({
 					form: {
 						userImg: file,
