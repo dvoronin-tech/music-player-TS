@@ -1,16 +1,7 @@
 import { FC, useMemo } from 'react';
-import styled from 'styled-components';
 import { ArtistCard } from '@/components/artistCards/artistCards';
 import type { ApiArtist } from '@music-player/backend';
-
-const NoDataSpan = styled.span`
-	font-size: 1.6rem;
-	font-weight: 400;
-	color: ${({ theme }) => theme.textSecond};
-	margin-top: 10px;
-	width: 100%;
-	text-align: center;
-`;
+import styles from './asideBar.module.scss';
 
 interface AsideLikedArtistsProps {
 	artists: ApiArtist[];
@@ -36,7 +27,9 @@ export const AsideLikedArtists: FC<AsideLikedArtistsProps> = ({
 
 	if (artists.length === 0) {
 		return (
-			<NoDataSpan>Вы не подписаны ни на одного артиста</NoDataSpan>
+			<span className={styles.no_data}>
+				Вы не подписаны ни на одного артиста
+			</span>
 		);
 	}
 

@@ -1,18 +1,7 @@
 import { FC } from 'react';
-import styled from 'styled-components';
 import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import type { ApiTrack } from '@music-player/backend';
-
-const NoDataDiv = styled.div`
-	width: 100%;
-	height: 100px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 2rem;
-	font-weight: 700;
-	color: ${({ theme }) => theme.textDisable};
-`;
+import styles from './LikedTracksGrid.module.scss';
 
 interface LikedTracksGridProps {
 	tracks: ApiTrack[];
@@ -27,9 +16,9 @@ export const LikedTracksGrid: FC<LikedTracksGridProps> = ({
 }) => {
 	if (!hasLikedTracks) {
 		return (
-			<NoDataDiv>
+			<div className={styles.no_data}>
 				<span>Вы не добавили ни одного трека</span>
-			</NoDataDiv>
+			</div>
 		);
 	}
 

@@ -3,7 +3,6 @@ import { FC, useEffect, useMemo, useState } from 'react';
 import styles from './artist.module.scss';
 import { useParams } from '@tanstack/react-router';
 
-import { styled } from 'styled-components';
 import Button from '@/components/buttons/buttons';
 import {
 	Follow,
@@ -22,32 +21,6 @@ import { addNotification } from '@/store/slices/notification';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import { v4 as randomId } from 'uuid';
 import { startTrack } from '@/store/slices/player';
-
-const PopularTrackListWrapper = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 20px;
-	margin: 20px 0;
-`;
-
-const MoreTracksWrapper = styled.div`
-	width: 100%;
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-	gap: 20px;
-	margin-top: 20px;
-`;
-
-const ErrorBlock = styled.div`
-	display: flex;
-	justify-content: center;
-
-	span {
-		font-size: 2rem;
-		font-weight: 700;
-	}
-`;
 
 const Artist: FC = () => {
 	const { artistId } = useParams({
@@ -188,32 +161,32 @@ const Artist: FC = () => {
 					<span className={styles.artist_track_title}>
 						Популярные треки
 					</span>
-					<PopularTrackListWrapper>
+					<div className={styles.popular_track_list}>
 						{isLoading ? (
 							<div className="loader"></div>
 						) : (
 							<PopularArtistTracks tracks={sortedTrackList} />
 						)}
-					</PopularTrackListWrapper>
+					</div>
 					<span className={styles.artist_track_title}>
 						Другие треки от {artist.name}
 					</span>
-					<MoreTracksWrapper>
+					<div className={styles.more_tracks}>
 						{isLoading ? (
 							<div className="loader"></div>
 						) : (
 							<OtherArtistTracks tracks={sortedTrackList} />
 						)}
-					</MoreTracksWrapper>
+					</div>
 				</div>
 			</main>
 		);
 	} else {
 		return (
 			<main className={styles.artist}>
-				<ErrorBlock>
+				<div className={styles.error_block}>
 					<span>Артист не найден</span>
-				</ErrorBlock>
+				</div>
 			</main>
 		);
 	}

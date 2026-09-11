@@ -1,16 +1,7 @@
 import { FC } from 'react';
-import styled from 'styled-components';
 import SmallTrackCard from '@/components/smallTrackCard/smallTrackCard';
 import type { ApiTrack } from '@music-player/backend';
-
-const NoDataSpan = styled.span`
-	font-size: 1.6rem;
-	font-weight: 400;
-	color: ${({ theme }) => theme.textSecond};
-	margin-top: 10px;
-	width: 100%;
-	text-align: center;
-`;
+import styles from './asideBar.module.scss';
 
 interface AsideLikedTracksProps {
 	tracks: ApiTrack[];
@@ -26,7 +17,11 @@ export const AsideLikedTracks: FC<AsideLikedTracksProps> = ({
 	}
 
 	if (tracks.length === 0) {
-		return <NoDataSpan>Вы не добавили ни одного трека</NoDataSpan>;
+		return (
+			<span className={styles.no_data}>
+				Вы не добавили ни одного трека
+			</span>
+		);
 	}
 
 	return tracks.map((item) => (
