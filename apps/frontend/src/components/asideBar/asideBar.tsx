@@ -7,7 +7,6 @@ import {
 	useGetLikedArtistsQuery,
 } from '@/api/rtk/liked';
 import Button from '@/components/buttons/buttons';
-import { useNavigate } from '@tanstack/react-router';
 import { AsideLikedTracks } from './AsideLikedTracks';
 import { AsideLikedArtists } from './AsideLikedArtists';
 import {
@@ -24,10 +23,7 @@ const AsideBar: FC = () => {
 		useGetLikedArtistsQuery();
 
 	const [showPlayList, setShowPlayList] = useState(false);
-	const [isHovered, setIsHovered] = useState(false);
 	const [isPopular, setIsPopular] = useState(false);
-
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (currentTrack && currentPlayList.length > 0) {
@@ -37,19 +33,12 @@ const AsideBar: FC = () => {
 		}
 	}, [currentPlayList.length, currentTrack]);
 
-	useEffect(() => {
-		setIsHovered(false);
-	}, [navigate]);
-
 	return (
 		<aside
 			className={clsx(
 				styles.aside_bar,
-				isHovered && styles.aside_bar_hovered,
 				showPlayList && styles.aside_bar_playlist,
 			)}
-			onMouseEnter={() => setIsHovered(true)}
-			onMouseLeave={() => setIsHovered(false)}
 		>
 			<div className={styles.flex_row}>
 				<span>Любимые треки</span>

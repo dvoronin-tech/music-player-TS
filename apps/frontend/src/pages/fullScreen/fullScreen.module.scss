@@ -193,23 +193,28 @@
     color: var(--text-second-color);
 }
 
-.fullscreen_next_button {
+.fullscreen_next_button,
+.fullscreen_prev_button {
     position: absolute;
-    right: 45px;
     z-index: 20;
     background-color: var(--main-bg-color-for-blur);
     backdrop-filter: blur(2px);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s ease all;
+}
 
-    animation: fade-in 0.5s ease;
+.fullscreen_next_button {
+    right: 45px;
 }
 
 .fullscreen_prev_button {
-    position: absolute;
     left: 45px;
-    z-index: 20;
-    background-color: var(--main-bg-color-for-blur);
-    backdrop-filter: blur(2px);
+}
 
+.fullscreen_nav_visible {
+    opacity: 1;
+    pointer-events: auto;
     animation: fade-in 0.5s ease;
 }
 

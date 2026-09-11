@@ -1,35 +1,15 @@
 import { FC } from 'react';
-import styled from 'styled-components';
+import styles from './notFoundPage.module.scss';
 import Button from '@/components/buttons/buttons';
 import { useNavigate } from '@tanstack/react-router';
-
-const Main = styled.main`
-	padding-top: 100px;
-	background-color: '${({ theme }) => theme.secondBg}';
-	height: 100svh;
-	box-sizing: border-box;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;
-
-const Info = styled.span`
-	font-size: 4rem;
-	font-weight: 700;
-`;
-
-const ButtonsWrapper = styled.div`
-	display: flex;
-	margin-top: 30px;
-`;
 
 const NotFoundPage: FC = () => {
 	const navigate = useNavigate();
 
 	return (
-		<Main>
-			<Info>Страница не найдена</Info>
-			<ButtonsWrapper>
+		<main className={styles.main}>
+			<span className={styles.info}>Страница не найдена</span>
+			<div className={styles.buttons_wrapper}>
 				<Button
 					variant="accent"
 					size="xl"
@@ -38,8 +18,8 @@ const NotFoundPage: FC = () => {
 				>
 					Перейти на главную
 				</Button>
-			</ButtonsWrapper>
-		</Main>
+			</div>
+		</main>
 	);
 };
 

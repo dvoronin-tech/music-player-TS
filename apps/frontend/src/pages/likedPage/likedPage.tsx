@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import clsx from 'clsx';
-
 import styles from './likedPage.module.scss';
 import { useAppSelector } from '@/hooks/useTypedRedux';
 import { useGetLikedTracksQuery } from '@/api/rtk/liked';

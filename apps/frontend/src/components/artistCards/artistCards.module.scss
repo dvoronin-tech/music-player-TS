@@ -1,5 +1,4 @@
 .artist_home_card {
-    flex: 0 0 110px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,25 +13,60 @@
             transform: scale(1.1);
         }
     }
+}
 
-    .artist_home_card_info {
+.type_big {
+    height: 150px;
+    flex: 0 0 110px;
+
+    .artist_img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 15px;
+    }
+
+    .artist_name {
         font-size: 1.4rem;
         font-weight: 700;
-        text-align: center;
-        color: var(--text-second-color);
-        transition: 0.5s ease all;
     }
 }
 
-.artist_card_img {
-    width: 100px;
+.type_small {
     height: 100px;
+    flex: 0 0 100px;
+
+    .artist_img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 10px;
+    }
+
+    .artist_name {
+        font-size: 1.2rem;
+        font-weight: 500;
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.artist_name {
+    text-align: center;
+    color: var(--text-second-color);
+    transition: 0.5s ease all;
+}
+
+.artist_img {
     border-radius: 100px;
     overflow: hidden;
-    margin-bottom: 15px;
     display: flex;
     justify-content: center;
+
     img {
-        transition: 0.5s ease all;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
     }
 }

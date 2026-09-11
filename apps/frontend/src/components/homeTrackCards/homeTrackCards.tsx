@@ -60,13 +60,6 @@ export const HomeTrackCard: FC<IProp> = ({
 		[likedTrackList, id],
 	);
 
-	const cutLongString = (string: string): string => {
-		if (string.length > 17) {
-			return string.substring(0, 15) + '...';
-		}
-		return string;
-	};
-
 	const playTrack = () => {
 		dispatch(startTrack({ queue: playList, trackId: id }));
 	};
@@ -127,8 +120,8 @@ export const HomeTrackCard: FC<IProp> = ({
 			</div>
 			<div className={styles.home_track_card_data}>
 				<div className={styles.home_track_card_info}>
-					<span>{cutLongString(title)}</span>
-					<span>{cutLongString(formatArtistNames(artists))}</span>
+					<span>{title}</span>
+					<span>{formatArtistNames(artists)}</span>
 				</div>
 				<div className={styles.home_track_card_buttons}>
 					{renderedInFullScreen ? (

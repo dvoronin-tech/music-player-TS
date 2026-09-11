@@ -262,16 +262,20 @@ const FullScreen: FC = () => {
 								)}
 								ref={CPLSelectionRef}
 							>
-								{CPLTranslateValue ? (
-									<Button
-										variant="alternative"
-										className={styles.fullscreen_prev_button}
-										size="3xl"
-										onClick={CPLTranslateToPrev}
-									>
-										{'<'}
-									</Button>
-								) : null}
+								<Button
+									variant="alternative"
+									className={clsx(
+										styles.fullscreen_prev_button,
+										{
+											[styles.fullscreen_nav_visible]:
+												!!CPLTranslateValue,
+										},
+									)}
+									size="3xl"
+									onClick={CPLTranslateToPrev}
+								>
+									{'<'}
+								</Button>
 
 								<div
 									className={styles.current_playlist_line}

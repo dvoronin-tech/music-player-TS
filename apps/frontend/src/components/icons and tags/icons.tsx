@@ -10,7 +10,6 @@ import { TbPlaylistAdd } from 'react-icons/tb';
 import { BsArrowsAngleExpand } from 'react-icons/bs';
 import { BsArrowsAngleContract } from 'react-icons/bs';
 import { FaUserPlus } from 'react-icons/fa';
-import styled, { keyframes } from 'styled-components';
 import { RxCross2 } from 'react-icons/rx';
 import { FaUserCheck } from 'react-icons/fa';
 
@@ -338,51 +337,20 @@ export const UserIcon: FC<IProps> = ({
 	);
 };
 
-const TagAnimation = (height: number) => keyframes`
-    0% {
-        height: ${height}px;
-    } 50% {
-        height: ${(33 * height) / 100}px;
-    } 100% {
-        height: ${height}px;
-    }
-`;
-
-const PlayingTag = styled.div<{ $height: number }>`
-	animation: fade-in 500ms ease;
-	width: ${({ $height }) => $height}px;
-	height: ${({ $height }) => $height}px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
-	div {
-		background-color: ${({ theme }) => theme.accent};
-		border-radius: 100px;
-		display: flex;
-		justify-content: space-between;
-		width: ${({ $height }) => ($height === 30 ? 7 : 11)}px;
-		height: ${({ $height }) => $height}px;
-		animation: ${({ $height }) => TagAnimation($height)} 1s ease infinite;
-
-		&:first-child {
-			animation: ${({ $height }) => TagAnimation($height)} 1s ease
-				infinite 0.5s;
-		}
-
-		&:last-child {
-			animation: ${({ $height }) => TagAnimation($height)} 1s ease
-				infinite 0.75s;
-		}
-	}
-`;
-
 export const PlayingTrackTag: FC<{ height?: number }> = ({ height = 30 }) => {
 	return (
-		<PlayingTag $height={height}>
+		<div
+			className={styles.playing_tag}
+			style={
+				{
+					'--tag-height': `${height}px`,
+					'--bar-width': `${height === 30 ? 7 : 11}px`,
+				} as React.CSSProperties
+			}
+		>
 			<div></div>
 			<div></div>
 			<div></div>
-		</PlayingTag>
+		</div>
 	);
 };
