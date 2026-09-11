@@ -74,4 +74,4 @@ function Button({
 	);
 }
 
-export default memo(Button);
+export default memo(Button) as unknown as typeof Button;
