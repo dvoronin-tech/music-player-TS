@@ -6,8 +6,8 @@ import { useAppSelector } from '@/hooks/useTypedRedux';
 import { useGetLikedTracksQuery } from '@/api/rtk/liked';
 import { Input } from '@/components/inputFields/inputFields';
 import Button from '@/components/buttons/buttons';
-import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import type { ApiTrack } from '@music-player/backend';
+import { LikedTracksGrid } from './LikedTracksGrid';
 import { publicUrl } from '@/utils/constants';
 import { selectCurrentTrack } from '@/store/slices/player';
 
@@ -72,17 +72,6 @@ const GridContainer = styled.div<{ $isNoData: boolean }>`
 	gap: 20px;
 `;
 
-const NoDataDiv = styled.div`
-	width: 100%;
-	height: 100px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 2rem;
-	font-weight: 700;
-	color: ${({ theme }) => theme.textDisable};
-`;
-
 const LikedPage: FC = () => {
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const currentTrack = useAppSelector(selectCurrentTrack);
@@ -90,41 +79,6 @@ const LikedPage: FC = () => {
 	const [searchStr, setSearchStr] = useState('');
 
 	const [isPopular, setIsPopular] = useState(false);
-
-	const renderLikedTrackList = () => {
-		if (likedTrackList.length !== 0) {
-			if (searchStr) {
-				const subDataArr = dataArr.filter((item) =>
-					item.title.toLowerCase().includes(searchStr.toLowerCase()),
-				);
-				return subDataArr.map((item) => {
-					return (
-						<HomeTrackCard
-							key={item.id}
-							track={item}
-							playList={dataArr}
-						/>
-					);
-				});
-			} else {
-				return dataArr.map((item) => {
-					return (
-						<HomeTrackCard
-							key={item.id}
-							track={item}
-							playList={dataArr}
-						/>
-					);
-				});
-			}
-		} else {
-			return (
-				<NoDataDiv>
-					<span>Вы не добавили ни одного трека</span>
-				</NoDataDiv>
-			);
-		}
-	};
 
 	useEffect(() => {
 		if (likedTrackList.length !== 0) {
@@ -194,7 +148,11 @@ const LikedPage: FC = () => {
 					</div>
 				</div>
 				<GridContainer $isNoData={likedTrackList.length === 0}>
-					{renderLikedTrackList()}
+					<LikedTracksGrid
+						tracks={dataArr}
+						searchStr={searchStr}
+						hasLikedTracks={likedTrackList.length !== 0}
+					/>
 				</GridContainer>
 			</Container>
 		</div>
