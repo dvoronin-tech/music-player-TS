@@ -10,14 +10,14 @@ import {
 	PlayOrPause,
 	UnFollow,
 } from '@/components/icons and tags/icons';
-import ArtistTrackCard from '@/components/artistTrackCards/artistTrackCards';
 import { useGetArtistQuery, useGetArtistsQuery } from '@/api/rtk/artists';
+import { PopularArtistTracks } from './PopularArtistTracks';
+import { OtherArtistTracks } from './OtherArtistTracks';
 import {
 	useGetLikedArtistsQuery,
 	useToggleLikedArtistMutation,
 } from '@/api/rtk/liked';
 import { useAppDispatch } from '@/hooks/useTypedRedux';
-import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import { addNotification } from '@/store/slices/notification';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import { v4 as randomId } from 'uuid';
@@ -65,6 +65,12 @@ const Artist: FC = () => {
 	);
 	const artist = artistDetail ?? artistSummary;
 	const trackList = artistDetail?.tracks ?? [];
+	const sortedTrackList = useMemo(() => {
+		if (trackList.length === 0) {
+			return [];
+		}
+		return [...trackList].sort((a, b) => b.auditions - a.auditions);
+	}, [trackList]);
 	const { data: likedArtistList = [] } = useGetLikedArtistsQuery();
 	const [toggleLikedArtist] = useToggleLikedArtistMutation();
 
@@ -81,58 +87,7 @@ const Artist: FC = () => {
 		}
 	}, [artistId, likedArtistList]);
 
-	const renderBetterTracks = (isBetter: boolean) => {
-		if (trackList.length !== 0) {
-			const newTrackList = [...trackList];
-			const sortedTrackList = newTrackList.sort((a, b) => {
-				return b.auditions - a.auditions;
-			});
-
-			if (isBetter) {
-				return (
-					<>
-						{sortedTrackList.map((item, index) => {
-							if (index >= 3) {
-								return null;
-							} else {
-								return (
-									<ArtistTrackCard
-										key={item.id}
-										playList={sortedTrackList}
-										track={item}
-									/>
-								);
-							}
-						})}
-					</>
-				);
-			} else {
-				return (
-					<>
-						{sortedTrackList.map((item, index) => {
-							if (index <= 2) {
-								return null;
-							} else {
-								return (
-									<HomeTrackCard
-										key={item.id}
-										track={item}
-										playList={sortedTrackList}
-									/>
-								);
-							}
-						})}
-					</>
-				);
-			}
-		}
-	};
-
 	const setCurrentTrack = () => {
-		const newTrackList = [...trackList];
-		const sortedTrackList = newTrackList.sort((a, b) => {
-			return b.auditions - a.auditions;
-		});
 		if (sortedTrackList.length > 0) {
 			dispatch(
 				startTrack({
@@ -237,7 +192,7 @@ const Artist: FC = () => {
 						{isLoading ? (
 							<div className="loader"></div>
 						) : (
-							renderBetterTracks(true)
+							<PopularArtistTracks tracks={sortedTrackList} />
 						)}
 					</PopularTrackListWrapper>
 					<span className={styles.artist_track_title}>
@@ -247,7 +202,7 @@ const Artist: FC = () => {
 						{isLoading ? (
 							<div className="loader"></div>
 						) : (
-							renderBetterTracks(false)
+							<OtherArtistTracks tracks={sortedTrackList} />
 						)}
 					</MoreTracksWrapper>
 				</div>
