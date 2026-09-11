@@ -1,11 +1,9 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState, useRef } from 'react';
 import styles from './auth.module.scss';
 import Button from '@/components/buttons/buttons';
-import { LuInfo } from 'react-icons/lu';
-import { FaTelegramPlane } from 'react-icons/fa';
-import { Input } from '@/components/inputFields/inputFields';
 import { useNavigate } from '@tanstack/react-router';
 import { useLoginMutation, useRegisterMutation } from '@/api/rtk/auth';
+import { AuthForm } from './AuthForm';
 
 interface IFormData {
 	username: string | null;
@@ -26,7 +24,6 @@ enum Colors {
 
 const Auth: FC = () => {
 	const [auth, setAuth] = useState<'reg' | 'auth'>('reg');
-	const [content, setContent] = useState<JSX.Element | null>(null);
 
 	const initialFormState = { username: null, password: null, email: '' };
 	const [formData, setFormData] = useState<IFormData>(initialFormState);
@@ -45,6 +42,12 @@ const Auth: FC = () => {
 	const prevAuth = useRef<'reg' | 'auth' | null>(null);
 	const [registerUser] = useRegisterMutation();
 	const [loginUser] = useLoginMutation();
+
+	const showResponse = prevAuth.current === auth && !!response;
+
+	useEffect(() => {
+		prevAuth.current = auth;
+	}, [auth, validationMessages, response, isLoading, responseColor]);
 
 	const queryErrorMessage = (error: unknown) => {
 		if (
@@ -278,135 +281,6 @@ const Auth: FC = () => {
 		form.reset();
 	};
 
-	useEffect(() => {
-		const { usernameInvalid, passwordInvalid, emailInvalid } =
-			validationMessages;
-		setContent(
-			<form
-				className={styles.auth_reg_form}
-				onSubmit={auth === 'reg' ? handleSubmitReg : handleSubmitAuth}
-			>
-				<div className={styles.auth_reg_title}>
-					{auth === 'auth' ? (
-						<span>
-							Войти в{' '}
-							<span className={styles.brooklyn_word}>Brooklyn</span>
-						</span>
-					) : (
-						<span>
-							Зарегистрироваться в{' '}
-							<span className={styles.brooklyn_word}>Brooklyn</span>
-						</span>
-					)}
-				</div>
-				<div className={styles.inputs_wrapper}>
-					<div className={styles.input_field}>
-						<div className={styles.label_icon_wrapper}>
-							<label htmlFor="username">Имя пользователя</label>
-							<LuInfo
-								className={styles.auth_error_icon}
-								style={{ opacity: usernameInvalid ? 1 : 0 }}
-							/>
-						</div>
-						<Input
-							onChange={handleChange}
-							type="text"
-							id="username"
-							name="username"
-							placeholder="Имя пользователя"
-							required
-						/>
-						{usernameInvalid && (
-							<div className={styles.validation_error}>
-								{usernameInvalid}
-							</div>
-						)}
-					</div>
-					<div className={styles.input_field}>
-						<div className={styles.label_icon_wrapper}>
-							<label htmlFor="password">Пароль</label>
-							<LuInfo
-								className={styles.auth_error_icon}
-								style={{ opacity: passwordInvalid ? 1 : 0 }}
-							/>
-						</div>
-						<Input
-							onChange={handleChange}
-							type="password"
-							id="password"
-							name="password"
-							placeholder="Пароль"
-							required
-						/>
-						{passwordInvalid && (
-							<div className={styles.validation_error}>
-								{passwordInvalid}
-							</div>
-						)}
-					</div>
-					{auth === 'reg' && (
-						<div className={styles.input_field}>
-							<div className={styles.label_icon_wrapper}>
-								<label htmlFor="email">
-									Адрес электронной почты
-								</label>
-								<LuInfo
-									className={styles.auth_error_icon}
-									style={{ opacity: emailInvalid ? 1 : 0 }}
-								/>
-							</div>
-							<Input
-								onChange={handleChange}
-								type="email"
-								id="email"
-								name="email"
-								placeholder="Электронная почта"
-								required
-							/>
-							{emailInvalid && (
-								<div className={styles.validation_error}>
-									{emailInvalid}
-								</div>
-							)}
-						</div>
-					)}
-				</div>
-				<Button
-					variant={
-						usernameInvalid ||
-						passwordInvalid ||
-						(auth === 'reg' && emailInvalid)
-							? 'disable'
-							: 'accent'
-					}
-					size="xl"
-					weight="semibold"
-					type={
-						!usernameInvalid &&
-						!passwordInvalid &&
-						(auth === 'reg' || !emailInvalid)
-							? 'submit'
-							: 'button'
-					}
-					className={styles.submit_auth_btn}
-				>
-					{auth === 'reg' ? 'Зарегистрироваться' : 'Войти'}
-				</Button>
-				{prevAuth.current === auth && response && (
-					<div
-						className={styles.response_message}
-						style={{
-							animation: 'reg-auth-data-fade-in 1s ease-out',
-							color: responseColor,
-						}}
-					>
-						{response}
-					</div>
-				)}
-			</form>,
-		);
-		prevAuth.current = auth;
-	}, [auth, validationMessages, response, isLoading, responseColor]);
 	return (
 		<div className={styles.auth}>
 			<div className={styles.auth_header}>
@@ -431,7 +305,18 @@ const Auth: FC = () => {
 					</Button>
 				</div>
 			</div>
-			<div className={styles.auth_wrapper}>{content}</div>
+			<div className={styles.auth_wrapper}>
+				<AuthForm
+					auth={auth}
+					validationMessages={validationMessages}
+					responseColor={responseColor}
+					response={response}
+					showResponse={showResponse}
+					onChange={handleChange}
+					onSubmitReg={handleSubmitReg}
+					onSubmitAuth={handleSubmitAuth}
+				/>
+			</div>
 		</div>
 	);
 };
