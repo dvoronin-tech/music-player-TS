@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-import clsx from 'clsx';
 import styles from './artistTrackCards.module.scss';
 import Button from '@/components/buttons/buttons';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
@@ -31,7 +30,6 @@ interface IProp {
 }
 
 const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
-	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const dispatch = useAppDispatch();
 	const { currentTrack, currentPlayList } = useAppSelector(
 		(state) => ({
@@ -93,90 +91,53 @@ const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
 		}
 	};
 
-	const handleMouseEnter = () => {
-		setIsHovered(true);
-	};
-	const handleMouseLeave = () => {
-		setIsHovered(false);
-	};
-
 	return (
-		<div
-			style={{ flexBasis: isHovered ? '60%' : '35%' }}
-			className={styles.popular_track_item}
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
-		>
-			<div
-				className={clsx(
-					styles.background_img,
-					isHovered ? styles.width_hover : styles.width_full,
-				)}
-				style={{ backgroundImage: `url(${albumImg})` }}
-				onClick={setCurrentTrack}
-			>
+		<div className={styles.popular_track_item}>
+			<div className={styles.background_img} onClick={setCurrentTrack}>
+				<img src={albumImg} alt={title} draggable={false} />
 				{currentTrack?.id === id && (
 					<div className={styles.playing_tag_wrapper}>
 						<PlayingTrackTag height={50} />
 					</div>
 				)}
-				<span
-					className={
-						isHovered ? styles.title_hidden : styles.title_visible
-					}
-				>
-					{title}
-				</span>
+				<span>{title}</span>
 			</div>
-			<div
-				className={clsx(
-					styles.track_item_info_panel,
-					isHovered ? styles.panel_expanded : styles.panel_collapsed,
-				)}
-			>
-				<>
-					<div
-						style={{ opacity: isHovered ? 1 : 0 }}
-						className={styles.track_item_info}
-					>
-						<span>{title}</span>
-						<span>{auditions} прослушиваний</span>
-					</div>
-					<div
-						style={{ opacity: isHovered ? 1 : 0 }}
-						className={styles.track_item_action_buttons}
-					>
-						<div className={styles.buttons_wrapper}>
-							<Button
-								variant="simple"
-								size="xs"
-								weight="semibold"
-								style={{ marginBottom: 10 }}
-								onClick={addToPlayList}
-							>
-								<AddToPlayList />
-							</Button>
-							<Button
-								variant="simple"
-								size="xs"
-								weight="semibold"
-								style={{ marginBottom: 10 }}
-								onClick={toggleIsLiked}
-							>
-								<Like type={isLiked ? 'active' : 'idle'} />
-							</Button>
-						</div>
+			<div className={styles.track_item_info_panel}>
+				<div className={styles.track_item_info}>
+					<span>{title}</span>
+					<span>{auditions} прослушиваний</span>
+				</div>
+				<div className={styles.track_item_action_buttons}>
+					<div className={styles.buttons_wrapper}>
 						<Button
-							variant="accent"
-							style={{ borderRadius: 100 }}
-							onClick={setCurrentTrack}
-							size="m"
+							variant="simple"
+							size="xs"
 							weight="semibold"
+							style={{ marginBottom: 10 }}
+							onClick={addToPlayList}
 						>
-							Проиграть
+							<AddToPlayList />
+						</Button>
+						<Button
+							variant="simple"
+							size="xs"
+							weight="semibold"
+							style={{ marginBottom: 10 }}
+							onClick={toggleIsLiked}
+						>
+							<Like type={isLiked ? 'active' : 'idle'} />
 						</Button>
 					</div>
-				</>
+					<Button
+						variant="accent"
+						style={{ borderRadius: 100 }}
+						onClick={setCurrentTrack}
+						size="m"
+						weight="semibold"
+					>
+						Проиграть
+					</Button>
+				</div>
 			</div>
 		</div>
 	);
