@@ -16,9 +16,15 @@
 .img_wrapper {
     width: 40px;
     height: 40px;
-    background-position: center;
-    background-size: cover;
     border-radius: 5px;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 }
 
 .track_info_wrapper {

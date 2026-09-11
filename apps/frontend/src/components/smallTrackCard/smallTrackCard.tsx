@@ -67,10 +67,9 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 	return (
 		<div className={styles.track_item_wrapper}>
 			<div className={styles.track_info_wrapper} onClick={setCurrent}>
-				<div
-					className={styles.img_wrapper}
-					style={{ backgroundImage: `url(${track.albumImg})` }}
-				></div>
+				<div className={styles.img_wrapper}>
+					<img src={track.albumImg} alt={track.title} draggable={false} />
+				</div>
 				<div className={styles.small_track_item_info}>
 					<span>{track.title}</span>
 					<span>{formatArtistNames(track.artists)}</span>
