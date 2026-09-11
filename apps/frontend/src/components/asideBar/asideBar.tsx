@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
+import clsx from 'clsx';
 import styles from './asideBar.module.scss';
-import styled from 'styled-components';
 import { useAppSelector } from '@/hooks/useTypedRedux';
 import {
 	useGetLikedTracksQuery,
@@ -9,74 +9,10 @@ import {
 import Button from '@/components/buttons/buttons';
 import SmallTrackCard from '@/components/smallTrackCard/smallTrackCard';
 import { ArtistCard } from '@/components/artistCards/artistCards';
-import { useNavigate } from '@tanstack/react-router';
 import {
 	selectCurrentTrack,
 	selectPlayerQueue,
 } from '@/store/slices/player';
-
-const AsideBarComponent = styled.aside<{
-	$isPlayList: boolean;
-	$isHovered: boolean;
-}>`
-	width: 400px;
-	background-color: ${({ theme }) => theme.secondBgBlur};
-	backdrop-filter: blur(20px);
-	position: fixed;
-	top: 90px;
-	left: ${({ $isHovered }) => ($isHovered ? '40px' : '-398px')};
-	height: calc(
-		100svh - ${({ $isPlayList }) => ($isPlayList ? '190px' : '110px')}
-	);
-	border-radius: 15px;
-	transition: 500ms ease all;
-	z-index: 100;
-	border: 1px solid ${({ theme }) => theme.border};
-	opacity: ${({ $isHovered }) => ($isHovered ? 1 : 0)};
-	box-sizing: border-box;
-	padding: 20px;
-	display: flex;
-	flex-direction: column;
-
-	&::before {
-		content: '';
-		width: 42px;
-		height: calc(
-			100svh - ${({ $isPlayList }) => ($isPlayList ? '190px' : '110px')}
-		);
-		position: absolute;
-		top: 0;
-		left: -42px;
-	}
-`;
-
-const FlexRow = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
-	span {
-		font-size: 2rem;
-		font-weight: 700;
-	}
-`;
-
-const NoDataSpan = styled.span`
-	font-size: 1.6rem;
-	font-weight: 400;
-	color: ${({ theme }) => theme.textSecond};
-	margin-top: 10px;
-	width: 100%;
-	text-align: center;
-`;
-
-const ArtistsGridWrapper = styled.div<{ $isNoArtists: boolean }>`
-	display: ${({ $isNoArtists }) => ($isNoArtists ? 'flex' : 'grid')};
-	justify-content: center;
-	grid-template-columns: repeat(auto-fill, minmax(100px, 100px));
-	gap: 20px;
-	width: 100%;
-`;
 
 const AsideBar: FC = () => {
 	const currentTrack = useAppSelector(selectCurrentTrack);
@@ -87,10 +23,7 @@ const AsideBar: FC = () => {
 		useGetLikedArtistsQuery();
 
 	const [showPlayList, setShowPlayList] = useState(false);
-	const [isHovered, setIsHovered] = useState(false);
 	const [isPopular, setIsPopular] = useState(false);
-
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (currentTrack && currentPlayList.length > 0) {
@@ -103,7 +36,11 @@ const AsideBar: FC = () => {
 	const renderLikedTrackList = () => {
 		if (!tracksLoading) {
 			if (likedTrackList.length === 0) {
-				return <NoDataSpan>Вы не добавили ни одного трека</NoDataSpan>;
+				return (
+					<span className={styles.no_data_span}>
+						Вы не добавили ни одного трека
+					</span>
+				);
 			} else {
 				return likedTrackList.map((item) => {
 					return (
@@ -125,9 +62,9 @@ const AsideBar: FC = () => {
 		if (!artistsLoading) {
 			if (likedArtists.length === 0) {
 				return (
-					<NoDataSpan>
+					<span className={styles.no_data_span}>
 						Вы не подписаны ни на одного артиста
-					</NoDataSpan>
+					</span>
 				);
 			} else {
 				if (isPopular) {
@@ -163,18 +100,14 @@ const AsideBar: FC = () => {
 		}
 	};
 
-	useEffect(() => {
-		setIsHovered(false);
-	}, [navigate]);
-
 	return (
-		<AsideBarComponent
-			$isHovered={isHovered}
-			$isPlayList={showPlayList}
-			onMouseEnter={() => setIsHovered(true)}
-			onMouseLeave={() => setIsHovered(false)}
+		<aside
+			className={clsx(
+				styles.aside_bar,
+				showPlayList && styles.with_playlist,
+			)}
 		>
-			<FlexRow>
+			<div className={styles.flex_row}>
 				<span>Любимые треки</span>
 				<Button
 					to="/home/liked"
@@ -183,11 +116,11 @@ const AsideBar: FC = () => {
 				>
 					Посмотреть всё
 				</Button>
-			</FlexRow>
+			</div>
 			<div className={styles.aside_liked_track_list}>
 				{renderLikedTrackList()}
 			</div>
-			<FlexRow style={{ marginTop: 10 }}>
+			<div className={styles.flex_row}>
 				<span>Любимые артисты</span>
 				<Button
 					variant={isPopular ? 'accent' : 'alternative'}
@@ -198,13 +131,20 @@ const AsideBar: FC = () => {
 				>
 					Сначала популярные
 				</Button>
-			</FlexRow>
-			<div className={styles.aside_artist_list}>
-				<ArtistsGridWrapper $isNoArtists={likedArtists.length === 0}>
-					{renderLikedArtists()}
-				</ArtistsGridWrapper>
 			</div>
-		</AsideBarComponent>
+			<div className={styles.aside_artist_list}>
+				<div
+					className={clsx(
+						styles.artists_grid,
+						likedArtists.length === 0
+							? styles.artists_grid_flex
+							: styles.artists_grid_grid,
+					)}
+				>
+					{renderLikedArtists()}
+				</div>
+			</div>
+		</aside>
 	);
 };
 

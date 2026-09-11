@@ -45,6 +45,19 @@
     }
 }
 
+.content_selection {
+    width: 100%;
+    overflow: scroll;
+
+    h2 {
+        text-align: center;
+    }
+
+    h3 {
+        text-align: end;
+    }
+}
+
 .action_links {
     display: flex;
     justify-content: center;

@@ -1,87 +1,13 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-
+import clsx from 'clsx';
 import styles from './likedPage.module.scss';
-import styled from 'styled-components';
 import { useAppSelector } from '@/hooks/useTypedRedux';
 import { useGetLikedTracksQuery } from '@/api/rtk/liked';
 import { Input } from '@/components/inputFields/inputFields';
 import Button from '@/components/buttons/buttons';
 import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import type { ApiTrack } from '@music-player/backend';
-import { publicUrl } from '@/utils/constants';
 import { selectCurrentTrack } from '@/store/slices/player';
-
-const Background = styled.div`
-	height: 333px;
-	width: 100%;
-	margin-top: 80px;
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 0;
-	margin-bottom: 20px;
-
-	.video_wrapper {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		overflow: hidden;
-		z-index: 1;
-		video {
-			filter: hue-rotate(300deg) blur(6px) brightness(60%);
-			object-fit: cover;
-			width: 100%;
-			height: 100%;
-		}
-	}
-
-	&::after {
-		content: '';
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		height: 150px;
-		background: linear-gradient(
-			180deg,
-			rgba(27, 26, 28, 0) 0%,
-			rgba(27, 26, 28, 1) 100%
-		);
-		z-index: 2;
-	}
-`;
-
-const Container = styled.div`
-	width: 100%;
-	box-sizing: border-box;
-	padding: 0 40px;
-	display: flex;
-	flex-direction: column;
-`;
-
-const GridContainer = styled.div<{ $isNoData: boolean }>`
-	width: 100%;
-	border-radius: 16px;
-	margin-top: 20px;
-
-	display: ${({ $isNoData }) => ($isNoData ? 'block' : 'grid')};
-	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-	gap: 20px;
-`;
-
-const NoDataDiv = styled.div`
-	width: 100%;
-	height: 100px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 2rem;
-	font-weight: 700;
-	color: ${({ theme }) => theme.textDisable};
-`;
 
 const LikedPage: FC = () => {
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
@@ -119,9 +45,9 @@ const LikedPage: FC = () => {
 			}
 		} else {
 			return (
-				<NoDataDiv>
+				<div className={styles.no_data_div}>
 					<span>Вы не добавили ни одного трека</span>
-				</NoDataDiv>
+				</div>
 			);
 		}
 	};
@@ -149,13 +75,13 @@ const LikedPage: FC = () => {
 			className={styles.liked_page}
 			style={{ paddingBottom: currentTrack ? '40px' : 0 }}
 		>
-			<Background>
-				<div className="video_wrapper">
+			<div className={styles.background}>
+				<div className={styles.video_wrapper}>
 					<video
 						autoPlay
 						loop
 						muted
-						src='/video/liked-video.webm'
+						src="/video/liked-video.webm"
 					/>
 				</div>
 				<div className={styles.liked_title_wrapper}>
@@ -165,8 +91,8 @@ const LikedPage: FC = () => {
 						<span>{likedTrackList.length} треков</span>
 					</div>
 				</div>
-			</Background>
-			<Container>
+			</div>
+			<div className={styles.container}>
 				<div className={styles.action_row}>
 					<Input
 						onChange={onSearch}
@@ -193,10 +119,17 @@ const LikedPage: FC = () => {
 						</Button>
 					</div>
 				</div>
-				<GridContainer $isNoData={likedTrackList.length === 0}>
+				<div
+					className={clsx(
+						styles.grid_container,
+						likedTrackList.length === 0
+							? styles.grid_block
+							: styles.grid_grid,
+					)}
+				>
 					{renderLikedTrackList()}
-				</GridContainer>
-			</Container>
+				</div>
+			</div>
 		</div>
 	);
 };

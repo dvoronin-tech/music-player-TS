@@ -1,27 +1,13 @@
 import { FC } from 'react';
 import styles from './PreRegPage.module.scss';
 import Button from '@/components/buttons/buttons';
-import styled from 'styled-components';
-
-const ContentSelection = styled.div`
-	width: 100%;
-	overflow: scroll;
-
-	h2 {
-		text-align: center;
-	}
-
-	h3 {
-		text-align: end;
-	}
-`;
 
 const PreRegPage: FC = () => {
 	return (
 		<div className={styles.pre_reg_main}>
 			<main>
 				<div className={styles.main_content}>
-					<ContentSelection>
+					<div className={styles.content_selection}>
 						<h1>
 							Добро пожаловать в <span>BROOKLYN</span>
 						</h1>
@@ -53,8 +39,7 @@ const PreRegPage: FC = () => {
 							Данное приложение написано на React с использованием
 							таких технологий как{' '}
 							<b>
-								Redux Toolkit, styled components, scss, React
-								Router
+								Redux Toolkit, SCSS modules, TanStack Router
 							</b>{' '}
 							на языке <b>TypeScript</b>. Серверная часть
 							приложения была написана на <b>Python</b> с
@@ -106,7 +91,7 @@ const PreRegPage: FC = () => {
 							<b>Приятного использования!!!</b>
 						</p>
 						<h3>Разработчик: Воронин Денис</h3>
-					</ContentSelection>
+					</div>
 					<div className={styles.action_links}>
 						<Button
 							variant="accent"
