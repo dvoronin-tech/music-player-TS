@@ -5,8 +5,8 @@ import { useAppSelector } from '@/hooks/useTypedRedux';
 import { useGetLikedTracksQuery } from '@/api/rtk/liked';
 import { Input } from '@/components/inputFields/inputFields';
 import Button from '@/components/buttons/buttons';
-import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import type { ApiTrack } from '@music-player/backend';
+import { LikedTracksGrid } from './LikedTracksGrid';
 import { selectCurrentTrack } from '@/store/slices/player';
 
 const LikedPage: FC = () => {
@@ -16,41 +16,6 @@ const LikedPage: FC = () => {
 	const [searchStr, setSearchStr] = useState('');
 
 	const [isPopular, setIsPopular] = useState(false);
-
-	const renderLikedTrackList = () => {
-		if (likedTrackList.length !== 0) {
-			if (searchStr) {
-				const subDataArr = dataArr.filter((item) =>
-					item.title.toLowerCase().includes(searchStr.toLowerCase()),
-				);
-				return subDataArr.map((item) => {
-					return (
-						<HomeTrackCard
-							key={item.id}
-							track={item}
-							playList={dataArr}
-						/>
-					);
-				});
-			} else {
-				return dataArr.map((item) => {
-					return (
-						<HomeTrackCard
-							key={item.id}
-							track={item}
-							playList={dataArr}
-						/>
-					);
-				});
-			}
-		} else {
-			return (
-				<div className={styles.no_data_div}>
-					<span>Вы не добавили ни одного трека</span>
-				</div>
-			);
-		}
-	};
 
 	useEffect(() => {
 		if (likedTrackList.length !== 0) {
@@ -127,7 +92,11 @@ const LikedPage: FC = () => {
 							: styles.grid_grid,
 					)}
 				>
-					{renderLikedTrackList()}
+					<LikedTracksGrid
+						tracks={dataArr}
+						searchStr={searchStr}
+						hasLikedTracks={likedTrackList.length !== 0}
+					/>
 				</div>
 			</div>
 		</div>
