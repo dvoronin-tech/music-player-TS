@@ -7,9 +7,9 @@ import {
 	useGetLikedArtistsQuery,
 } from '@/api/rtk/liked';
 import Button from '@/components/buttons/buttons';
-import SmallTrackCard from '@/components/smallTrackCard/smallTrackCard';
-import { ArtistCard } from '@/components/artistCards/artistCards';
 import { useNavigate } from '@tanstack/react-router';
+import { AsideLikedTracks } from './AsideLikedTracks';
+import { AsideLikedArtists } from './AsideLikedArtists';
 import {
 	selectCurrentTrack,
 	selectPlayerQueue,
@@ -61,15 +61,6 @@ const FlexRow = styled.div`
 	}
 `;
 
-const NoDataSpan = styled.span`
-	font-size: 1.6rem;
-	font-weight: 400;
-	color: ${({ theme }) => theme.textSecond};
-	margin-top: 10px;
-	width: 100%;
-	text-align: center;
-`;
-
 const ArtistsGridWrapper = styled.div<{ $isNoArtists: boolean }>`
 	display: ${({ $isNoArtists }) => ($isNoArtists ? 'flex' : 'grid')};
 	justify-content: center;
@@ -100,69 +91,6 @@ const AsideBar: FC = () => {
 		}
 	}, [currentPlayList.length, currentTrack]);
 
-	const renderLikedTrackList = () => {
-		if (!tracksLoading) {
-			if (likedTrackList.length === 0) {
-				return <NoDataSpan>Вы не добавили ни одного трека</NoDataSpan>;
-			} else {
-				return likedTrackList.map((item) => {
-					return (
-						<SmallTrackCard
-							track={item}
-							playList={likedTrackList}
-							showRemoveButton={false}
-							key={item.id}
-						/>
-					);
-				});
-			}
-		} else {
-			return <div className="loading"></div>;
-		}
-	};
-
-	const renderLikedArtists = () => {
-		if (!artistsLoading) {
-			if (likedArtists.length === 0) {
-				return (
-					<NoDataSpan>
-						Вы не подписаны ни на одного артиста
-					</NoDataSpan>
-				);
-			} else {
-				if (isPopular) {
-					const artistsListCopy = [...likedArtists];
-					const sortedArr = artistsListCopy.sort(
-						(a, b) => b.likes - a.likes,
-					);
-					return sortedArr.map((item) => {
-						return (
-							<ArtistCard
-								key={item.id}
-								id={item.id}
-								name={item.name}
-								img={item.artistImg}
-								type="small"
-							/>
-						);
-					});
-				} else {
-					return likedArtists.map((item) => {
-						return (
-							<ArtistCard
-								key={item.id}
-								id={item.id}
-								name={item.name}
-								img={item.artistImg}
-								type="small"
-							/>
-						);
-					});
-				}
-			}
-		}
-	};
-
 	useEffect(() => {
 		setIsHovered(false);
 	}, [navigate]);
@@ -185,7 +113,10 @@ const AsideBar: FC = () => {
 				</Button>
 			</FlexRow>
 			<div className={styles.aside_liked_track_list}>
-				{renderLikedTrackList()}
+				<AsideLikedTracks
+					tracks={likedTrackList}
+					isLoading={tracksLoading}
+				/>
 			</div>
 			<FlexRow style={{ marginTop: 10 }}>
 				<span>Любимые артисты</span>
@@ -201,7 +132,11 @@ const AsideBar: FC = () => {
 			</FlexRow>
 			<div className={styles.aside_artist_list}>
 				<ArtistsGridWrapper $isNoArtists={likedArtists.length === 0}>
-					{renderLikedArtists()}
+					<AsideLikedArtists
+						artists={likedArtists}
+						isLoading={artistsLoading}
+						isPopular={isPopular}
+					/>
 				</ArtistsGridWrapper>
 			</div>
 		</AsideBarComponent>
