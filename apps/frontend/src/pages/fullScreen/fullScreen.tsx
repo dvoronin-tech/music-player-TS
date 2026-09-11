@@ -7,8 +7,8 @@ import {
 	useToggleLikedTrackMutation,
 } from '@/api/rtk/liked';
 import { formatArtistNames } from '@/utils/formatArtists';
-import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import Button from '@/components/buttons/buttons';
+import { FullScreenPlayQueue } from './FullScreenPlayQueue';
 import {
 	CurrentPlayList,
 	Like,
@@ -72,17 +72,6 @@ const FullScreen: FC = () => {
 
 	const closeFullScreen = () => {
 		dispatch(toggleShowFullScreen(false));
-	};
-
-	const renderCurrentPlayList = () => {
-		return playQueue.map((item) => (
-			<HomeTrackCard
-				key={item.id}
-				renderedInFullScreen
-				playList={currentPlayList}
-				track={item}
-			/>
-		));
 	};
 
 	useEffect(() => {
@@ -293,7 +282,12 @@ const FullScreen: FC = () => {
 									}}
 									ref={CPLLineRef}
 								>
-									{renderCurrentPlayList()}
+									{playQueue.length > 0 && (
+										<FullScreenPlayQueue
+											playQueue={playQueue}
+											currentPlayList={currentPlayList}
+										/>
+									)}
 								</div>
 
 								<Button
