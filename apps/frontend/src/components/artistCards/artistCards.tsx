@@ -22,13 +22,6 @@ export const ArtistCard: FC<IProp> = ({
 		navigate({ to: '/artist/$artistId', params: { artistId: String(id) } });
 	};
 
-	const cutLongString = (string: string): string => {
-		if (string.length > 12 && type === 'small') {
-			return string.substring(0, 10) + '...';
-		}
-		return string;
-	};
-
 	return (
 		<div
 			className={clsx(
@@ -37,21 +30,10 @@ export const ArtistCard: FC<IProp> = ({
 			)}
 			onClick={selectArtist}
 		>
-			<div
-				className={clsx(
-					styles.artist_img,
-					type === 'big' ? styles.img_big : styles.img_small,
-				)}
-				style={{ backgroundImage: `url(${img})` }}
-			></div>
-			<span
-				className={clsx(
-					styles.artist_name,
-					type === 'big' ? styles.name_big : styles.name_small,
-				)}
-			>
-				{cutLongString(name)}
-			</span>
+			<div className={styles.artist_img}>
+				<img src={img} alt={name} draggable={false} />
+			</div>
+			<span className={styles.artist_name}>{name}</span>
 		</div>
 	);
 };
