@@ -9,7 +9,6 @@ import {
 import Button from '@/components/buttons/buttons';
 import SmallTrackCard from '@/components/smallTrackCard/smallTrackCard';
 import { ArtistCard } from '@/components/artistCards/artistCards';
-import { useNavigate } from '@tanstack/react-router';
 import {
 	selectCurrentTrack,
 	selectPlayerQueue,
@@ -24,10 +23,7 @@ const AsideBar: FC = () => {
 		useGetLikedArtistsQuery();
 
 	const [showPlayList, setShowPlayList] = useState(false);
-	const [isHovered, setIsHovered] = useState(false);
 	const [isPopular, setIsPopular] = useState(false);
-
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (currentTrack && currentPlayList.length > 0) {
@@ -104,19 +100,12 @@ const AsideBar: FC = () => {
 		}
 	};
 
-	useEffect(() => {
-		setIsHovered(false);
-	}, [navigate]);
-
 	return (
 		<aside
 			className={clsx(
 				styles.aside_bar,
 				showPlayList && styles.with_playlist,
-				isHovered ? styles.visible : styles.hidden,
 			)}
-			onMouseEnter={() => setIsHovered(true)}
-			onMouseLeave={() => setIsHovered(false)}
 		>
 			<div className={styles.flex_row}>
 				<span>Любимые треки</span>
@@ -131,7 +120,7 @@ const AsideBar: FC = () => {
 			<div className={styles.aside_liked_track_list}>
 				{renderLikedTrackList()}
 			</div>
-			<div className={styles.flex_row} style={{ marginTop: 10 }}>
+			<div className={styles.flex_row}>
 				<span>Любимые артисты</span>
 				<Button
 					variant={isPopular ? 'accent' : 'alternative'}

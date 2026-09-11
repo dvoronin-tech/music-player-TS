@@ -13,6 +13,14 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
+    left: -398px;
+    opacity: 0;
+
+    &:hover {
+        left: 40px;
+        opacity: 1;
+    }
 
     &::before {
         content: '';
@@ -30,16 +38,6 @@
     &::before {
         height: calc(100svh - 190px);
     }
-}
-
-.visible {
-    left: 40px;
-    opacity: 1;
-}
-
-.hidden {
-    left: -398px;
-    opacity: 0;
 }
 
 .flex_row {
@@ -82,17 +80,14 @@
     flex: 0 1 360px;
     background-color: var(--main-bg-color-for-blur);
     border-radius: 10px;
-    margin-top: 10px;
     overflow: scroll;
     display: flex;
     flex-direction: column;
 }
 
-
 .aside_artist_list {
     background-color: var(--main-bg-color-for-blur);
     border-radius: 10px;
-    margin-top: 10px;
     overflow: scroll;
     width: 360px;
     flex: 1 1 150px;
