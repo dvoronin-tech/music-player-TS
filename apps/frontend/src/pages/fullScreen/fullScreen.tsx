@@ -235,14 +235,13 @@ const FullScreen: FC = () => {
 	return (
 		<>
 			{currentTrack && currentPlayList && (
-				<div
-					className={styles.background}
-					style={
-						{
-							'--bg-image': `url(${currentTrack.albumImg})`,
-						} as React.CSSProperties
-					}
-				>
+				<div className={styles.background}>
+					<img
+						className={styles.background_img}
+						src={currentTrack.albumImg}
+						alt=""
+						draggable={false}
+					/>
 					<div className={styles.fullscreen_top_elements}>
 						<img
 							className={clsx(
@@ -258,28 +257,34 @@ const FullScreen: FC = () => {
 							<div
 								className={clsx(
 									styles.cpl_selection,
-									showCurrentPlayList
-										? styles.cpl_visible
-										: styles.cpl_hidden,
-									isCPLLong
-										? styles.cpl_gradient_end_visible
-										: styles.cpl_gradient_end_hidden,
-									CPLTranslateValue
-										? styles.cpl_gradient_start_visible
-										: styles.cpl_gradient_start_hidden,
+									{
+										[styles.cpl_visible]: showCurrentPlayList,
+									},
+									{
+										[styles.cpl_gradient_end_visible]:
+											isCPLLong,
+									},
+									{
+										[styles.cpl_gradient_start_visible]:
+											!!CPLTranslateValue,
+									},
 								)}
 								ref={CPLSelectionRef}
 							>
-								{CPLTranslateValue ? (
-									<Button
-										variant="alternative"
-										className={styles.fullscreen_prev_button}
-										size="3xl"
-										onClick={CPLTranslateToPrev}
-									>
-										{'<'}
-									</Button>
-								) : null}
+								<Button
+									variant="alternative"
+									className={clsx(
+										styles.fullscreen_prev_button,
+										{
+											[styles.fullscreen_nav_visible]:
+												!!CPLTranslateValue,
+										},
+									)}
+									size="3xl"
+									onClick={CPLTranslateToPrev}
+								>
+									{'<'}
+								</Button>
 
 								<div
 									className={styles.cpl_line}
@@ -291,16 +296,20 @@ const FullScreen: FC = () => {
 									{renderCurrentPlayList()}
 								</div>
 
-								{isCPLLong && (
-									<Button
-										variant="alternative"
-										className={styles.fullscreen_next_button}
-										size="3xl"
-										onClick={CPLTranslateToNext}
-									>
-										{'>'}
-									</Button>
-								)}
+								<Button
+									variant="alternative"
+									className={clsx(
+										styles.fullscreen_next_button,
+										{
+											[styles.fullscreen_nav_visible]:
+												isCPLLong,
+										},
+									)}
+									size="3xl"
+									onClick={CPLTranslateToNext}
+								>
+									{'>'}
+								</Button>
 							</div>
 							<div
 								ref={infoDiv}
