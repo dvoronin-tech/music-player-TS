@@ -11,6 +11,26 @@
     font-family: inherit;
 }
 
+.general_btn:disabled {
+    background-color: var(--disabled-bg-color);
+    color: var(--text-disable-color);
+    cursor: not-allowed;
+    border-color: transparent;
+    transform: none;
+
+    @media (hover: hover) {
+        &:hover {
+            background-color: var(--disabled-bg-color);
+            color: var(--text-disable-color);
+            transform: none;
+
+            svg {
+                color: inherit;
+            }
+        }
+    }
+}
+
 .accent {
     background-color: var(--accent-color);
     border-radius: 10px;

@@ -26,3 +26,7 @@ export const loginBodySchema = z.object({
 		.string({ error: 'Password is required' })
 		.min(1, 'Password is required'),
 });
+
+export type RegisterBody = z.infer<typeof registerBodySchema>;
+export type LoginBody = z.infer<typeof loginBodySchema>;
+
