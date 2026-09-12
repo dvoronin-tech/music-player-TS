@@ -1,18 +1,21 @@
 .notification_wrapper {
     position: fixed;
     z-index: 100;
-    top: 90px;
-    right: 20px;
-    height: 500px;
-    width: 450px;
+    width: 100svw;
+    height: 100svh;
     overflow: scroll;
     pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 10px;
 }
 
 .notification {
     box-sizing: border-box;
-    margin-bottom: 10px;
     padding: 15px;
+    max-width: 500px;
     min-width: 330px;
     height: 70px;
     display: flex;
@@ -22,9 +25,14 @@
     position: relative;
     border-radius: 10px;
     pointer-events: visible;
-    
+    right: 0;
+
     border: 1px solid var(--stroke-light);
-    animation: notification-fade-in 1s ease;
+    animation: notification-fade-in-desktop 1s ease;
+
+    &.fadeOut {
+        animation: notification-fade-out 0.5s ease forwards;
+    }
 
     img {
         width: 40px;
@@ -95,17 +103,38 @@
     }
 }
 
-@keyframes notification-fade-in {
+@media screen and (max-width: 480px) {
+    .notification_wrapper {
+        padding: 10px;
+    }
+
+    .notification {
+        max-width: 100%;
+        min-width: 100%;
+        animation: notification-fade-in-mobile 1s ease;
+    }
+}
+
+@keyframes notification-fade-in-mobile {
     from {
-        right: -440px;
+        transform: translateY(-100%);
         opacity: 0;
     } to {
-        right: 0px;
+        transform: translateY(0);
         opacity: 1;
     }
 }
 
-:global {
+@keyframes notification-fade-in-desktop {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    } to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 @keyframes notification-fade-out {
     from {
         transform: scale(1);
@@ -113,15 +142,5 @@
     } to {
         transform: scale(0.9);
         opacity: 0;
-    }
-}
-
-}
-
-@keyframes notifications-fade-up {
-    from {
-        top: 0;
-    } to {
-        top: -90px;
     }
 }

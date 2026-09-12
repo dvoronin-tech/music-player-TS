@@ -1,4 +1,5 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router';
+import Notification from '@/components/notification/notification';
 import NotFoundPage from '@/pages/notFoundPage/notFoundPage';
 
 export const Route = createRootRoute({
@@ -10,6 +11,7 @@ function RootComponent() {
 	return (
 		<div className="App">
 			<Outlet />
+			<Notification />
 		</div>
 	);
 }

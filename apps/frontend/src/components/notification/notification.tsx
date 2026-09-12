@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 import styles from './notification.module.scss';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
@@ -32,51 +33,43 @@ interface INotificationItemProps {
 
 const NotificationItem: FC<INotificationItemProps> = ({ notificationData }) => {
 	const { img, info, additionalInfo, notificationId } = notificationData;
-	const additionalInfoSpan = useRef<HTMLSpanElement>(null);
-	const notificationItem = useRef<HTMLDivElement>(null);
 	const [isDelete, setIsDelete] = useState<boolean>(false);
+	const [isExiting, setIsExiting] = useState(false);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		const timerId = setTimeout(() => {
-			if (notificationItem.current) {
-				notificationItem.current.style.animation =
-					'notification-fade-out 0.5s ease';
-
-				setTimeout(() => {
-					dispatch(deleteNotification(notificationId));
-				}, 495);
-			}
-		}, 3000);
+			setIsExiting(true);
+		}, 4000);
 
 		return () => void clearTimeout(timerId);
-	}, [dispatch]);
-
-	useEffect(() => {
-		if (additionalInfoSpan.current) {
-			additionalInfoSpan.current.innerHTML = additionalInfo;
-		}
-	}, [additionalInfo]);
+	}, []);
 
 	const handleDelete = () => {
-		if (notificationItem.current) {
-			notificationItem.current.style.animation =
-				'notification-fade-out 0.5s ease';
+		setIsExiting(true);
+	};
 
-			setTimeout(() => {
-				dispatch(deleteNotification(notificationId));
-			}, 450);
+	const handleAnimationEnd = (
+		event: React.AnimationEvent<HTMLDivElement>,
+	) => {
+		if (
+			!isExiting ||
+			!event.animationName.includes('notification-fade-out')
+		) {
+			return;
 		}
+
+		dispatch(deleteNotification(notificationId));
 	};
 
 	const deleteBtnOpacity = isDelete ? 1 : 0;
 
 	return (
 		<div
-			ref={notificationItem}
 			onMouseEnter={() => setIsDelete(true)}
 			onMouseLeave={() => setIsDelete(false)}
-			className={styles.notification}
+			onAnimationEnd={handleAnimationEnd}
+			className={clsx(styles.notification, isExiting && styles.fadeOut)}
 		>
 			{typeof img === 'string' ? (
 				<img src={img} alt="Фото" />
@@ -87,11 +80,9 @@ const NotificationItem: FC<INotificationItemProps> = ({ notificationData }) => {
 			<div className={styles.notification_data}>
 				<span className={styles.notification_info}>{info}</span>
 				<span
-					ref={additionalInfoSpan}
 					className={styles.notification_additional_info}
-				>
-					{additionalInfo}
-				</span>
+					dangerouslySetInnerHTML={{ __html: additionalInfo }}
+				/>
 			</div>
 			<button
 				onClick={handleDelete}
