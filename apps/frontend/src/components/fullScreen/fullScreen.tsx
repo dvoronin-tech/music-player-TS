@@ -170,8 +170,8 @@ const FullScreen: FC = () => {
 					img: currentTrack.albumImg,
 					info: `${currentTrack.title} - ${formatArtistNames(currentTrack.artists)}`,
 					additionalInfo: isLiked
-						? 'Трек удалён из <span>избранного</span>'
-						: 'Трек добавлен в <span>избранное</span>',
+						? 'Трек удалён из __избранного__'
+						: 'Трек добавлен в __избранное__',
 				}),
 			);
 		}

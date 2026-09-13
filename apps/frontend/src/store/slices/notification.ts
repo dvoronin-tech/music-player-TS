@@ -1,20 +1,20 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { ReactNode } from 'react';
 
-export interface INotificationData {
-	img: string | ReactNode;
+export type NotificationPayload = {
+	notificationId: string;
+	img: string;
 	info: string;
 	additionalInfo: string;
-	notificationId: string;
-}
+	variant?: 'success' | 'error';
+};
 
-const initialState: INotificationData[] = [];
+const initialState: NotificationPayload[] = [];
 
 export const notificationSlice = createSlice({
 	name: 'notification',
 	initialState,
 	reducers: {
-		addNotification(state, action: PayloadAction<INotificationData>) {
+		addNotification(state, action: PayloadAction<NotificationPayload>) {
 			state.push(action.payload);
 		},
 		deleteNotification(state, action: PayloadAction<string>) {

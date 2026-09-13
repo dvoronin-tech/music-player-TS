@@ -26,7 +26,6 @@ import { addNotification } from '@/store/slices/notification';
 import { formatArtistNames } from '@/utils/formatArtists';
 import type { ApiTrack } from '@music-player/backend';
 import { v4 as randomId } from 'uuid';
-import { MdErrorOutline } from 'react-icons/md';
 import { shallowEqual } from 'react-redux';
 
 interface IProp {
@@ -72,8 +71,8 @@ export const HomeTrackCard: FC<IProp> = ({
 				img: track.albumImg,
 				info: `${track.title} - ${formatArtistNames(track.artists)}`,
 				additionalInfo: isLiked
-					? 'Трек удалён из <span>избранного</span>'
-					: 'Трек добавлен в <span>избранное</span>',
+					? 'Трек удалён из __избранного__'
+					: 'Трек добавлен в __избранное__',
 			}),
 		);
 	};
@@ -88,17 +87,18 @@ export const HomeTrackCard: FC<IProp> = ({
 					img: track.albumImg,
 					info: `${track.title} - ${formatArtistNames(track.artists)}`,
 					additionalInfo:
-						'Трек добавлен в <span>текущий плейлист</span>',
+						'Трек добавлен в __текущий плейлист__',
 				}),
 			);
 		} else {
 			dispatch(
 				addNotification({
 					notificationId: randomId(),
-					img: <MdErrorOutline style={{ color: '#C84141' }} />,
+					img: '',
 					info: `${track.title} - ${formatArtistNames(track.artists)}`,
 					additionalInfo:
-						'Трек уже добавлен в <span>текущий плейлист</span>',
+						'Трек уже добавлен в __текущий плейлист__',
+					variant: 'error',
 				}),
 			);
 		}

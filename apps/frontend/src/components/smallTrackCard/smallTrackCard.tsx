@@ -39,7 +39,7 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 			addNotification({
 				img: track.albumImg,
 				info: `${track.title} - ${formatArtistNames(track.artists)}`,
-				additionalInfo: 'Трек удалён из <span>избранного</span>',
+				additionalInfo: 'Трек удалён из __избранного__',
 				notificationId: randomId(),
 			}),
 		);
