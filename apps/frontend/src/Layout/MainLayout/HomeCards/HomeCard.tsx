@@ -2,8 +2,7 @@ import { FC, memo } from 'react';
 
 import styles from './HomeCard.module.scss';
 import Button from '@/components/buttons/buttons';
-import { PlayOrPause } from '@/components/icons and tags/icons';
-import { FaPlay } from 'react-icons/fa';
+import PlayIcon from '@/assets/icons/play.svg?react';
 
 export interface HomeCardProps {
 	img: string;
@@ -36,7 +35,7 @@ export const HomeCard: FC<HomeCardProps> = memo(
 						onClick={onClick}
 						className={styles.home_card_button}
 					>
-						<FaPlay />
+						<PlayIcon />
 					</Button>
 				</div>
 				<img

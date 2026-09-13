@@ -1,0 +1,54 @@
+.artists_line_section_header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.artists_line_wrapper {
+	margin-top: 23px;
+	overflow: auto;
+    scroll-behavior: smooth;
+    position: relative;
+}
+
+.buttons_wrapper {
+	display: flex;
+	gap: 10px;
+}
+
+.button {
+    width: 40px;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--inputs-bg-color);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+
+    &:disabled {
+        opacity: 0.5;
+    }
+}
+
+.artists_line_section {
+	height: 210px;
+	width: calc(100svw - 80px);
+	overflow: hidden;
+
+	span:first-child {
+		font-weight: 700;
+		font-size: 3.2rem;
+	}
+}
+
+.artists_line {
+	display: flex;
+	align-items: center;
+	transition: 1s all ease;
+	width: max-content;
+	gap: 30px;
+}
