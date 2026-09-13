@@ -58,8 +58,7 @@ interface NotificationItemProps {
 }
 
 const NotificationItem: FC<NotificationItemProps> = ({ notificationData }) => {
-	const { img, info, additionalInfo, notificationId, variant } =
-		notificationData;
+	const { info, additionalInfo, notificationId } = notificationData;
 	const [isDelete, setIsDelete] = useState<boolean>(false);
 	const [isExiting, setIsExiting] = useState(false);
 	const dispatch = useAppDispatch();
@@ -98,16 +97,16 @@ const NotificationItem: FC<NotificationItemProps> = ({ notificationData }) => {
 			onAnimationEnd={handleAnimationEnd}
 			className={clsx(styles.notification, isExiting && styles.fadeOut)}
 		>
-			{variant === 'error' ? (
+			{'img' in notificationData ? (
+				<img src={notificationData.img} alt="Фото" />
+			) : notificationData.variant === 'error' ? (
 				<div className={styles.notification_icon}>
 					<MdErrorOutline style={{ color: '#C84141' }} />
 				</div>
-			) : variant === 'success' ? (
+			) : (
 				<div className={styles.notification_icon}>
 					<MdCheckCircleOutline style={{ color: '#4EBA3C' }} />
 				</div>
-			) : (
-				<img src={img} alt="Фото" />
 			)}
 
 			<div className={styles.notification_data}>

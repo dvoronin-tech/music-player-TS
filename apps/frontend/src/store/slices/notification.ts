@@ -1,12 +1,19 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-export type NotificationPayload = {
+type NotificationBase = {
 	notificationId: string;
-	img: string;
 	info: string;
 	additionalInfo: string;
-	variant?: 'success' | 'error';
 };
+
+export type NotificationPayload =
+	| (NotificationBase & {
+			variant: 'success' | 'error';
+	  })
+	| (NotificationBase & {
+			variant?: never;
+			img: string;
+	  });
 
 const initialState: NotificationPayload[] = [];
 

@@ -81,7 +81,6 @@ const ArtistTrackCard: FC<Prop> = ({ track, playList }) => {
 			dispatch(
 				addNotification({
 					notificationId: randomId(),
-					img: '',
 					info: `${track.title} - ${formatArtistNames(track.artists)}`,
 					additionalInfo:
 						'Трек уже добавлен в __текущий плейлист__',

@@ -69,7 +69,6 @@ export const AuthForm: FC = () => {
 		dispatch(
 			addNotification({
 				notificationId: randomId(),
-				img: '',
 				info,
 				additionalInfo,
 				variant: isError ? 'error' : 'success',

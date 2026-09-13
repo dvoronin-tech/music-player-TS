@@ -94,7 +94,6 @@ export const HomeTrackCard: FC<Prop> = ({
 			dispatch(
 				addNotification({
 					notificationId: randomId(),
-					img: '',
 					info: `${track.title} - ${formatArtistNames(track.artists)}`,
 					additionalInfo:
 						'Трек уже добавлен в __текущий плейлист__',

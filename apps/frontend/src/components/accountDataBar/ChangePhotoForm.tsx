@@ -50,7 +50,6 @@ const ChangePhotoForm: FC<ChangePhotoFormProps> = ({ onBack }) => {
 			dispatch(
 				addNotification({
 					notificationId: randomId(),
-					img: '',
 					info: 'Фотография профиля',
 					additionalInfo: 'Не удалось __загрузить фото__',
 					variant: 'error',
