@@ -8,8 +8,8 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SCOPE="uuuuuwwwwwuuuuus-projects"
 BACKEND_PROJECT="music-player-backend"
 FRONTEND_PROJECT="music-player-frontend"
-BACKEND_URL="https://music-player-backend.vercel.app"
-FRONTEND_URL="https://music-player-frontend.vercel.app"
+BACKEND_URL="https://music-player-backend-uuuuuwwwwwuuuuus-projects.vercel.app"
+FRONTEND_URL="https://music-player-frontend-gules.vercel.app"
 
 if ! command -v vercel >/dev/null 2>&1; then
 	vercel() {
