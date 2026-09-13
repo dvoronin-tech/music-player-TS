@@ -7,7 +7,6 @@
 		"verbatimModuleSyntax": true,
 		"skipLibCheck": true,
 		"declaration": true,
-		"types": ["node"],
 		"rootDir": "./src",
 		"outDir": "./dist"
 	},
