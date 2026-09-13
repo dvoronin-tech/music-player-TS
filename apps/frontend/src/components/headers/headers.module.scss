@@ -70,6 +70,11 @@ header {
             width: 50px;
         }
     }
+
+    .show_user_data {
+        opacity: 0;
+        pointer-events: none;
+    }
 }
 
 @keyframes header-fade-in {

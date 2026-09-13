@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
+import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import MainHeader from '@/components/headers/MainHeader';
 import PlaySelection from '@/components/PlaySelection/PlaySelection';
@@ -12,6 +13,7 @@ import {
 	toggleShowFullScreen,
 } from '@/store/slices/ui';
 import { selectCurrentTrack } from '@/store/slices/player';
+import styles from './AuthedShell.module.scss';
 
 interface AuthedShellProps {
 	children: ReactNode;
@@ -20,9 +22,8 @@ interface AuthedShellProps {
 export default function AuthedShell({ children }: AuthedShellProps) {
 	const dispatch = useAppDispatch();
 	const currentTrack = useAppSelector(selectCurrentTrack);
-	const { showUserData, showFullScreen, showCurrentPlayList } = useAppSelector(
-		(state) => state.ui,
-	);
+	const { showUserData, showFullScreen, showCurrentPlayList } =
+		useAppSelector((state) => state.ui);
 
 	useEffect(() => {
 		if (showUserData && showCurrentPlayList) {
@@ -41,15 +42,17 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 	}
 
 	return (
-		<>
-			<div style={{ paddingBottom: currentTrack ? 'var(--play-selection-height)' : 0 }}>
-				<MainHeader />
-				{children}
-			</div>
+		<div
+			className={clsx(styles.shell, {
+				[styles.shell_with_player]: !!currentTrack,
+			})}
+		>
+			<MainHeader />
+			{children}
 			<PlaySelection />
 			<AsideBar />
 			<CPLSelection />
 			<AccountDataBar />
-		</>
+		</div>
 	);
 }

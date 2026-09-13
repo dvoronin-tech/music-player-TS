@@ -7,12 +7,13 @@ import { toggleShowUserData } from '@/store/slices/ui';
 import { useGetMeQuery } from '@/api/rtk/user';
 import Button from '@/components/buttons/buttons';
 import UserImage from '@/components/userImage/UserImage';
+import clsx from 'clsx';
 
 const MainHeader: FC = () => {
 	const dispatch = useAppDispatch();
 
 	const { data: user } = useGetMeQuery();
-	const { showUserData } = useAppSelector((state) => state.ui);
+	const showUserData = useAppSelector((state) => state.ui.showUserData);
 
 	const username = user?.username ?? '';
 	const email = user?.email ?? '';
@@ -33,8 +34,9 @@ const MainHeader: FC = () => {
 				<HomeIcon />
 			</Button>
 			<div
-				style={{ opacity: showUserData ? 0 : 1 }}
-				className={styles.header_account}
+				className={clsx(styles.header_account, {
+					[styles.show_user_data]: showUserData,
+				})}
 				onClick={toggleSUD}
 			>
 				<div className={styles.header_account_info}>
