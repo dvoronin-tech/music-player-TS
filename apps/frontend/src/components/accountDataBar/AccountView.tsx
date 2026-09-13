@@ -38,8 +38,7 @@ const AccountView: FC<AccountViewProps> = ({
 			if (dateOnUp - startDate >= 1000) {
 				const answer = confirm('Вы точно хотите выйти из аккаунта?');
 				if (answer) {
-					logout();
-					navigate({ to: '/auth' });
+					logout(navigate);
 				}
 			}
 		}
@@ -78,9 +77,9 @@ const AccountView: FC<AccountViewProps> = ({
 						styles.logout_btn,
 						isLoggingOut && styles.logout_btn_logging_out,
 					)}
-					onMouseDown={onDown}
-					onMouseUp={onUp}
-					onMouseLeave={onMouseLeave}
+					onPointerDown={onDown}
+					onPointerUp={onUp}
+					onPointerLeave={onMouseLeave}
 				>
 					Выйти из аккаунта
 				</Button>

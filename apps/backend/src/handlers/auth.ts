@@ -67,5 +67,5 @@ export const loginUser = factory.createHandlers(
 
 export const logoutUser = factory.createHandlers(async (c) => {
 	await db.delete(tokens).where(eq(tokens.key, c.get('token')));
-	return c.body(null, 204);
+	return c.json({ message: 'Logged out' }, 200);
 });

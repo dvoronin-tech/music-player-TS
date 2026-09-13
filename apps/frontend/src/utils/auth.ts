@@ -1,4 +1,4 @@
-import { redirect } from '@tanstack/react-router';
+import { type UseNavigateResult, redirect } from '@tanstack/react-router';
 import store from '@/store/store';
 import { baseApi } from '@/api/baseApi';
 import { authApi } from '@/api/rtk/auth';
@@ -39,11 +39,12 @@ export const prefetchAppData = async () => {
 	}
 };
 
-export const logout = async () => {
+export const logout = async (navigate: UseNavigateResult<string>) => {
 	try {
 		await store.dispatch(authApi.endpoints.logout.initiate()).unwrap();
 	} catch {
 		// Local session still ends if the request fails.
 	}
 	clearSession();
+	navigate({ to: '/auth' });
 };

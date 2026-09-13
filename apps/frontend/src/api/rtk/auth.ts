@@ -33,17 +33,14 @@ export const authApi = baseApi.injectEndpoints({
 				return parseHonoJson<LoginResult>(res);
 			},
 		}),
-		logout: build.mutation<void, void>({
+		logout: build.mutation<{ message: string }, void>({
 			async queryFn() {
 				const res = await getAuthedClient().api.auth.logout.$post();
-				return parseHonoJson<void>(res);
+				return parseHonoJson<{ message: string }>(res);
 			},
 		}),
 	}),
 });
 
-export const {
-	useRegisterMutation,
-	useLoginMutation,
-	useLogoutMutation,
-} = authApi;
+export const { useRegisterMutation, useLoginMutation, useLogoutMutation } =
+	authApi;
