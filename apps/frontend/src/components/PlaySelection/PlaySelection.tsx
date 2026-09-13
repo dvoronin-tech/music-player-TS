@@ -8,11 +8,6 @@ import { LeftElements } from './LeftElements/LeftElements';
 import { RightElements } from './RightElements/RightElements';
 import { selectCurrentTrack } from '@/store/slices/player';
 
-export interface IKeyInfo {
-	keyCode: string;
-	shiftKey: boolean;
-}
-
 const PlaySelection: FC = () => {
 	const currentTrack = useAppSelector(selectCurrentTrack);
 

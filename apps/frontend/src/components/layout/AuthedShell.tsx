@@ -2,11 +2,11 @@ import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import MainHeader from '@/components/headers/MainHeader';
-import PlaySelection from '@/pages/PlaySelection/PlaySelection';
+import PlaySelection from '@/components/PlaySelection/PlaySelection';
 import AsideBar from '@/components/asideBar/asideBar';
 import CPLSelection from '@/components/CPLSelection/CPLSelection';
 import AccountDataBar from '@/components/accountDataBar/accountDataBar';
-import FullScreen from '@/pages/fullScreen/fullScreen';
+import FullScreen from '@/components/fullScreen/fullScreen';
 import {
 	setCurrentPlayListOpen,
 	toggleShowFullScreen,

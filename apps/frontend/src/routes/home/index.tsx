@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { prefetchAppData, requireAuth } from '@/utils/auth';
 import AuthedShell from '@/components/layout/AuthedShell';
-import Main from '@/pages/Main/Main';
+import MainLayout from '@/Layout/MainLayout/MainLayout';
 
 export const Route = createFileRoute('/home/')({
 	beforeLoad: () => {
@@ -14,7 +14,7 @@ export const Route = createFileRoute('/home/')({
 function HomePage() {
 	return (
 		<AuthedShell>
-			<Main />
+			<MainLayout />
 		</AuthedShell>
 	);
 }

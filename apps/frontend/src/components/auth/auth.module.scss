@@ -1,51 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
-
-.auth {
-    width: 100%;
-    height: 100svh;
-	background-color: var(--second-bg-color);
-	flex: 1 1 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.auth_header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 100px;
-	padding: 0 60px;
-
-}
-.auth_title {
-	font-size: 4rem;
-	color: var(--text-color);
-	letter-spacing: 5px;
-	font-weight: bold;
-	font-family: 'Inria Sans';
-}
-
-.auth_wrapper {
-	display: flex;
-	justify-content: space-evenly;
-	height: calc(100svh - 100px);
-	align-items: center;
-	background-color: var(--second-bg-color);
-}
-
-.reg_wrapper {
-	height: 100%;
-	display: flex;
-	align-items: center;
-}
-
 .auth_form {
 	max-width: 550px;
 	width: 100%;
 	max-height: 640px;
-    height: 100%;
+	height: 100%;
 	background-color: var(--main-bg-color);
 	display: flex;
 	flex-direction: column;
@@ -53,8 +10,7 @@
 	align-items: center;
 	border-radius: 20px;
 	position: relative;
-
-    padding: 40px;
+	padding: 40px;
 }
 
 .auth_form_title {
@@ -62,22 +18,23 @@
 	font-size: 3.2rem;
 	width: 355px;
 	text-align: center;
+
 	.brooklyn_word {
 		color: var(--accent-color);
 	}
 }
 
 .inputs_wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
 }
 
 .input_field {
 	display: flex;
 	flex-direction: column;
-    gap: 10px;
+	gap: 10px;
 
 	label {
 		font-size: 1.5rem;
@@ -121,35 +78,16 @@
 	color: var(--error-color);
 }
 
-.forgot_pass {
-	display: flex;
-	justify-content: flex-end;
-	margin-top: 10px;
-
-	button {
-		color: var(--text-disable-color);
-		width: max-content;
-		cursor: pointer;
-		font-size: 1.4rem;
-		font-weight: 300;
-
-		@media (hover: hover) {
-			&:hover {
-				color: var(--text-color);
-			}
-		}
-	}
-}
-
 .auth_form_actions {
-    width: 300px;
+	width: 300px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-    gap: 10px;
-    button {
-        width: 100%;
-    }
+	gap: 10px;
+
+	button {
+		width: 100%;
+	}
 }
 
 .submit_auth_btn {
@@ -161,30 +99,13 @@
 	font-size: 1.4rem;
 	font-weight: 400;
 	padding: 0;
-    height: 30px;
+	height: 30px;
 
 	@media (hover: hover) {
 		&:hover {
 			color: var(--text-color);
 		}
 	}
-}
-
-.disable_action {
-	width: 100px;
-	height: 100px;
-	box-shadow: none;
-
-	&:hover {
-		@extend .disable_action;
-		box-shadow: 0px 0px 30px 1px var(--accent-color);
-	}
-}
-
-.sign_in_logo {
-	position: relative;
-	right: 2px;
-	top: 2px;
 }
 
 .validation_error {
@@ -206,7 +127,9 @@
 	opacity: 0;
 	visibility: hidden;
 	pointer-events: none;
-	transition: opacity 0.2s ease, visibility 0.2s ease;
+	transition:
+		opacity 0.2s ease,
+		visibility 0.2s ease;
 
 	&::before {
 		content: '';
@@ -254,21 +177,17 @@
 }
 
 @media (max-width: 480px) {
-    .auth {
-        padding: 0;
-    }
+	.auth_form {
+		max-height: 100%;
+		border-radius: 0;
+		padding: 40px 20px 10px 20px;
+	}
 
-    .auth_form {
-        max-height: 100%;
-        border-radius: 0;
-        padding: 40px 20px 10px 20px;
-    }
+	.auth_form_title {
+		font-size: 2.4rem;
+	}
 
-    .auth_form_title {
-        font-size: 2.4rem;
-    }
-
-    .auth_form_actions {
-        width: 100%;
-    }
+	.auth_form_actions {
+		width: 100%;
+	}
 }

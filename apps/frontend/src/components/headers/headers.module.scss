@@ -22,27 +22,6 @@ header {
         font-size: 2rem;
     }
 
-    .header_search_panel {
-        display: flex;
-        align-items: center;
-        button {
-            width: 20px;
-            height: 20px;
-            position: relative;
-            left: 40px;
-            z-index: 12;
-            cursor: pointer;
-            svg {
-                color: var(--text-disable-color);
-                opacity: 1;
-                transition: 0.2s all ease;
-            }
-            &:hover svg {
-                color: var(--accent-color);
-            }
-        }
-    }
-    
     .header_account {
         display: flex;
         min-width: 200px;

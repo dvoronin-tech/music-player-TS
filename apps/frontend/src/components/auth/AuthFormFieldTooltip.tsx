@@ -1,5 +1,6 @@
 import { memo, useEffect, useRef, useState } from 'react';
 import { LuInfo } from 'react-icons/lu';
+import clsx from 'clsx';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import styles from './auth.module.scss';
 
@@ -29,11 +30,17 @@ export const AuthFormFieldTooltip = memo(
 		return (
 			<div
 				ref={tooltipRef}
-				className={`${styles.auth_error_tooltip} ${isTooltipOpen ? styles.auth_error_tooltip_open : ''}`}
+				className={clsx(
+					styles.auth_error_tooltip,
+					isTooltipOpen && styles.auth_error_tooltip_open,
+				)}
 			>
 				<button
 					type="button"
-					className={`${styles.auth_error_icon_btn} ${message ? styles.auth_error_icon_visible : ''}`}
+					className={clsx(
+						styles.auth_error_icon_btn,
+						message && styles.auth_error_icon_visible,
+					)}
 					aria-label={message}
 					aria-expanded={isTooltipOpen}
 					aria-describedby={message ? `${id}-error` : undefined}

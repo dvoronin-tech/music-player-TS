@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { HomeTrackCard } from '@/components/homeTrackCards/homeTrackCards';
 import type { ApiTrack } from '@music-player/backend';
-import styles from './likedPage.module.scss';
+import styles from './LikedTracksGrid.module.scss';
 
 interface LikedTracksGridProps {
 	tracks: ApiTrack[];

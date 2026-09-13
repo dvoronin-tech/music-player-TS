@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { prefetchAppData, requireAuth } from '@/utils/auth';
 import AuthedShell from '@/components/layout/AuthedShell';
-import LikedPage from '@/pages/likedPage/likedPage';
+import LikedTracksLayout from '@/Layout/LikedTracksLayout/LikedTracksLayout';
 
 export const Route = createFileRoute('/home/liked')({
 	beforeLoad: () => {
@@ -14,7 +14,7 @@ export const Route = createFileRoute('/home/liked')({
 function LikedRoutePage() {
 	return (
 		<AuthedShell>
-			<LikedPage />
+			<LikedTracksLayout />
 		</AuthedShell>
 	);
 }
