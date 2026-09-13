@@ -37,7 +37,7 @@ const LikedTracksLayout: FC = () => {
 
 	return (
 		<div
-			className={styles.liked_page}
+			className={styles.liked_tracks}
 			style={{ paddingBottom: currentTrack ? '40px' : 0 }}
 		>
 			<div className={styles.background}>

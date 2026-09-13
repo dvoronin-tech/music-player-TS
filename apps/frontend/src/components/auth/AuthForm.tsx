@@ -7,7 +7,6 @@ import {
 	useReducer,
 	useState,
 } from 'react';
-import { MdCheckCircleOutline, MdErrorOutline } from 'react-icons/md';
 import { v4 as randomId } from 'uuid';
 import { useNavigate } from '@tanstack/react-router';
 import styles from './auth.module.scss';
@@ -70,13 +69,9 @@ export const AuthForm: FC = () => {
 		dispatch(
 			addNotification({
 				notificationId: randomId(),
-				img: isError ? (
-					<MdErrorOutline style={{ color: '#C84141' }} />
-				) : (
-					<MdCheckCircleOutline style={{ color: '#4EBA3C' }} />
-				),
 				info,
 				additionalInfo,
+				variant: isError ? 'error' : 'success',
 			}),
 		);
 	};
@@ -111,7 +106,7 @@ export const AuthForm: FC = () => {
 			if ('data' in res && res.data) {
 				sendToast({
 					info: 'Регистрация',
-					additionalInfo: 'Регистрация прошла <span>успешно</span>',
+					additionalInfo: 'Регистрация прошла __успешно__',
 					isError: false,
 				});
 				setFormData(initialFormValues);

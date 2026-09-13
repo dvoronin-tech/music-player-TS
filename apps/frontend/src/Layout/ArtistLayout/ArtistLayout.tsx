@@ -51,7 +51,7 @@ const ArtistLayout: FC = () => {
 
 	useEffect(() => {
 		const isLikedArtist = likedArtistList.find(
-			(item) => item.name === artistId,
+			(item) => item.id === Number(artistId),
 		);
 		if (isLikedArtist) {
 			setIsLikedArtist(true);
@@ -80,8 +80,8 @@ const ArtistLayout: FC = () => {
 					img: artist.artistImg,
 					info: artist.name,
 					additionalInfo: !isLikedArtist
-						? 'Вы <span>подписались</span> на артиста'
-						: 'Вы <span>отписались</span> от артиста',
+						? 'Вы __подписались__ на артиста'
+						: 'Вы __отписались__ от артиста',
 				}),
 			);
 		}

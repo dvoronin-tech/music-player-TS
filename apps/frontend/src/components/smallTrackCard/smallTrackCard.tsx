@@ -16,13 +16,13 @@ import { formatArtistNames } from '@/utils/formatArtists';
 import type { ApiTrack } from '@music-player/backend';
 import { v4 as randomId } from 'uuid';
 
-interface ISmallTrackListProps {
+interface SmallTrackListProps {
 	track: ApiTrack;
 	playList: ApiTrack[];
 	showRemoveButton?: boolean;
 }
 
-const SmallTrackCard: FC<ISmallTrackListProps> = ({
+const SmallTrackCard: FC<SmallTrackListProps> = ({
 	track,
 	playList,
 	showRemoveButton = true,
@@ -39,7 +39,7 @@ const SmallTrackCard: FC<ISmallTrackListProps> = ({
 			addNotification({
 				img: track.albumImg,
 				info: `${track.title} - ${formatArtistNames(track.artists)}`,
-				additionalInfo: 'Трек удалён из <span>избранного</span>',
+				additionalInfo: 'Трек удалён из __избранного__',
 				notificationId: randomId(),
 			}),
 		);
