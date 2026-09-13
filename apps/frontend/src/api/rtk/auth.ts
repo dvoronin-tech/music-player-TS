@@ -1,18 +1,10 @@
 import type { ApiUser } from '@music-player/backend';
+import type { LoginBody, RegisterBody } from '@music-player/backend/schemas';
 import { client, getAuthedClient } from '@/api/hono-client';
 import { baseApi } from '@/api/baseApi';
 import { parseHonoJson } from '@/api/parseHono';
 
-export type RegisterBody = {
-	username: string;
-	email: string;
-	password: string;
-};
-
-export type LoginBody = {
-	username: string;
-	password: string;
-};
+export type { LoginBody, RegisterBody };
 
 export type LoginResult = {
 	token: string;

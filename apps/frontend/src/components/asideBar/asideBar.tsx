@@ -7,8 +7,8 @@ import {
 	useGetLikedArtistsQuery,
 } from '@/api/rtk/liked';
 import Button from '@/components/buttons/buttons';
-import SmallTrackCard from '@/components/smallTrackCard/smallTrackCard';
-import { ArtistCard } from '@/components/artistCards/artistCards';
+import { AsideLikedTracks } from './AsideLikedTracks';
+import { AsideLikedArtists } from './AsideLikedArtists';
 import {
 	selectCurrentTrack,
 	selectPlayerQueue,
@@ -33,73 +33,6 @@ const AsideBar: FC = () => {
 		}
 	}, [currentPlayList.length, currentTrack]);
 
-	const renderLikedTrackList = () => {
-		if (!tracksLoading) {
-			if (likedTrackList.length === 0) {
-				return (
-					<span className={styles.no_data_span}>
-						Вы не добавили ни одного трека
-					</span>
-				);
-			} else {
-				return likedTrackList.map((item) => {
-					return (
-						<SmallTrackCard
-							track={item}
-							playList={likedTrackList}
-							showRemoveButton={false}
-							key={item.id}
-						/>
-					);
-				});
-			}
-		} else {
-			return <div className="loading"></div>;
-		}
-	};
-
-	const renderLikedArtists = () => {
-		if (!artistsLoading) {
-			if (likedArtists.length === 0) {
-				return (
-					<span className={styles.no_data_span}>
-						Вы не подписаны ни на одного артиста
-					</span>
-				);
-			} else {
-				if (isPopular) {
-					const artistsListCopy = [...likedArtists];
-					const sortedArr = artistsListCopy.sort(
-						(a, b) => b.likes - a.likes,
-					);
-					return sortedArr.map((item) => {
-						return (
-							<ArtistCard
-								key={item.id}
-								id={item.id}
-								name={item.name}
-								img={item.artistImg}
-								type="small"
-							/>
-						);
-					});
-				} else {
-					return likedArtists.map((item) => {
-						return (
-							<ArtistCard
-								key={item.id}
-								id={item.id}
-								name={item.name}
-								img={item.artistImg}
-								type="small"
-							/>
-						);
-					});
-				}
-			}
-		}
-	};
-
 	return (
 		<aside
 			className={clsx(
@@ -118,7 +51,10 @@ const AsideBar: FC = () => {
 				</Button>
 			</div>
 			<div className={styles.aside_liked_track_list}>
-				{renderLikedTrackList()}
+				<AsideLikedTracks
+					tracks={likedTrackList}
+					isLoading={tracksLoading}
+				/>
 			</div>
 			<div className={styles.flex_row}>
 				<span>Любимые артисты</span>
@@ -141,7 +77,11 @@ const AsideBar: FC = () => {
 							: styles.artists_grid_grid,
 					)}
 				>
-					{renderLikedArtists()}
+					<AsideLikedArtists
+						artists={likedArtists}
+						isLoading={artistsLoading}
+						isPopular={isPopular}
+					/>
 				</div>
 			</div>
 		</aside>

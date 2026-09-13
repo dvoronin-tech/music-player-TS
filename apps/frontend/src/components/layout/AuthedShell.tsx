@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
-import Notification from '@/components/notification/notification';
 import MainHeader from '@/components/headers/MainHeader';
 import PlaySelection from '@/pages/PlaySelection/PlaySelection';
 import AsideBar from '@/components/asideBar/asideBar';
@@ -51,7 +50,6 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 			<AsideBar />
 			<CPLSelection />
 			<AccountDataBar />
-			<Notification />
 		</>
 	);
 }

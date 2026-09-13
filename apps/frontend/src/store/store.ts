@@ -17,7 +17,7 @@ const store = configureStore({
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(playerMiddleware, baseApi.middleware),
-	devTools: false,
+	devTools: import.meta.env.DEV,
 });
 
 export default store;
