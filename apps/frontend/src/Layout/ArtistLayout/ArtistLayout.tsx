@@ -4,11 +4,9 @@ import styles from './ArtistLayout.module.scss';
 import { useParams } from '@tanstack/react-router';
 
 import Button from '@/components/buttons/buttons';
-import {
-	Follow,
-	PlayOrPause,
-	UnFollow,
-} from '@/components/icons and tags/icons';
+import PlayIcon from '@/assets/icons/play.svg?react';
+import UserPlusIcon from '@/assets/icons/user-plus.svg?react';
+import UserCheckIcon from '@/assets/icons/user-check.svg?react';
 import { useGetArtistQuery, useGetArtistsQuery } from '@/api/rtk/artists';
 import { PopularArtistTracks } from '@/components/artist/PopularArtistTracks';
 import { OtherArtistTracks } from '@/components/artist/OtherArtistTracks';
@@ -119,8 +117,9 @@ const ArtistLayout: FC = () => {
 							style={{ borderRadius: 100 }}
 							onClick={setCurrentTrack}
 						>
-							<PlayOrPause
-								scale={26}
+							<PlayIcon
+								width={24}
+								height={24}
 								style={{
 									color: '#E0DCEA',
 									position: 'relative',
@@ -136,8 +135,9 @@ const ArtistLayout: FC = () => {
 							className={styles.follow_artist_btn}
 						>
 							{isLikedArtist ? (
-								<UnFollow
-									scale={20}
+								<UserCheckIcon
+									width={20}
+									height={20}
 									style={{
 										position: 'relative',
 										top: 1,
@@ -145,8 +145,9 @@ const ArtistLayout: FC = () => {
 									}}
 								/>
 							) : (
-								<Follow
-									scale={20}
+								<UserPlusIcon
+									width={20}
+									height={20}
 									style={{
 										position: 'relative',
 										top: 1,

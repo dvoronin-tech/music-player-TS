@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef, useState } from 'react';
-import { LuInfo } from 'react-icons/lu';
+import InfoIcon from '@/assets/icons/info.svg?react';
 import clsx from 'clsx';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import styles from './auth.module.scss';
@@ -48,7 +48,7 @@ export const AuthFormFieldTooltip = memo(
 					tabIndex={message ? 0 : -1}
 					onClick={handleIconClick}
 				>
-					<LuInfo className={styles.auth_error_icon} />
+					<InfoIcon className={styles.auth_error_icon} />
 				</button>
 				{message && (
 					<div

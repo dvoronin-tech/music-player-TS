@@ -148,3 +148,34 @@ code {
   50%   {transform:scaleY(-1) rotate(0deg)}
   100%  {transform:scaleY(-1) rotate(-135deg)}
 }
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.icon-active {
+    color: var(--accent-color);
+    transition: 0.3s all ease;
+
+    @media (hover: hover) {
+        &:hover {
+            color: var(--accent-color-hover);
+        }
+    }
+}
+
+.icon-like-idle {
+    stroke-width: 2px;
+    fill: none;
+    color: var(--text-color);
+    transition: 0.3s all ease;
+
+    @media (hover: hover) {
+        &:hover {
+            fill: none;
+            color: var(--accent-color);
+        }
+    }
+}
+

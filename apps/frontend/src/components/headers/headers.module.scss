@@ -16,10 +16,16 @@ header {
     z-index: 200;
 
     .header_home {
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
         padding: 0;
-        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+            width: 20px;
+            height: 20px;
+        }
     }
 
     .header_account {

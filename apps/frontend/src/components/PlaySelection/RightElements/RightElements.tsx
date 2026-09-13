@@ -1,20 +1,21 @@
 import { FC, memo, SyntheticEvent } from 'react';
 import { shallowEqual } from 'react-redux';
 import { v4 as randomId } from 'uuid';
+import clsx from 'clsx';
 
 import {
 	useGetLikedTracksQuery,
 	useToggleLikedTrackMutation,
 } from '@/api/rtk/liked';
-import {
-	CurrentPlayList,
-	FullScreen,
-	Like,
-	PlayOrPause,
-	Random,
-	Repeat,
-	Rewind,
-} from '@/components/icons and tags/icons';
+import HeartIcon from '@/assets/icons/heart.svg?react';
+import ShuffleIcon from '@/assets/icons/shuffle.svg?react';
+import RewindIcon from '@/assets/icons/rewind.svg?react';
+import PlayIcon from '@/assets/icons/play.svg?react';
+import PauseIcon from '@/assets/icons/pause.svg?react';
+import RepeatIcon from '@/assets/icons/repeat.svg?react';
+import Repeat1Icon from '@/assets/icons/repeat-1.svg?react';
+import PlaylistIcon from '@/assets/icons/playlist.svg?react';
+import ExpandIcon from '@/assets/icons/expand.svg?react';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import { addNotification } from '@/store/slices/notification';
 import {
@@ -124,34 +125,51 @@ export const RightElements: FC = memo(() => {
 		return null;
 	}
 
-	const controlType = (isActive: boolean) => (isActive ? 'active' : 'idle');
-
 	return (
 		<div className={styles.right_elements}>
 			<div className={styles.music_controls}>
 				<div className={styles.left_controls}>
 					<button onClick={toggleIsLiked} className={styles.control}>
-						<Like type={isLiked ? 'active' : 'idle'} />
+						<HeartIcon
+							className={clsx(
+								'icon',
+								isLiked ? 'icon-active' : 'icon-like-idle',
+							)}
+						/>
 					</button>
 				</div>
 				<div className={styles.center_controls}>
 					<button className={styles.control} onClick={toggleIsRandom}>
-						<Random type={controlType(isRandom)} />
+						<ShuffleIcon
+							className={clsx('icon', isRandom && 'icon-active')}
+						/>
 					</button>
 					<button className={styles.control} onClick={prevTrack}>
-						<Rewind type="idle" />
+						<RewindIcon className="icon" />
 					</button>
 					<button className={styles.control} onClick={toggleIsPlay}>
-						<PlayOrPause type={controlType(isPlay)} />
+						{isPlay ? (
+							<PauseIcon className="icon icon-active" />
+						) : (
+							<PlayIcon
+								width={18}
+								height={18}
+								className="icon icon-active"
+							/>
+						)}
 					</button>
 					<button
 						className={`${styles.control} ${styles.next_rewind}`}
 						onClick={playNextTrack}
 					>
-						<Rewind type="idle" />
+						<RewindIcon className="icon" />
 					</button>
 					<button className={styles.control} onClick={toggleIsRepeat}>
-						<Repeat type={controlType(isRepeat)} />
+						{isRepeat ? (
+							<Repeat1Icon className="icon icon-active" />
+						) : (
+							<RepeatIcon className="icon" />
+						)}
 					</button>
 				</div>
 				<div className={styles.right_controls}>
@@ -159,8 +177,11 @@ export const RightElements: FC = memo(() => {
 						className={styles.current_play_list_control}
 						onClick={toggleShowCurrentPlayList}
 					>
-						<CurrentPlayList
-							type={controlType(showCurrentPlayList)}
+						<PlaylistIcon
+							className={clsx(
+								'icon',
+								showCurrentPlayList && 'icon-active',
+							)}
 						/>
 					</button>
 					<button
@@ -171,7 +192,13 @@ export const RightElements: FC = memo(() => {
 							alignItems: 'center',
 						}}
 					>
-						<FullScreen type="idle" />
+						<ExpandIcon
+							className="icon"
+							style={{
+								width: 'calc(20px - 35%)',
+								height: 'calc(20px - 35%)',
+							}}
+						/>
 					</button>
 				</div>
 			</div>

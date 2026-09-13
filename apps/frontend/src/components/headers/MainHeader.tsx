@@ -1,5 +1,5 @@
 import { FC, memo } from 'react';
-import { FaHome } from 'react-icons/fa';
+import HomeIcon from '@/assets/icons/home.svg?react';
 
 import styles from './headers.module.scss';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
@@ -30,7 +30,7 @@ const MainHeader: FC = () => {
 				className={styles.header_home}
 				aria-label="На главную"
 			>
-				<FaHome />
+				<HomeIcon />
 			</Button>
 			<div
 				style={{ opacity: showUserData ? 0 : 1 }}

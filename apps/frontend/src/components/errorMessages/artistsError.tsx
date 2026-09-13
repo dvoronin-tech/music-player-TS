@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { MdOutlineError } from "react-icons/md";
+import ErrorIcon from '@/assets/icons/error.svg?react';
 import styles from './artistsError.module.scss';
 
 interface Prop {
@@ -9,9 +9,9 @@ interface Prop {
 export const ArtistsError: FC<Prop> = ({errorMessage}) => {
     return (
         <div className={styles.artists_error}>
-            <MdOutlineError style={{marginRight: 20}} />
+            <ErrorIcon style={{marginRight: 20}} />
             <span>{errorMessage}</span>
-            <MdOutlineError />
+            <ErrorIcon />
         </div>
     )
 }

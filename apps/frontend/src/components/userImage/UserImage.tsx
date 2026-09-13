@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { FaUser } from 'react-icons/fa';
+import UserIcon from '@/assets/icons/user.svg?react';
 import styles from './UserImage.module.scss';
 
 type UserImageProps = {
@@ -10,7 +10,7 @@ const UserImage: FC<UserImageProps> = ({ userImg }) => {
 	if (userImg) {
 		return <img className={styles.photo} src={userImg} alt="моё фото" />;
 	}
-	return <FaUser className={styles.icon} />;
+	return <UserIcon className={styles.icon} />;
 };
 
 export default UserImage;

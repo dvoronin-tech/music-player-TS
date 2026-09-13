@@ -2,13 +2,11 @@ import { FC, useMemo } from 'react';
 import clsx from 'clsx';
 
 import styles from './homeTrackCards.module.scss';
-import {
-	AddToPlayList,
-	Cross,
-	Like,
-	PlayOrPause,
-	PlayingTrackTag,
-} from '@/components/icons and tags/icons';
+import PlaylistAddIcon from '@/assets/icons/playlist-add.svg?react';
+import CloseIcon from '@/assets/icons/close.svg?react';
+import HeartIcon from '@/assets/icons/heart.svg?react';
+import PlayIcon from '@/assets/icons/play.svg?react';
+import { PlayingTrackTag } from '@/components/playingTrackTag/PlayingTrackTag';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
 	useGetLikedTracksQuery,
@@ -126,16 +124,21 @@ export const HomeTrackCard: FC<Prop> = ({
 					{renderedInFullScreen ? (
 						track.id !== currentTrack?.id && (
 							<button onClick={deleteTrack}>
-								<Cross />
+								<CloseIcon className="icon" />
 							</button>
 						)
 					) : (
 						<button onClick={addToPlayList}>
-							<AddToPlayList />
+							<PlaylistAddIcon className="icon" />
 						</button>
 					)}
 					<button onClick={toggleIsLiked}>
-						<Like type={isLiked ? 'active' : 'idle'} />
+						<HeartIcon
+							className={clsx(
+								'icon',
+								isLiked ? 'icon-active' : 'icon-like-idle',
+							)}
+						/>
 					</button>
 				</div>
 			</div>
@@ -153,17 +156,18 @@ const PlayButton: FC<{ isCurrent: boolean; isPlaying: boolean }> = ({
 				isPlaying ? (
 					<PlayingTrackTag />
 				) : (
-					<PlayOrPause
+					<PlayIcon
 						style={{ position: 'relative', left: '0' }}
-						scale={25}
-						type="active"
+						width={23}
+						height={23}
+						className="icon-active"
 					/>
 				)
 			) : (
-				<PlayOrPause
-					scale={30}
+				<PlayIcon
+					width={28}
+					height={28}
 					className={styles.home_track_card_play_icon}
-					type="idle"
 				/>
 			)}
 		</button>

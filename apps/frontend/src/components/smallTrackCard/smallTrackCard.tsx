@@ -1,6 +1,8 @@
 import { FC, useEffect, useState } from 'react';
+import clsx from 'clsx';
 import styles from './smallTrackCard.module.scss';
-import { Cross, Like } from '@/components/icons and tags/icons';
+import CloseIcon from '@/assets/icons/close.svg?react';
+import HeartIcon from '@/assets/icons/heart.svg?react';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
 	useGetLikedTracksQuery,
@@ -77,11 +79,16 @@ const SmallTrackCard: FC<SmallTrackListProps> = ({
 			</div>
 			{showRemoveButton && currentTrack?.id !== track.id && (
 				<button style={{ marginRight: 5 }} onClick={deleteCurrent}>
-					<Cross />
+					<CloseIcon className="icon" />
 				</button>
 			)}
 			<button onClick={deleteLike}>
-				<Like type={isLikedTrack ? 'active' : 'idle'} />
+				<HeartIcon
+					className={clsx(
+						'icon',
+						isLikedTrack ? 'icon-active' : 'icon-like-idle',
+					)}
+				/>
 			</button>
 		</div>
 	);

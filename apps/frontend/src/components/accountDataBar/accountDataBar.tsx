@@ -1,7 +1,7 @@
 import { type TransitionEvent, type FC, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
-import { Cross } from '@/components/icons and tags/icons';
+import CloseIcon from '@/assets/icons/close.svg?react';
 import { toggleShowUserData } from '@/store/slices/ui';
 import { useGetMeQuery } from '@/api/rtk/user';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
@@ -29,13 +29,13 @@ const AccountDataBar: FC = () => {
 
 	useOutsideClick(accountBarRef, handleCloseAccountBar);
 
-    const handleTransitionEnd = (e: TransitionEvent) => {
-        if (!showUserData) {
-            if (e.target === accountBarRef.current) {
-                setChangePhoto(false);
-            }
-        }
-    }
+	const handleTransitionEnd = (e: TransitionEvent) => {
+		if (!showUserData) {
+			if (e.target === accountBarRef.current) {
+				setChangePhoto(false);
+			}
+		}
+	};
 
 	return (
 		<aside
@@ -44,7 +44,7 @@ const AccountDataBar: FC = () => {
 				showUserData && styles.account_bar_show,
 			)}
 			ref={accountBarRef}
-            onTransitionEnd={handleTransitionEnd}
+			onTransitionEnd={handleTransitionEnd}
 		>
 			<div className={styles.header}>
 				<span className={styles.title}>Аккаунт</span>
@@ -52,7 +52,7 @@ const AccountDataBar: FC = () => {
 					className={styles.back_btn}
 					onClick={handleCloseAccountBar}
 				>
-					<Cross />
+					<CloseIcon className="icon" />
 				</button>
 			</div>
 			{changePhoto ? (

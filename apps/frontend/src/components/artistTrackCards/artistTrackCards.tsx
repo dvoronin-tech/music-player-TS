@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from 'react';
+import clsx from 'clsx';
 import styles from './artistTrackCards.module.scss';
 import Button from '@/components/buttons/buttons';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
@@ -12,11 +13,9 @@ import {
 	selectPlayerQueue,
 	startTrack,
 } from '@/store/slices/player';
-import {
-	AddToPlayList,
-	Like,
-	PlayingTrackTag,
-} from '@/components/icons and tags/icons';
+import PlaylistAddIcon from '@/assets/icons/playlist-add.svg?react';
+import HeartIcon from '@/assets/icons/heart.svg?react';
+import { PlayingTrackTag } from '@/components/playingTrackTag/PlayingTrackTag';
 import { addNotification } from '@/store/slices/notification';
 import { formatArtistNames } from '@/utils/formatArtists';
 import type { ApiTrack } from '@music-player/backend';
@@ -115,7 +114,7 @@ const ArtistTrackCard: FC<Prop> = ({ track, playList }) => {
 							style={{ marginBottom: 10 }}
 							onClick={addToPlayList}
 						>
-							<AddToPlayList />
+							<PlaylistAddIcon className="icon" />
 						</Button>
 						<Button
 							variant="simple"
@@ -124,7 +123,12 @@ const ArtistTrackCard: FC<Prop> = ({ track, playList }) => {
 							style={{ marginBottom: 10 }}
 							onClick={toggleIsLiked}
 						>
-							<Like type={isLiked ? 'active' : 'idle'} />
+							<HeartIcon
+								className={clsx(
+									'icon',
+									isLiked ? 'icon-active' : 'icon-like-idle',
+								)}
+							/>
 						</Button>
 					</div>
 					<Button

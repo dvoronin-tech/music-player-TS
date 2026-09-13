@@ -1,13 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { MdCheckCircleOutline, MdErrorOutline } from 'react-icons/md';
+import CheckCircleIcon from '@/assets/icons/check-circle.svg?react';
+import ErrorOutlineIcon from '@/assets/icons/error-outline.svg?react';
+import CloseIcon from '@/assets/icons/close.svg?react';
 import styles from './notification.module.scss';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
 	deleteNotification,
 	type NotificationPayload,
 } from '@/store/slices/notification';
-import { RxCross2 } from 'react-icons/rx';
 
 function renderHighlightedText(text: string) {
 	const nodes: React.ReactNode[] = [];
@@ -101,11 +102,11 @@ const NotificationItem: FC<NotificationItemProps> = ({ notificationData }) => {
 				<img src={notificationData.img} alt="Фото" />
 			) : notificationData.variant === 'error' ? (
 				<div className={styles.notification_icon}>
-					<MdErrorOutline style={{ color: '#C84141' }} />
+					<ErrorOutlineIcon style={{ color: '#C84141' }} />
 				</div>
 			) : (
 				<div className={styles.notification_icon}>
-					<MdCheckCircleOutline style={{ color: '#4EBA3C' }} />
+					<CheckCircleIcon style={{ color: '#4EBA3C' }} />
 				</div>
 			)}
 
@@ -120,7 +121,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ notificationData }) => {
 				style={{ opacity: deleteBtnOpacity }}
 				className={styles.delete_notification}
 			>
-				<RxCross2 strokeWidth={1} />
+				<CloseIcon strokeWidth={1} />
 			</button>
 		</div>
 	);
