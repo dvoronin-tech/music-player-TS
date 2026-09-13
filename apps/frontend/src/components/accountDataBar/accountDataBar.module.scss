@@ -9,7 +9,7 @@
 	background-color: var(--second-bg-color-for-blur);
 	border: 1px solid var(--stroke-light);
 	border-radius: 15px;
-	z-index: 20;
+	z-index: 900;
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
@@ -17,6 +17,43 @@
 
 .account_bar_show {
 	right: 40px;
+}
+
+.blur_bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100svw;
+	height: 100svh;
+	backdrop-filter: blur(12px);
+	z-index: 899;
+	filter: brightness(60%);
+	animation: account-blur-fade-in 0.7s ease;
+
+	&.fadeOut {
+		animation: account-blur-fade-out 0.7s ease forwards;
+		pointer-events: none;
+	}
+}
+
+@keyframes account-blur-fade-in {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes account-blur-fade-out {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
 }
 
 .header {
@@ -237,7 +274,7 @@ button.file_picker {
 		transition: 0.4s linear all;
 		width: 0;
 		background-color: var(--error-color);
-		z-index: 0;
+		z-index: -1;
 	}
 }
 

@@ -1,4 +1,10 @@
-import { type TransitionEvent, type FC, useRef, useState } from 'react';
+import {
+	type AnimationEvent,
+	type TransitionEvent,
+	type FC,
+	useRef,
+	useState,
+} from 'react';
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import CloseIcon from '@/assets/icons/close.svg?react';
@@ -20,6 +26,7 @@ const AccountDataBar: FC = () => {
 	const regDate = user?.regDate ? new Date(user.regDate) : new Date();
 
 	const [changePhoto, setChangePhoto] = useState(false);
+	const [shouldRenderBlur, setShouldRenderBlur] = useState(showUserData);
 
 	const accountBarRef = useRef<HTMLDivElement>(null);
 
@@ -29,6 +36,10 @@ const AccountDataBar: FC = () => {
 
 	useOutsideClick(accountBarRef, handleCloseAccountBar);
 
+	if (showUserData && !shouldRenderBlur) {
+		setShouldRenderBlur(true);
+	}
+
 	const handleTransitionEnd = (e: TransitionEvent) => {
 		if (!showUserData) {
 			if (e.target === accountBarRef.current) {
@@ -37,36 +48,58 @@ const AccountDataBar: FC = () => {
 		}
 	};
 
+	const handleBlurAnimationEnd = (event: AnimationEvent<HTMLDivElement>) => {
+		if (
+			showUserData ||
+			!event.animationName.includes('account-blur-fade-out')
+		) {
+			return;
+		}
+
+		setShouldRenderBlur(false);
+	};
+
 	return (
-		<aside
-			className={clsx(
-				styles.account_bar,
-				showUserData && styles.account_bar_show,
-			)}
-			ref={accountBarRef}
-			onTransitionEnd={handleTransitionEnd}
-		>
-			<div className={styles.header}>
-				<span className={styles.title}>Аккаунт</span>
-				<button
-					className={styles.back_btn}
-					onClick={handleCloseAccountBar}
-				>
-					<CloseIcon className="icon" />
-				</button>
-			</div>
-			{changePhoto ? (
-				<ChangePhotoForm onBack={() => setChangePhoto(false)} />
-			) : (
-				<AccountView
-					username={username}
-					email={email}
-					userImg={userImg}
-					regDate={regDate}
-					onChangePhoto={() => setChangePhoto(true)}
+		<>
+			<aside
+				className={clsx(
+					styles.account_bar,
+					showUserData && styles.account_bar_show,
+				)}
+				ref={accountBarRef}
+				onTransitionEnd={handleTransitionEnd}
+			>
+				<div className={styles.header}>
+					<span className={styles.title}>Аккаунт</span>
+					<button
+						className={styles.back_btn}
+						onClick={handleCloseAccountBar}
+					>
+						<CloseIcon className="icon" />
+					</button>
+				</div>
+				{changePhoto ? (
+					<ChangePhotoForm onBack={() => setChangePhoto(false)} />
+				) : (
+					<AccountView
+						username={username}
+						email={email}
+						userImg={userImg}
+						regDate={regDate}
+						onChangePhoto={() => setChangePhoto(true)}
+					/>
+				)}
+			</aside>
+			{shouldRenderBlur && (
+				<div
+					className={clsx(
+						styles.blur_bg,
+						!showUserData && styles.fadeOut,
+					)}
+					onAnimationEnd={handleBlurAnimationEnd}
 				/>
 			)}
-		</aside>
+		</>
 	);
 };
 

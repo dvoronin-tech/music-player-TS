@@ -7,7 +7,7 @@ const normalizeRefs = (ref: ElementRef | ElementRef[]): ElementRef[] =>
 
 export const useOutsideClick = (
 	ref: ElementRef | ElementRef[],
-	callback: () => void,
+	callback: (event: PointerEvent) => void,
 ) => {
 	useEffect(() => {
 		const refs = normalizeRefs(ref);
@@ -24,7 +24,7 @@ export const useOutsideClick = (
 			);
 
 			if (!isInside) {
-				callback();
+				callback(event);
 			}
 		};
 

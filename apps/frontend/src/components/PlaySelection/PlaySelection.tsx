@@ -14,7 +14,7 @@ const PlaySelection: FC = () => {
 	if (!currentTrack) return null;
 
 	return (
-		<div className={styles.play_selection}>
+		<div className={styles.play_selection} data-play-selection>
 			<LeftElements />
 			<RightElements />
 		</div>

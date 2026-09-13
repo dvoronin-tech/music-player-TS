@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, type AnimationEvent } from 'react';
 import clsx from 'clsx';
 import styles from './asideBar.module.scss';
 import { useAppSelector } from '@/hooks/useTypedRedux';
@@ -9,10 +9,7 @@ import {
 import Button from '@/components/buttons/buttons';
 import { AsideLikedTracks } from './AsideLikedTracks';
 import { AsideLikedArtists } from './AsideLikedArtists';
-import {
-	selectCurrentTrack,
-	selectPlayerQueue,
-} from '@/store/slices/player';
+import { selectCurrentTrack, selectPlayerQueue } from '@/store/slices/player';
 
 const AsideBar: FC = () => {
 	const currentTrack = useAppSelector(selectCurrentTrack);
@@ -24,6 +21,8 @@ const AsideBar: FC = () => {
 
 	const [showPlayList, setShowPlayList] = useState(false);
 	const [isPopular, setIsPopular] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+	const [shouldRenderBlur, setShouldRenderBlur] = useState(false);
 
 	useEffect(() => {
 		if (currentTrack && currentPlayList.length > 0) {
@@ -33,58 +32,76 @@ const AsideBar: FC = () => {
 		}
 	}, [currentPlayList.length, currentTrack]);
 
+	if (isOpen && !shouldRenderBlur) {
+		setShouldRenderBlur(true);
+	}
+
+	const handleBlurAnimationEnd = (event: AnimationEvent<HTMLDivElement>) => {
+		if (isOpen || !event.animationName.includes('aside-blur-fade-out')) {
+			return;
+		}
+
+		setShouldRenderBlur(false);
+	};
+
 	return (
-		<aside
-			className={clsx(
-				styles.aside_bar,
-				showPlayList && styles.with_playlist,
-			)}
-		>
-			<div className={styles.flex_row}>
-				<span>Любимые треки</span>
-				<Button
-					to="/home/liked"
-					variant="alternative"
-					size="s"
-				>
-					Посмотреть всё
-				</Button>
-			</div>
-			<div className={styles.aside_liked_track_list}>
-				<AsideLikedTracks
-					tracks={likedTrackList}
-					isLoading={tracksLoading}
-				/>
-			</div>
-			<div className={styles.flex_row}>
-				<span>Любимые артисты</span>
-				<Button
-					variant={isPopular ? 'accent' : 'alternative'}
-					onClick={() => setIsPopular(!isPopular)}
-					size="s"
-					weight={isPopular ? 'medium' : 'regular'}
-					style={{ borderRadius: 100 }}
-				>
-					Сначала популярные
-				</Button>
-			</div>
-			<div className={styles.aside_artist_list}>
-				<div
-					className={clsx(
-						styles.artists_grid,
-						likedArtists.length === 0
-							? styles.artists_grid_flex
-							: styles.artists_grid_grid,
-					)}
-				>
-					<AsideLikedArtists
-						artists={likedArtists}
-						isLoading={artistsLoading}
-						isPopular={isPopular}
+		<>
+			<aside
+				className={clsx(
+					styles.aside_bar,
+					showPlayList && styles.with_playlist,
+				)}
+				onMouseEnter={() => setIsOpen(true)}
+				onMouseLeave={() => setIsOpen(false)}
+			>
+				<div className={styles.flex_row}>
+					<span>Любимые треки</span>
+					<Button to="/home/liked" variant="alternative" size="s">
+						Посмотреть всё
+					</Button>
+				</div>
+				<div className={styles.aside_liked_track_list}>
+					<AsideLikedTracks
+						tracks={likedTrackList}
+						isLoading={tracksLoading}
 					/>
 				</div>
-			</div>
-		</aside>
+				<div className={styles.flex_row}>
+					<span>Любимые артисты</span>
+					<Button
+						variant={isPopular ? 'accent' : 'alternative'}
+						onClick={() => setIsPopular(!isPopular)}
+						size="s"
+						weight={isPopular ? 'medium' : 'regular'}
+						style={{ borderRadius: 100 }}
+					>
+						Сначала популярные
+					</Button>
+				</div>
+				<div className={styles.aside_artist_list}>
+					<div
+						className={clsx(
+							styles.artists_grid,
+							likedArtists.length === 0
+								? styles.artists_grid_flex
+								: styles.artists_grid_grid,
+						)}
+					>
+						<AsideLikedArtists
+							artists={likedArtists}
+							isLoading={artistsLoading}
+							isPopular={isPopular}
+						/>
+					</div>
+				</div>
+			</aside>
+			{shouldRenderBlur && (
+				<div
+					className={clsx(styles.blur_bg, !isOpen && styles.fadeOut)}
+					onAnimationEnd={handleBlurAnimationEnd}
+				/>
+			)}
+		</>
 	);
 };
 
