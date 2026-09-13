@@ -25,7 +25,7 @@ function resolveCorsOrigin(origin: string): string | undefined {
 	return undefined;
 }
 
-export const app: Hono = factory.createApp();
+export const app = factory.createApp();
 export default app;
 
 app.use('*', logger());
