@@ -46,8 +46,7 @@ const ChangePhotoForm: FC<ChangePhotoFormProps> = ({ onBack }) => {
 		if (!file || isLoading) return;
 
 		try {
-			const res = await setMyPhoto(file).unwrap();
-			console.log(res);
+			await setMyPhoto(file).unwrap();
 			onBack();
 		} catch {
 			dispatch(

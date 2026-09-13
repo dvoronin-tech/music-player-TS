@@ -6,7 +6,6 @@ interface AuthFormTitleProps {
 }
 
 export const AuthFormTitle: FC<AuthFormTitleProps> = ({ title }) => {
-	console.log('rerender');
 	return (
 		<div className={styles.auth_form_title}>
 			<span>

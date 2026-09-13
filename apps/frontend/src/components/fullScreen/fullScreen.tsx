@@ -132,8 +132,6 @@ const FullScreen: FC = () => {
 			if (CPLSelectionRef.current) {
 				const newValue = prevState + 260 * 2;
 				if (CPLLineRef.current) {
-					console.log(CPLLineRef.current.clientWidth);
-					console.log(newValue);
 					if (
 						newValue >=
 						CPLLineRef.current.clientWidth -
