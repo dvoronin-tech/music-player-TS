@@ -5,9 +5,8 @@ import Button from '@/components/buttons/buttons';
 const PreRegPage: FC = () => {
 	return (
 		<div className={styles.pre_reg_main}>
-			<main>
-				<div className={styles.main_content}>
-					<div className={styles.content_selection}>
+			<div className={styles.main_content}>
+				<div className={styles.content_selection}>
 						<h1>
 							Добро пожаловать в <span>BROOKLYN</span>
 						</h1>
@@ -87,19 +86,18 @@ const PreRegPage: FC = () => {
 							<b>Приятного использования!!!</b>
 						</p>
 						<h3>Разработчик: Воронин Денис</h3>
-					</div>
-					<div className={styles.action_links}>
-						<Button
-							variant="accent"
-							size="xl"
-							weight="bold"
-							to="/auth"
-						>
-							Перейти к авторизации
-						</Button>
-					</div>
 				</div>
-			</main>
+				<div className={styles.action_links}>
+					<Button
+						variant="accent"
+						size="xl"
+						weight="bold"
+						to="/auth"
+					>
+						Перейти к авторизации
+					</Button>
+				</div>
+			</div>
 		</div>
 	);
 };

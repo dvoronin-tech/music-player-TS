@@ -66,21 +66,6 @@ header {
     }
 }
 
-.simple_header {
-    height: 100px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    background-color: var(--main-bg-color);
-    span {
-        margin-left: 60px;
-        font-size: 4rem;
-        font-weight: 700;
-        font-family: 'Inria Sans';
-        letter-spacing: 5px;
-    }
-}
-
 @keyframes header-fade-in {
     from {
         top: -100px;
