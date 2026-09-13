@@ -9,19 +9,20 @@ import {
 	listLikedTracks,
 	trackExists,
 } from '#/queries/catalog.js';
+import { setMyPhotoFormSchema } from '#/schemas/me.js';
 import { artistIdParamSchema, trackIdParamSchema } from '#/schemas/params.js';
 import { jsonError } from '#/utils/http.js';
 import {
-	avatarExtension,
-	MAX_AVATAR_BYTES,
-	removeLocalMedia,
-	saveAvatar,
+	extensionFromMimeType,
+	toMyAvatarPath,
+	toMyAvatarUploadPath,
 } from '#/utils/media.js';
-import { validateParam } from '#/utils/validate.js';
+import { validateForm, validateParam } from '#/utils/validate.js';
+import { deleteMyAvatar, postMyAvatar } from '#/utils/postMyAvatar.js';
 
 async function findCurrentUser(userId: string) {
 	return db.query.users.findFirst({
-		where: eq(users.id, userId),
+		where: (users, {}) => eq(users.id, userId),
 	});
 }
 
@@ -34,49 +35,51 @@ export const getMe = factory.createHandlers(async (c) => {
 	return c.json(toApiUser(user));
 });
 
-export const setMyPhoto = factory.createHandlers(async (c) => {
-	const user = await findCurrentUser(c.get('userId'));
-	if (!user) {
-		return jsonError(c, 401, 'Invalid token');
-	}
+export const setMyPhoto = factory.createHandlers(
+	validateForm(setMyPhotoFormSchema),
+	async (c) => {
+		const userId = c.get('userId');
+		const { userImg } = c.req.valid('form');
 
-	let form: FormData;
-	try {
-		form = await c.req.formData();
-	} catch {
-		return jsonError(c, 400, 'Expected multipart form data');
-	}
+		const user = await findCurrentUser(userId);
 
-	const file = form.get('userImg');
-	if (!(file instanceof File) || file.size === 0) {
-		return jsonError(c, 400, 'userImg file is required');
-	}
-	if (file.size > MAX_AVATAR_BYTES) {
-		return jsonError(c, 413, 'Avatar must be 2MB or smaller');
-	}
+		if (!user) {
+			return jsonError(c, 401, 'Invalid token');
+		}
 
-	const extension = avatarExtension(file.type);
-	if (!extension) {
-		return jsonError(c, 400, 'Avatar must be jpeg, png, webp, or gif');
-	}
+		const previousPath = user.userImg;
+		const imageName = `${userId}-${Date.now()}${extensionFromMimeType(userImg.type)}`;
+		const imagePath = toMyAvatarPath(imageName);
 
-	const relativePath = await saveAvatar(user.id, file, extension);
-	if (user.userImg !== relativePath) {
-		await removeLocalMedia(user.userImg);
-	}
+		try {
+			await postMyAvatar(userImg, toMyAvatarUploadPath(imagePath));
+			await db
+				.update(users)
+				.set({
+					userImg: imagePath,
+				})
+				.where(eq(users.id, userId));
+		} catch (error) {
+			console.error(error);
+			return jsonError(c, 500, 'Failed to upload image');
+		}
 
-	const [updated] = await db
-		.update(users)
-		.set({ userImg: relativePath })
-		.where(eq(users.id, user.id))
-		.returning();
+		if (previousPath && previousPath !== imagePath) {
+			try {
+				await deleteMyAvatar(toMyAvatarUploadPath(previousPath));
+			} catch (error) {
+				console.error(error);
+			}
+		}
 
-	if (!updated) {
-		return jsonError(c, 500, 'Failed to update avatar');
-	}
+		const updatedUser = await findCurrentUser(userId);
+		if (!updatedUser) {
+			return jsonError(c, 401, 'Invalid token');
+		}
 
-	return c.json(toApiUser(updated));
-});
+		return c.json(toApiUser(updatedUser));
+	},
+);
 
 export const getLikedTracks = factory.createHandlers(async (c) => {
 	return c.json(await listLikedTracks(c.get('userId')));

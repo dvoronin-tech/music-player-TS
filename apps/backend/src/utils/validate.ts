@@ -20,3 +20,11 @@ export function validateParam<T extends ZodType>(schema: T) {
 		}
 	});
 }
+
+export function validateForm<T extends ZodType>(schema: T) {
+	return zValidator('form', schema, (result, c) => {
+		if (!result.success) {
+			return c.json({ error: firstIssue(result.error) }, 400);
+		}
+	});
+}

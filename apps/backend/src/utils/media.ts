@@ -1,8 +1,6 @@
-import { mkdir, unlink, writeFile } from 'node:fs/promises';
-import path from 'node:path';
 import { env } from '#/utils/env.js';
 
-const AVATAR_TYPES: Record<string, string> = {
+const IMAGE_MIME_TYPES: Record<string, string> = {
 	'image/jpeg': '.jpg',
 	'image/png': '.png',
 	'image/webp': '.webp',
@@ -15,34 +13,16 @@ export function toMediaUrl(value: string): string {
 	return `${env.MEDIA_URL}${value}`;
 }
 
-export function avatarExtension(mimeType: string): string | undefined {
-	return AVATAR_TYPES[mimeType];
+export function extensionFromMimeType(mimeType: string): string | undefined {
+	return IMAGE_MIME_TYPES[mimeType];
 }
 
-export function avatarRelativePath(userId: string, extension: string): string {
-	return `/media/avatars/${userId}${extension}`;
+const AVATAR_OBJECT_PATH = '/images/userImg';
+
+export function toMyAvatarPath(fileName: string): string {
+	return `${AVATAR_OBJECT_PATH}/${fileName}`;
 }
 
-function toAbsoluteMediaPath(relativePath: string): string {
-	return path.join(process.cwd(), relativePath.replace(/^\//, ''));
-}
-
-export async function saveAvatar(
-	userId: string,
-	file: File,
-	extension: string,
-): Promise<string> {
-	const relativePath = avatarRelativePath(userId, extension);
-	const absolutePath = toAbsoluteMediaPath(relativePath);
-	await mkdir(path.dirname(absolutePath), { recursive: true });
-	await writeFile(absolutePath, Buffer.from(await file.arrayBuffer()));
-	return relativePath;
-}
-
-export async function removeLocalMedia(relativePath: string | null) {
-	if (!relativePath?.startsWith('/media/')) {
-		return;
-	}
-
-	await unlink(toAbsoluteMediaPath(relativePath)).catch(() => undefined);
+export function toMyAvatarUploadPath(objectPath: string): string {
+	return `${env.UPLOAD_MEDIA_URL}${objectPath}`;
 }
