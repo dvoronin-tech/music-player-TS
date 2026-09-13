@@ -1,12 +1,12 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-interface IUiState {
+interface UiState {
 	showUserData: boolean;
 	showFullScreen: boolean;
 	showCurrentPlayList: boolean;
 }
 
-const initialState: IUiState = {
+const initialState: UiState = {
 	showUserData: false,
 	showFullScreen: false,
 	showCurrentPlayList: false,

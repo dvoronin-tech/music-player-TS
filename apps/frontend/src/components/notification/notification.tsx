@@ -1,12 +1,38 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import clsx from 'clsx';
+import { MdCheckCircleOutline, MdErrorOutline } from 'react-icons/md';
 import styles from './notification.module.scss';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
 	deleteNotification,
-	type INotificationData,
+	type NotificationPayload,
 } from '@/store/slices/notification';
 import { RxCross2 } from 'react-icons/rx';
+
+function renderHighlightedText(text: string) {
+	const nodes: React.ReactNode[] = [];
+	let lastIndex = 0;
+	let key = 0;
+
+	for (const match of text.matchAll(/__(.+?)__/g)) {
+		const index = match.index ?? 0;
+		if (index > lastIndex) {
+			nodes.push(text.slice(lastIndex, index));
+		}
+		nodes.push(
+			<span key={key++} className={styles.accent}>
+				{match[1]}
+			</span>,
+		);
+		lastIndex = index + match[0].length;
+	}
+
+	if (lastIndex < text.length) {
+		nodes.push(text.slice(lastIndex));
+	}
+
+	return nodes;
+}
 
 const Notification: FC = () => {
 	const notificationList = useAppSelector((state) => state.notification);
@@ -27,12 +53,12 @@ const Notification: FC = () => {
 
 export default Notification;
 
-interface INotificationItemProps {
-	notificationData: INotificationData;
+interface NotificationItemProps {
+	notificationData: NotificationPayload;
 }
 
-const NotificationItem: FC<INotificationItemProps> = ({ notificationData }) => {
-	const { img, info, additionalInfo, notificationId } = notificationData;
+const NotificationItem: FC<NotificationItemProps> = ({ notificationData }) => {
+	const { info, additionalInfo, notificationId } = notificationData;
 	const [isDelete, setIsDelete] = useState<boolean>(false);
 	const [isExiting, setIsExiting] = useState(false);
 	const dispatch = useAppDispatch();
@@ -71,18 +97,23 @@ const NotificationItem: FC<INotificationItemProps> = ({ notificationData }) => {
 			onAnimationEnd={handleAnimationEnd}
 			className={clsx(styles.notification, isExiting && styles.fadeOut)}
 		>
-			{typeof img === 'string' ? (
-				<img src={img} alt="Фото" />
+			{'img' in notificationData ? (
+				<img src={notificationData.img} alt="Фото" />
+			) : notificationData.variant === 'error' ? (
+				<div className={styles.notification_icon}>
+					<MdErrorOutline style={{ color: '#C84141' }} />
+				</div>
 			) : (
-				<div className={styles.notification_icon}>{img}</div>
+				<div className={styles.notification_icon}>
+					<MdCheckCircleOutline style={{ color: '#4EBA3C' }} />
+				</div>
 			)}
 
 			<div className={styles.notification_data}>
 				<span className={styles.notification_info}>{info}</span>
-				<span
-					className={styles.notification_additional_info}
-					dangerouslySetInnerHTML={{ __html: additionalInfo }}
-				/>
+				<span className={styles.notification_additional_info}>
+					{renderHighlightedText(additionalInfo)}
+				</span>
 			</div>
 			<button
 				onClick={handleDelete}

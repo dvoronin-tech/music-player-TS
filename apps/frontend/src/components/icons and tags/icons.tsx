@@ -13,7 +13,7 @@ import { FaUserPlus } from 'react-icons/fa';
 import { RxCross2 } from 'react-icons/rx';
 import { FaUserCheck } from 'react-icons/fa';
 
-interface IProps {
+interface Props {
 	scale?: number;
 	type?: 'active' | 'idle' | 'disable';
 	className?: string;
@@ -40,7 +40,7 @@ const getClassList = (
 	}
 };
 
-export const Like: FC<IProps> = ({
+export const Like: FC<Props> = ({
 	scale = 20,
 	type = 'idle',
 	className,
@@ -87,7 +87,7 @@ export const Like: FC<IProps> = ({
 	}
 };
 
-export const Random: FC<IProps> = ({
+export const Random: FC<Props> = ({
 	scale = 20,
 	type = 'idle',
 	className,
@@ -101,7 +101,7 @@ export const Random: FC<IProps> = ({
 	);
 };
 
-export const Rewind: FC<IProps> = ({
+export const Rewind: FC<Props> = ({
 	scale = 20,
 	type = 'idle',
 	className,
@@ -115,7 +115,7 @@ export const Rewind: FC<IProps> = ({
 	);
 };
 
-export const Repeat: FC<IProps> = ({
+export const Repeat: FC<Props> = ({
 	scale = 20,
 	type = 'idle',
 	className,
@@ -161,7 +161,7 @@ export const Repeat: FC<IProps> = ({
 	}
 };
 
-export const PlayOrPause: FC<IProps> = ({
+export const PlayOrPause: FC<Props> = ({
 	scale = 20,
 	type = 'idle',
 	className,
@@ -200,7 +200,7 @@ export const PlayOrPause: FC<IProps> = ({
 	}
 };
 
-export const CurrentPlayList: FC<IProps> = ({
+export const CurrentPlayList: FC<Props> = ({
 	scale = 20,
 	type = 'idle',
 	className,
@@ -214,7 +214,7 @@ export const CurrentPlayList: FC<IProps> = ({
 	);
 };
 
-export const AddToPlayList: FC<IProps> = ({
+export const AddToPlayList: FC<Props> = ({
 	scale = 20,
 	type = 'idle',
 	className,
@@ -230,7 +230,7 @@ export const AddToPlayList: FC<IProps> = ({
 	);
 };
 
-export const FullScreen: FC<IProps> = ({
+export const FullScreen: FC<Props> = ({
 	scale = 20,
 	type = 'idle',
 	className,
@@ -274,7 +274,7 @@ export const FullScreen: FC<IProps> = ({
 		);
 	}
 };
-export const Follow: FC<IProps> = ({
+export const Follow: FC<Props> = ({
 	scale = 20,
 	type = 'idle',
 	className,
@@ -290,7 +290,7 @@ export const Follow: FC<IProps> = ({
 	);
 };
 
-export const Cross: FC<IProps> = ({
+export const Cross: FC<Props> = ({
 	scale = 20,
 	type = 'idle',
 	className,
@@ -305,7 +305,7 @@ export const Cross: FC<IProps> = ({
 	);
 };
 
-export const UnFollow: FC<IProps> = ({
+export const UnFollow: FC<Props> = ({
 	scale = 20,
 	type = 'idle',
 	className,

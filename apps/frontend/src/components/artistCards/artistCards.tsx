@@ -3,14 +3,14 @@ import clsx from 'clsx';
 import styles from './artistCards.module.scss';
 import { useNavigate } from '@tanstack/react-router';
 
-interface IProp {
+interface Prop {
 	img: string;
 	name: string;
 	type?: 'small' | 'big';
 	id: number;
 }
 
-export const ArtistCard: FC<IProp> = ({
+export const ArtistCard: FC<Prop> = ({
 	img,
 	name,
 	type = 'big',

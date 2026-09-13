@@ -87,7 +87,7 @@ const MainLayout: FC = () => {
 
 	const setBestInBrooklyn = () => {
 		const oldArr = [...trackList];
-		const sortedArr = oldArr.sort((a, b) => a.auditions - b.auditions);
+		const sortedArr = oldArr.sort((a, b) => b.auditions - a.auditions);
 		const queue: ApiTrack[] = sortedArr.slice(0, 10);
 		if (queue.length > 0) {
 			dispatch(startTrack({ queue, trackId: queue[0].id }));
