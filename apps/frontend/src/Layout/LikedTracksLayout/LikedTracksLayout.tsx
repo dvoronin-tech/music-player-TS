@@ -1,15 +1,15 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import clsx from 'clsx';
-import styles from './likedPage.module.scss';
+import styles from './LikedTracksLayout.module.scss';
 import { useAppSelector } from '@/hooks/useTypedRedux';
 import { useGetLikedTracksQuery } from '@/api/rtk/liked';
 import { Input } from '@/components/inputFields/inputFields';
 import Button from '@/components/buttons/buttons';
 import type { ApiTrack } from '@music-player/backend';
-import { LikedTracksGrid } from './LikedTracksGrid';
+import { LikedTracksGrid } from '@/components/likedTracks/LikedTracksGrid';
 import { selectCurrentTrack } from '@/store/slices/player';
 
-const LikedPage: FC = () => {
+const LikedTracksLayout: FC = () => {
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const currentTrack = useAppSelector(selectCurrentTrack);
 	const [dataArr, setDataArr] = useState<ApiTrack[]>([]);
@@ -103,4 +103,4 @@ const LikedPage: FC = () => {
 	);
 };
 
-export default LikedPage;
+export default LikedTracksLayout;

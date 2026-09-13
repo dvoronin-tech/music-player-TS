@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 
-import styles from './artist.module.scss';
+import styles from './ArtistLayout.module.scss';
 import { useParams } from '@tanstack/react-router';
 
 import Button from '@/components/buttons/buttons';
@@ -10,8 +10,8 @@ import {
 	UnFollow,
 } from '@/components/icons and tags/icons';
 import { useGetArtistQuery, useGetArtistsQuery } from '@/api/rtk/artists';
-import { PopularArtistTracks } from './PopularArtistTracks';
-import { OtherArtistTracks } from './OtherArtistTracks';
+import { PopularArtistTracks } from '@/components/artist/PopularArtistTracks';
+import { OtherArtistTracks } from '@/components/artist/OtherArtistTracks';
 import {
 	useGetLikedArtistsQuery,
 	useToggleLikedArtistMutation,
@@ -22,7 +22,7 @@ import { skipToken } from '@reduxjs/toolkit/query/react';
 import { v4 as randomId } from 'uuid';
 import { startTrack } from '@/store/slices/player';
 
-const Artist: FC = () => {
+const ArtistLayout: FC = () => {
 	const { artistId } = useParams({
 		from: '/artist/$artistId',
 	});
@@ -192,4 +192,4 @@ const Artist: FC = () => {
 	);
 };
 
-export default Artist;
+export default ArtistLayout;

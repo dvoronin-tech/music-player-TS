@@ -18,7 +18,7 @@ export const clearSession = () => {
 export const requireAuth = () => {
 	const token = getAuthToken();
 	if (!token) {
-		throw redirect({ to: '/auth' });
+		throw redirect({ to: '/' });
 	}
 };
 
@@ -35,7 +35,7 @@ export const prefetchAppData = async () => {
 	);
 	if (hasUnauthorized) {
 		clearSession();
-		throw redirect({ to: '/auth' });
+		throw redirect({ to: '/' });
 	}
 };
 

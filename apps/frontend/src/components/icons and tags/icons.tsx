@@ -1,8 +1,8 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC } from 'react';
 import styles from './icons.module.scss';
 
 import { TiHeartFullOutline } from 'react-icons/ti';
-import { FaPause, FaPlay, FaRandom, FaUser } from 'react-icons/fa';
+import { FaPause, FaPlay, FaRandom } from 'react-icons/fa';
 import { BsFillRewindFill } from 'react-icons/bs';
 import { LuRepeat, LuRepeat1 } from 'react-icons/lu';
 import { PiPlaylistBold } from 'react-icons/pi';
@@ -313,22 +313,6 @@ export const UnFollow: FC<IProps> = ({
 }) => {
 	return (
 		<FaUserCheck
-			className={
-				getClassList(type, className) + ` ${styles.add_playlist}`
-			}
-			style={{ width: `${scale}px`, height: `${scale}px`, ...style }}
-		/>
-	);
-};
-
-export const UserIcon: FC<IProps> = ({
-	scale = 20,
-	type = 'idle',
-	className,
-	style,
-}) => {
-	return (
-		<FaUser
 			className={
 				getClassList(type, className) + ` ${styles.add_playlist}`
 			}

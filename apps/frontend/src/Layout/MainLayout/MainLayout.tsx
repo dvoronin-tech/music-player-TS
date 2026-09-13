@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import styles from './Main.module.scss';
+import styles from './MainLayout.module.scss';
 import Button from '@/components/buttons/buttons';
 import { HomeCards } from '@/components/homeCard/HomeCards';
 import { HomeArtists } from '@/components/artistCards/HomeArtists';
@@ -8,11 +8,10 @@ import { useGetArtistsQuery } from '@/api/rtk/artists';
 import { useGetTracksQuery } from '@/api/rtk/tracks';
 import { HomeTracks } from '@/components/homeTrackCards/HomeTracks';
 import type { ApiTrack } from '@music-player/backend';
-import { publicUrl } from '@/utils/constants';
 import { startTrack } from '@/store/slices/player';
 import { shuffle } from '@/utils/shuffle';
 
-const Main: FC = () => {
+const MainLayout: FC = () => {
 	const dispatch = useAppDispatch();
 
 	const {
@@ -28,12 +27,9 @@ const Main: FC = () => {
 
 	const [isButtonShow, setIsButtonShow] = useState<boolean>(false);
 	const [translateValue, setTranslateValue] = useState<number>(0);
-	const [rightShadowOpasity, setRightShadowOpacity] = useState<number>(0);
 
 	const artistLineWrapper = useRef<HTMLDivElement>(null);
 	const artistLine = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {});
 
 	useEffect(() => {
 		const artistLineWidth = artistLineWrapper.current?.clientWidth;
@@ -45,9 +41,6 @@ const Main: FC = () => {
 					? false
 					: true,
 			);
-			setRightShadowOpacity(1);
-		} else {
-			setRightShadowOpacity(0);
 		}
 	}, [artists.length, translateValue]);
 
@@ -225,4 +218,4 @@ const Main: FC = () => {
 	);
 };
 
-export default Main;
+export default MainLayout;

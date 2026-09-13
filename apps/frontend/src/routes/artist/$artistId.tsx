@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { prefetchAppData, requireAuth } from '@/utils/auth';
 import AuthedShell from '@/components/layout/AuthedShell';
-import Artist from '@/pages/artist/artist';
+import ArtistLayout from '@/Layout/ArtistLayout/ArtistLayout';
 
 export const Route = createFileRoute('/artist/$artistId')({
 	beforeLoad: () => {
@@ -14,7 +14,7 @@ export const Route = createFileRoute('/artist/$artistId')({
 function ArtistRoutePage() {
 	return (
 		<AuthedShell>
-			<Artist />
+			<ArtistLayout />
 		</AuthedShell>
 	);
 }

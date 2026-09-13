@@ -1,10 +1,14 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { createRootRoute, Navigate, Outlet } from '@tanstack/react-router';
 import Notification from '@/components/notification/notification';
-import NotFoundPage from '@/pages/notFoundPage/notFoundPage';
+import { getAuthToken } from '@/utils/auth';
+
+function UnknownRouteRedirect() {
+	return <Navigate to={getAuthToken() ? '/home' : '/'} replace />;
+}
 
 export const Route = createRootRoute({
 	component: RootComponent,
-	notFoundComponent: NotFoundPage,
+	notFoundComponent: UnknownRouteRedirect,
 });
 
 function RootComponent() {
