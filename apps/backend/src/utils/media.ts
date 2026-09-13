@@ -1,4 +1,4 @@
-import { env } from '#/utils/env.js';
+import { env } from './env.js';
 
 const IMAGE_MIME_TYPES: Record<string, string> = {
 	'image/jpeg': '.jpg',

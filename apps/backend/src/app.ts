@@ -2,9 +2,9 @@ import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
-import { factory } from '#/factory.js';
-import { routes } from '#/routes/index.js';
-import { env } from '#/utils/env.js';
+import { factory } from './factory.js';
+import { routes } from './routes/index.js';
+import { env } from './utils/env.js';
 
 const allowedOrigins = env.CORS_ORIGIN.split(',').map((value) => value.trim());
 

@@ -1,4 +1,4 @@
-import { factory } from '#/factory.js';
+import { factory } from '../factory.js';
 import {
 	getLikedArtists,
 	getLikedTracks,
@@ -8,8 +8,8 @@ import {
 	setMyPhoto,
 	unlikeArtist,
 	unlikeTrack,
-} from '#/handlers/me.js';
-import { requireAuth } from '#/middleware/auth.js';
+} from '../handlers/me.js';
+import { requireAuth } from '../middleware/auth.js';
 
 export const meRoutes = factory
 	.createApp()

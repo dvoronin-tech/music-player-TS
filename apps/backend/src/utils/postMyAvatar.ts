@@ -1,4 +1,4 @@
-import { env } from '#/utils/env.js';
+import { env } from './env.js';
 
 async function supabaseStorageFetch(
 	imagePath: string,

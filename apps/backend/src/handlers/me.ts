@@ -1,24 +1,24 @@
 import { and, eq } from 'drizzle-orm';
 import { userLikedArtists, userLikedTracks, users } from '@music-player/db';
-import { db } from '#/db.js';
-import { factory } from '#/factory.js';
-import { toApiUser } from '#/mappers.js';
+import { db } from '../db.js';
+import { factory } from '../factory.js';
+import { toApiUser } from '../mappers.js';
 import {
 	artistExists,
 	listLikedArtists,
 	listLikedTracks,
 	trackExists,
-} from '#/queries/catalog.js';
-import { setMyPhotoFormSchema } from '#/schemas/me.js';
-import { artistIdParamSchema, trackIdParamSchema } from '#/schemas/params.js';
-import { jsonError } from '#/utils/http.js';
+} from '../queries/catalog.js';
+import { setMyPhotoFormSchema } from '../schemas/me.js';
+import { artistIdParamSchema, trackIdParamSchema } from '../schemas/params.js';
+import { jsonError } from '../utils/http.js';
 import {
 	extensionFromMimeType,
 	toMyAvatarPath,
 	toMyAvatarUploadPath,
-} from '#/utils/media.js';
-import { validateForm, validateParam } from '#/utils/validate.js';
-import { deleteMyAvatar, postMyAvatar } from '#/utils/postMyAvatar.js';
+} from '../utils/media.js';
+import { validateForm, validateParam } from '../utils/validate.js';
+import { deleteMyAvatar, postMyAvatar } from '../utils/postMyAvatar.js';
 
 async function findCurrentUser(userId: string) {
 	return db.query.users.findFirst({

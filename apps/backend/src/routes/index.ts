@@ -1,8 +1,8 @@
-import { factory } from '#/factory.js';
-import { artistsRoutes } from '#/routes/artists.js';
-import { authRoutes } from '#/routes/auth.js';
-import { meRoutes } from '#/routes/me.js';
-import { tracksRoutes } from '#/routes/tracks.js';
+import { factory } from '../factory.js';
+import { artistsRoutes } from './artists.js';
+import { authRoutes } from './auth.js';
+import { meRoutes } from './me.js';
+import { tracksRoutes } from './tracks.js';
 
 const _routes = factory
 	.createApp()
@@ -20,4 +20,4 @@ export type {
 	ApiArtistRef,
 	ApiTrack,
 	ApiUser,
-} from '#/mappers.js';
+} from '../mappers.js';

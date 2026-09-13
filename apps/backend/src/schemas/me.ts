@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { extensionFromMimeType, MAX_AVATAR_BYTES } from '#/utils/media.js';
+import { extensionFromMimeType, MAX_AVATAR_BYTES } from '../utils/media.js';
 
 const avatarFileSchema = z
 	.custom<File>((value) => value instanceof File || value instanceof Blob, {
