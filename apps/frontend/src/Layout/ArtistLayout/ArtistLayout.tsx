@@ -51,7 +51,7 @@ const ArtistLayout: FC = () => {
 
 	useEffect(() => {
 		const isLikedArtist = likedArtistList.find(
-			(item) => item.name === artistId,
+			(item) => item.id === Number(artistId),
 		);
 		if (isLikedArtist) {
 			setIsLikedArtist(true);
