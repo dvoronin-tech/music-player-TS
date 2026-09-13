@@ -9,14 +9,14 @@
 	width: 100%;
 	bottom: 0;
 	z-index: 999;
-	animation: play-selection-fade-in 0.5s ease;
+	animation: play-selection-fade-in 0.8s ease;
 }
 
 @keyframes play-selection-fade-in {
 	from {
-		bottom: var(--play-selection-height);
+		transform: translateY(100%);
 	}
 	to {
-		bottom: 0;
+		transform: translateY(0);
 	}
 }
