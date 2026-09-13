@@ -28,13 +28,13 @@ import type { ApiTrack } from '@music-player/backend';
 import { v4 as randomId } from 'uuid';
 import { shallowEqual } from 'react-redux';
 
-interface IProp {
+interface Prop {
 	track: ApiTrack;
 	playList: ApiTrack[];
 	renderedInFullScreen?: boolean;
 }
 
-export const HomeTrackCard: FC<IProp> = ({
+export const HomeTrackCard: FC<Prop> = ({
 	track,
 	playList,
 	renderedInFullScreen,

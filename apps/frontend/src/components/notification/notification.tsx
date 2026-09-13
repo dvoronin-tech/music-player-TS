@@ -53,11 +53,11 @@ const Notification: FC = () => {
 
 export default Notification;
 
-interface INotificationItemProps {
+interface NotificationItemProps {
 	notificationData: NotificationPayload;
 }
 
-const NotificationItem: FC<INotificationItemProps> = ({ notificationData }) => {
+const NotificationItem: FC<NotificationItemProps> = ({ notificationData }) => {
 	const { img, info, additionalInfo, notificationId, variant } =
 		notificationData;
 	const [isDelete, setIsDelete] = useState<boolean>(false);

@@ -23,12 +23,12 @@ import type { ApiTrack } from '@music-player/backend';
 import { v4 as randomId } from 'uuid';
 import { shallowEqual } from 'react-redux';
 
-interface IProp {
+interface Prop {
 	playList: ApiTrack[];
 	track: ApiTrack;
 }
 
-const ArtistTrackCard: FC<IProp> = ({ track, playList }) => {
+const ArtistTrackCard: FC<Prop> = ({ track, playList }) => {
 	const dispatch = useAppDispatch();
 	const { currentTrack, currentPlayList } = useAppSelector(
 		(state) => ({
