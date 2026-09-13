@@ -6,7 +6,12 @@ import * as schema from './schema/index.js';
 config();
 
 export function createDb(connectionString: string | undefined) {
-	const pool = new Pool({ connectionString });
+	const isLocal = connectionString?.includes('localhost');
+	const pool = new Pool({
+		connectionString,
+		max: process.env.VERCEL ? 1 : 10,
+		ssl: isLocal ? undefined : { rejectUnauthorized: false },
+	});
 	return drizzle(pool, { schema });
 }
 
