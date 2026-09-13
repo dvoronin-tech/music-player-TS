@@ -34,7 +34,7 @@ function RootComponent() {
 					<Outlet />
 				</AuthedShell>
 			)}
-			<Notification />
+			<Notification considerHeader={!isPublicPage} />
 		</div>
 	);
 }

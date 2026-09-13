@@ -12,6 +12,10 @@
     padding: 10px;
 }
 
+.notification_wrapper_with_header {
+    padding-top: calc(var(--header-height) + 10px);
+}
+
 .notification {
     box-sizing: border-box;
     padding: 15px;
@@ -28,7 +32,9 @@
     right: 0;
 
     border: 1px solid var(--stroke-light);
-    animation: notification-fade-in-desktop 1s ease;
+    animation:
+        notification-fade-in-desktop 1s ease,
+        notification-fade-out 0.5s ease 4s forwards;
 
     &.fadeOut {
         animation: notification-fade-out 0.5s ease forwards;
@@ -112,7 +118,9 @@
     .notification {
         max-width: 100%;
         min-width: 100%;
-        animation: notification-fade-in-mobile 1s ease;
+        animation:
+            notification-fade-in-mobile 1s ease,
+            notification-fade-out 0.5s ease 4s forwards;
     }
 }
 

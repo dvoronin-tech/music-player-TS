@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import clsx from 'clsx';
 import CheckCircleIcon from '@/assets/icons/check-circle.svg?react';
 import ErrorOutlineIcon from '@/assets/icons/error-outline.svg?react';
@@ -35,11 +35,17 @@ function renderHighlightedText(text: string) {
 	return nodes;
 }
 
-const Notification: FC = () => {
+const Notification: FC<{ considerHeader?: boolean }> = ({
+	considerHeader = false,
+}) => {
 	const notificationList = useAppSelector((state) => state.notification);
 
 	return (
-		<div className={styles.notification_wrapper}>
+		<div
+			className={clsx(styles.notification_wrapper, {
+				[styles.notification_wrapper_with_header]: considerHeader,
+			})}
+		>
 			{notificationList.map((item) => {
 				return (
 					<NotificationItem
@@ -64,14 +70,6 @@ const NotificationItem: FC<NotificationItemProps> = ({ notificationData }) => {
 	const [isExiting, setIsExiting] = useState(false);
 	const dispatch = useAppDispatch();
 
-	useEffect(() => {
-		const timerId = setTimeout(() => {
-			setIsExiting(true);
-		}, 4000);
-
-		return () => void clearTimeout(timerId);
-	}, []);
-
 	const handleDelete = () => {
 		setIsExiting(true);
 	};
@@ -79,10 +77,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ notificationData }) => {
 	const handleAnimationEnd = (
 		event: React.AnimationEvent<HTMLDivElement>,
 	) => {
-		if (
-			!isExiting ||
-			!event.animationName.includes('notification-fade-out')
-		) {
+		if (!event.animationName.includes('notification-fade-out')) {
 			return;
 		}
 
