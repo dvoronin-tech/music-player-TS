@@ -2,5 +2,5 @@
 	"$schema": "https://openapi.vercel.sh/vercel.json",
 	"framework": "hono",
 	"installCommand": "cd ../.. && pnpm install",
-	"buildCommand": "echo \"Vercel compiles the Hono app\""
+	"buildCommand": "cd ../.. && pnpm --filter @music-player/db build"
 }
