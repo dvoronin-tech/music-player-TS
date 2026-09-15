@@ -1,12 +1,9 @@
 import type { ReactNode } from 'react';
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import clsx from 'clsx';
+import { useIsMobileLayout } from '@/hooks/useIsMobileLayout';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import MainHeader from '@/components/headers/MainHeader';
-import PlaySelection from '@/components/PlaySelection/PlaySelection';
-import AsideBar from '@/components/asideBar/asideBar';
-import CPLSelection from '@/components/CPLSelection/CPLSelection';
-import AccountDataBar from '@/components/accountDataBar/accountDataBar';
 import FullScreen from '@/components/fullScreen/fullScreen';
 import MobileNavPanel from '@/components/MobileNavPanel/MobileNavPanel';
 import {
@@ -16,11 +13,16 @@ import {
 import { selectCurrentTrack } from '@/store/slices/player';
 import styles from './AuthedShell.module.scss';
 
+const DesktopPanels = lazy(
+	() => import('@/components/DesktopPanels/DesktopPanels'),
+);
+
 interface AuthedShellProps {
 	children: ReactNode;
 }
 
 export default function AuthedShell({ children }: AuthedShellProps) {
+	const isMobile = useIsMobileLayout();
 	const dispatch = useAppDispatch();
 	const currentTrack = useAppSelector(selectCurrentTrack);
 	const { showUserData, showFullScreen, showCurrentPlayList } =
@@ -51,10 +53,11 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 			<MainHeader />
 			<MobileNavPanel />
 			{children}
-			<PlaySelection />
-			<AsideBar />
-			<CPLSelection />
-			<AccountDataBar />
+			{!isMobile && (
+				<Suspense fallback={null}>
+					<DesktopPanels />
+				</Suspense>
+			)}
 		</div>
 	);
 }

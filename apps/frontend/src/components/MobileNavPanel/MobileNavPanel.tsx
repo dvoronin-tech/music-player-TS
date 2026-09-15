@@ -4,15 +4,19 @@ import HomeIcon from '@/assets/icons/home.svg?react';
 import { useGetMeQuery } from '@/api/rtk/user';
 import UserImage from '@/components/userImage/UserImage';
 import styles from './MobileNavPanel.module.scss';
+import { clsx } from 'clsx';
 
 const MobileNavPanel: FC = () => {
 	const { data: user } = useGetMeQuery();
 
 	return (
-		<nav className={styles.mobile_nav_panel} aria-label="Мобильная навигация">
+		<nav
+			className={styles.mobile_nav_panel}
+			aria-label="Мобильная навигация"
+		>
 			<button
 				type="button"
-				className={`${styles.nav_item} ${styles.account}`}
+				className={clsx(styles.nav_item, styles.account)}
 				aria-label="Аккаунт"
 				disabled
 			>
