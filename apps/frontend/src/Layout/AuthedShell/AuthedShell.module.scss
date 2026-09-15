@@ -5,3 +5,9 @@
 .shell_with_player {
 	padding-bottom: var(--play-selection-height);
 }
+
+@media screen and (max-width: 480px) {
+	.shell {
+		padding-bottom: calc(var(--mobile-nav-panel-height) + 20px);
+	}
+}

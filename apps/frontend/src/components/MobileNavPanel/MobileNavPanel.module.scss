@@ -1,0 +1,48 @@
+.mobile_nav_panel {
+	display: none;
+}
+
+@media screen and (max-width: 480px) {
+	.mobile_nav_panel {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		z-index: 200;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		width: 100%;
+		height: var(--mobile-nav-panel-height);
+		padding: 0 20px;
+		background-color: var(--second-bg-color-for-blur);
+		backdrop-filter: blur(40px);
+	}
+
+	.nav_item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 48px;
+		height: 48px;
+		color: var(--text-second-color);
+		cursor: default;
+
+		svg {
+			width: 32px;
+			height: 32px;
+		}
+	}
+
+	.account {
+		width: 42px;
+		height: 42px;
+		overflow: hidden;
+		border-radius: 50%;
+		background-color: var(--inputs-bg-color);
+
+		svg {
+			width: 22px;
+			height: 22px;
+		}
+	}
+}

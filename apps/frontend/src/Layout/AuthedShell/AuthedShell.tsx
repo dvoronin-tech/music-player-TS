@@ -8,6 +8,7 @@ import AsideBar from '@/components/asideBar/asideBar';
 import CPLSelection from '@/components/CPLSelection/CPLSelection';
 import AccountDataBar from '@/components/accountDataBar/accountDataBar';
 import FullScreen from '@/components/fullScreen/fullScreen';
+import MobileNavPanel from '@/components/MobileNavPanel/MobileNavPanel';
 import {
 	setCurrentPlayListOpen,
 	toggleShowFullScreen,
@@ -48,6 +49,7 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 			})}
 		>
 			<MainHeader />
+			<MobileNavPanel />
 			{children}
 			<PlaySelection />
 			<AsideBar />
