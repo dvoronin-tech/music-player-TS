@@ -5,6 +5,7 @@ import { useGetMeQuery } from '@/api/rtk/user';
 import UserImage from '@/components/userImage/UserImage';
 import styles from './MobileNavPanel.module.scss';
 import { clsx } from 'clsx';
+import { Link } from '@tanstack/react-router';
 
 const MobileNavPanel: FC = () => {
 	const { data: user } = useGetMeQuery();
@@ -30,14 +31,13 @@ const MobileNavPanel: FC = () => {
 			>
 				<HomeIcon />
 			</button>
-			<button
-				type="button"
+			<Link
+				to="/home/liked"
 				className={styles.nav_item}
 				aria-label="Любимые треки"
-				disabled
 			>
 				<HeartIcon />
-			</button>
+			</Link>
 		</nav>
 	);
 };

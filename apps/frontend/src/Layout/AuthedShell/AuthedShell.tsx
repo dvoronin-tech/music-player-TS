@@ -51,8 +51,9 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 			})}
 		>
 			<MainHeader />
-			<MobileNavPanel />
 			{children}
+
+			{isMobile && <MobileNavPanel />}
 			{!isMobile && (
 				<Suspense fallback={null}>
 					<DesktopPanels />
