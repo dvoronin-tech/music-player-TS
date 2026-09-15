@@ -1,4 +1,12 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import {
+	ChangeEvent,
+	FC,
+	Suspense,
+	lazy,
+	useCallback,
+	useEffect,
+	useState,
+} from 'react';
 import clsx from 'clsx';
 import styles from './LikedTracksLayout.module.scss';
 import { useAppSelector } from '@/hooks/useTypedRedux';
@@ -6,14 +14,22 @@ import { useGetLikedTracksQuery } from '@/api/rtk/liked';
 import { Input } from '@/components/inputFields/inputFields';
 import Button from '@/components/buttons/buttons';
 import type { ApiTrack } from '@music-player/backend';
-import { LikedTracksGrid } from '@/components/likedTracks/LikedTracksGrid';
 import { selectCurrentTrack } from '@/store/slices/player';
+import { humanizeTrackCount } from '@/utils/humanizeTrackCount';
+import { useIsMobileLayout } from '@/hooks/useIsMobileLayout';
+
+const LikedTracksGrid = lazy(() =>
+	import('@/components/likedTracks/LikedTracksGrid').then((module) => ({
+		default: module.LikedTracksGrid,
+	})),
+);
 
 const LikedTracksLayout: FC = () => {
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const currentTrack = useAppSelector(selectCurrentTrack);
 	const [dataArr, setDataArr] = useState<ApiTrack[]>([]);
 	const [searchStr, setSearchStr] = useState('');
+	const isMobile = useIsMobileLayout();
 
 	const [isPopular, setIsPopular] = useState(false);
 
@@ -31,9 +47,9 @@ const LikedTracksLayout: FC = () => {
 		}
 	}, [isPopular, likedTrackList]);
 
-	const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
+	const onSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		setSearchStr(e.target.value);
-	};
+	}, []);
 
 	return (
 		<div
@@ -46,14 +62,17 @@ const LikedTracksLayout: FC = () => {
 						autoPlay
 						loop
 						muted
+						playsInline
 						src="/video/liked-video.webm"
 					/>
 				</div>
 				<div className={styles.liked_title_wrapper}>
 					<span className={styles.liked_title}>Любимые треки</span>
-					<div>
+					<div className={styles.liked_meta}>
 						<span className={styles.liked_brooklyn}>BROOKLYN</span>
-						<span>{likedTrackList.length} треков</span>
+						<span>
+							{humanizeTrackCount(likedTrackList.length, 'ru')}
+						</span>
 					</div>
 				</div>
 			</div>
@@ -72,7 +91,7 @@ const LikedTracksLayout: FC = () => {
 							size="l"
 							weight="semibold"
 						>
-							С начала новые
+							Новые
 						</Button>
 						<Button
 							onClick={() => setIsPopular(true)}
@@ -80,7 +99,7 @@ const LikedTracksLayout: FC = () => {
 							size="l"
 							weight="semibold"
 						>
-							С начала популярные
+							Популярные
 						</Button>
 					</div>
 				</div>
@@ -92,11 +111,15 @@ const LikedTracksLayout: FC = () => {
 							: styles.grid_grid,
 					)}
 				>
-					<LikedTracksGrid
-						tracks={dataArr}
-						searchStr={searchStr}
-						hasLikedTracks={likedTrackList.length !== 0}
-					/>
+					{!isMobile && (
+						<Suspense fallback={null}>
+							<LikedTracksGrid
+								tracks={dataArr}
+								searchStr={searchStr}
+								hasLikedTracks={likedTrackList.length !== 0}
+							/>
+						</Suspense>
+					)}
 				</div>
 			</div>
 		</div>
