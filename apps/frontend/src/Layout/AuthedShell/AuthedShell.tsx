@@ -76,9 +76,9 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 					<>
 						<AsideBar />
 						<CPLSelection />
-						<AccountDataBar />
 					</>
 				)}
+				<AccountDataBar />
 				{(layout === 'tablet' || layout === 'mobile') && (
 					<MobilePlaySection layout={layout} />
 				)}

@@ -6,14 +6,21 @@ import UserImage from '@/components/userImage/UserImage';
 import styles from './MobileNavPanel.module.scss';
 import { clsx } from 'clsx';
 import { Link, useLocation } from '@tanstack/react-router';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
+import { toggleShowUserData } from '@/store/slices/ui';
 
 const MobileNavPanel: FC = () => {
+	const dispatch = useAppDispatch();
 	const { data: user } = useGetMeQuery();
 
 	const { pathname } = useLocation();
 
 	const activeLiked = pathname === '/home/liked';
 	const activeHome = pathname === '/home';
+
+	const openAccount = () => {
+		dispatch(toggleShowUserData(true));
+	};
 
 	return (
 		<nav
@@ -24,7 +31,7 @@ const MobileNavPanel: FC = () => {
 				type="button"
 				className={clsx(styles.nav_item, styles.account)}
 				aria-label="Аккаунт"
-				disabled
+				onClick={openAccount}
 			>
 				<UserImage userImg={user?.userImg ?? null} />
 			</button>

@@ -221,6 +221,7 @@ button.file_picker {
 .user_data {
 	display: flex;
 	flex-direction: column;
+	min-width: 0;
 }
 
 .username {
@@ -292,5 +293,88 @@ button.file_picker {
 	&::after {
 		width: 100%;
 		transition: 1s linear all;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.account_bar {
+		width: calc(100% - 40px);
+		max-height: calc(100svh - 40px);
+		top: auto;
+		bottom: 20px;
+		left: 20px;
+		right: auto;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		-webkit-backdrop-filter: blur(20px);
+		transform: translateY(calc(100% + 40px));
+		pointer-events: none;
+		transition: transform 0.7s ease;
+	}
+
+	.account_bar_show {
+		right: auto;
+		transform: translateY(0);
+		pointer-events: auto;
+	}
+
+	.title {
+		font-size: 1.8rem;
+	}
+
+	.account_data {
+		height: auto;
+		padding: 16px;
+	}
+
+	.img_wrapper {
+		width: 72px;
+		height: 72px;
+		flex-shrink: 0;
+		margin-right: 14px;
+	}
+
+	.username,
+	.email {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.info_row {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.info_label {
+		margin-right: 0;
+	}
+
+	.back_btn {
+		width: 40px;
+		height: 40px;
+	}
+
+	.info_value {
+		word-break: break-word;
+	}
+
+	button.file_picker {
+		height: 160px;
+		font-size: 1.8rem;
+	}
+
+	.file_img_wrapper {
+		flex-direction: column;
+		height: auto;
+		align-items: stretch;
+
+		img {
+			width: 100%;
+			max-width: 160px;
+			height: 160px;
+			align-self: center;
+		}
 	}
 }
