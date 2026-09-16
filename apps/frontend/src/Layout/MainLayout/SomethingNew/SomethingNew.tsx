@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { useGetTracksQuery } from '@/api/rtk/tracks';
+import { Loader } from '@/components/loader/Loader';
 import { HomeTracks } from '@/components/homeTrackCards/HomeTracks';
 import styles from './SomethingNew.module.scss';
 
@@ -22,7 +23,7 @@ export const SomethingNew: FC = () => {
 				className={styles.home_track_cards_wrapper}
 			>
 				{tracksLoading ? (
-					<div className="loader"></div>
+					<Loader />
 				) : (
 					<HomeTracks
 						tracks={trackList}
