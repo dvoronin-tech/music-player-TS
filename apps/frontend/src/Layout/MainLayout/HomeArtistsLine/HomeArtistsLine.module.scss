@@ -45,6 +45,18 @@
 	}
 }
 
+@media screen and (max-width: 768px) {
+	.artists_line_section span:first-child {
+		font-size: 2.4rem;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.artists_line_section span:first-child {
+		font-size: 2rem;
+	}
+}
+
 .artists_line {
 	display: flex;
 	align-items: center;

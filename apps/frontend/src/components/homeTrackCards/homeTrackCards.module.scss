@@ -18,8 +18,10 @@
 
     box-shadow: 0 6px 8px 0 var(--second-bg-color);
 
-    &:hover {
-        box-shadow: 0 0 10px 0 var(--accent-color);
+    @media (hover: hover) {
+        &:hover {
+            box-shadow: 0 0 10px 0 var(--accent-color);
+        }
     }
 }
 
@@ -59,7 +61,19 @@
     overflow: hidden;
     border-radius: 8px;
 
-    &:hover,
+    @media (hover: hover) {
+        &:hover {
+            .home_track_card_play {
+                opacity: 1;
+            }
+
+            img {
+                transform: scale(1.1);
+                filter: blur(4px);
+            }
+        }
+    }
+
     &.home_track_card_wrapper_current {
         .home_track_card_play {
             opacity: 1;

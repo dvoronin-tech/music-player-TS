@@ -9,9 +9,27 @@
 	font-weight: 700;
 }
 
+@media screen and (max-width: 768px) {
+	.something_new_title {
+		font-size: 2.4rem;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.something_new_title {
+		font-size: 2rem;
+	}
+}
+
 .home_track_cards_wrapper {
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 	gap: 20px;
+}
+
+.home_track_cards_list {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
 }
