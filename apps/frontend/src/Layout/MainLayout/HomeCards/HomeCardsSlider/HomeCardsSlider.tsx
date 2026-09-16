@@ -91,16 +91,11 @@ export const HomeCardsSlider: FC<HomeCardsSliderProps> = memo(({ cards }) => {
 		originalDeltaX.current = clientX - startX.current;
 		const deltaX = originalDeltaX.current;
 
-		if (Math.abs(deltaX) > 25) {
-			document.body.style.overflowY = 'hidden';
-		}
-
-		setTranslateX(-currentSlideIndex * slideWidth + (deltaX / 2));
+		setTranslateX(-currentSlideIndex * slideWidth + deltaX / 2);
 	};
 
-	const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
+	const handleTouchEnd = () => {
 		const origDeltaX = originalDeltaX.current;
-
 		const threshold = slideWidth * SWIPE_THRESHOLD;
 
 		if (origDeltaX < -threshold) {
@@ -112,7 +107,6 @@ export const HomeCardsSlider: FC<HomeCardsSliderProps> = memo(({ cards }) => {
 		}
 
 		originalDeltaX.current = 0;
-		document.body.style.overflowY = 'auto';
 		setIsDragging(false);
 		setAutoplayKey((key) => key + 1);
 	};
