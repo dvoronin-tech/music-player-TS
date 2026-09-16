@@ -66,7 +66,6 @@ interface NotificationItemProps {
 
 const NotificationItem: FC<NotificationItemProps> = ({ notificationData }) => {
 	const { info, additionalInfo, notificationId } = notificationData;
-	const [isDelete, setIsDelete] = useState<boolean>(false);
 	const [isExiting, setIsExiting] = useState(false);
 	const dispatch = useAppDispatch();
 
@@ -84,12 +83,8 @@ const NotificationItem: FC<NotificationItemProps> = ({ notificationData }) => {
 		dispatch(deleteNotification(notificationId));
 	};
 
-	const deleteBtnOpacity = isDelete ? 1 : 0;
-
 	return (
 		<div
-			onMouseEnter={() => setIsDelete(true)}
-			onMouseLeave={() => setIsDelete(false)}
 			onAnimationEnd={handleAnimationEnd}
 			className={clsx(styles.notification, isExiting && styles.fadeOut)}
 		>
@@ -113,7 +108,6 @@ const NotificationItem: FC<NotificationItemProps> = ({ notificationData }) => {
 			</div>
 			<button
 				onClick={handleDelete}
-				style={{ opacity: deleteBtnOpacity }}
 				className={styles.delete_notification}
 			>
 				<CloseIcon strokeWidth={1} />

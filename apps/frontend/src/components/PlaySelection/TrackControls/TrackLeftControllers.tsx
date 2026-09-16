@@ -1,0 +1,40 @@
+import { FC } from 'react';
+import clsx from 'clsx';
+import {
+	useGetLikedTracksQuery,
+	useToggleLikedTrackMutation,
+} from '@/api/rtk/liked';
+import HeartIcon from '@/assets/icons/heart.svg?react';
+import { useAppSelector } from '@/hooks/useTypedRedux';
+import { selectCurrentTrack } from '@/store/slices/player';
+import styles from './TrackControls.module.scss';
+
+export const TrackLeftControllers: FC = () => {
+	const currentTrack = useAppSelector(selectCurrentTrack);
+	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
+	const [toggleLikedTrack] = useToggleLikedTrackMutation();
+	const isLiked = likedTrackList.some(
+		(track) => track.id === currentTrack?.id,
+	);
+
+	const toggleIsLiked = () => {
+		if (!currentTrack) {
+			return;
+		}
+
+		toggleLikedTrack({ id: currentTrack.id, isLiked, track: currentTrack });
+	};
+
+	return (
+		<div className={styles.left_controls}>
+			<button onClick={toggleIsLiked} className={styles.control}>
+				<HeartIcon
+					className={clsx(
+						'icon',
+						isLiked ? 'icon-active' : 'icon-like-idle',
+					)}
+				/>
+			</button>
+		</div>
+	);
+};

@@ -4,6 +4,7 @@ import {
 	type FC,
 	useRef,
 	useState,
+    useEffect,
 } from 'react';
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
@@ -29,6 +30,7 @@ const AccountDataBar: FC = () => {
 	const [shouldRenderBlur, setShouldRenderBlur] = useState(showUserData);
 
 	const accountBarRef = useRef<HTMLDivElement>(null);
+    const mobileNavPanelRef = useRef<HTMLDivElement>(null);
 
 	const handleCloseAccountBar = () => {
 		dispatch(toggleShowUserData(false));

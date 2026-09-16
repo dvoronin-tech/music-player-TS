@@ -128,7 +128,7 @@ export const AuthForm: FC = () => {
 				localStorage.setItem('Token', res.data.token);
                 sendToast({
 					info: 'Вход',
-					additionalInfo: 'Вход прошл <span>успешно</span>',
+					additionalInfo: 'Вход прошл __успешно__',
 					isError: false,
 				});
 				await navigate({ to: '/home' });

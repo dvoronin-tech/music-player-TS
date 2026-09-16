@@ -1,7 +1,19 @@
-import { FC } from 'react';
+import { FC, Suspense, lazy } from 'react';
+import clsx from 'clsx';
 import { useGetTracksQuery } from '@/api/rtk/tracks';
-import { HomeTracks } from '@/components/homeTrackCards/HomeTracks';
+import { Loader } from '@/components/loader/Loader';
+import { useLayout } from '@/hooks/useLayout';
 import styles from './SomethingNew.module.scss';
+
+const HomeTracks = lazy(() =>
+	import('@/components/homeTrackCards/HomeTracks').then((module) => ({
+		default: module.HomeTracks,
+	})),
+);
+
+const SmallTrackCard = lazy(
+	() => import('@/components/smallTrackCard/smallTrackCard'),
+);
 
 export const SomethingNew: FC = () => {
 	const {
@@ -9,25 +21,46 @@ export const SomethingNew: FC = () => {
 		error: tracksError,
 		isLoading: tracksLoading,
 	} = useGetTracksQuery();
+	const isMobile = useLayout() === 'mobile';
+
+	const justifyContent = tracksLoading
+		? 'center'
+		: isMobile
+			? undefined
+			: 'space-between';
 
 	return (
 		<div className={styles.something_new}>
 			<span className={styles.something_new_title}>Что-то новое</span>
 			<div
 				style={{
-					justifyContent: tracksLoading
-						? 'center'
-						: 'space-between',
+					justifyContent,
 				}}
-				className={styles.home_track_cards_wrapper}
+				className={clsx(
+					styles.home_track_cards_wrapper,
+					isMobile && !tracksLoading && styles.home_track_cards_list,
+				)}
 			>
 				{tracksLoading ? (
-					<div className="loader"></div>
+					<Loader />
 				) : (
-					<HomeTracks
-						tracks={trackList}
-						error={tracksError}
-					/>
+					<Suspense fallback={null}>
+						{isMobile && !tracksError ? (
+							trackList.map((item) => (
+								<SmallTrackCard
+									key={item.id}
+									track={item}
+									playList={trackList}
+									showRemoveButton={false}
+								/>
+							))
+						) : (
+							<HomeTracks
+								tracks={trackList}
+								error={tracksError}
+							/>
+						)}
+					</Suspense>
 				)}
 			</div>
 		</div>

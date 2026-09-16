@@ -17,9 +17,11 @@
     left: -398px;
     opacity: 0;
 
-    &:hover {
-        left: 40px;
-        opacity: 1;
+    @media (hover: hover) {
+        &:hover {
+            left: 40px;
+            opacity: 1;
+        }
     }
 
     &::before {

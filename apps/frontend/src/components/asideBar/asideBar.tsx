@@ -11,6 +11,8 @@ import { AsideLikedTracks } from './AsideLikedTracks';
 import { AsideLikedArtists } from './AsideLikedArtists';
 import { selectCurrentTrack, selectPlayerQueue } from '@/store/slices/player';
 
+const canHover = () => window.matchMedia('(hover: hover)').matches;
+
 const AsideBar: FC = () => {
 	const currentTrack = useAppSelector(selectCurrentTrack);
 	const currentPlayList = useAppSelector(selectPlayerQueue);
@@ -51,8 +53,12 @@ const AsideBar: FC = () => {
 					styles.aside_bar,
 					showPlayList && styles.with_playlist,
 				)}
-				onMouseEnter={() => setIsOpen(true)}
-				onMouseLeave={() => setIsOpen(false)}
+				onMouseEnter={() => {
+					if (canHover()) setIsOpen(true);
+				}}
+				onMouseLeave={() => {
+					if (canHover()) setIsOpen(false);
+				}}
 			>
 				<div className={styles.flex_row}>
 					<span>Любимые треки</span>

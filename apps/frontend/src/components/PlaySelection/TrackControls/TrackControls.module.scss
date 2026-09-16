@@ -1,5 +1,5 @@
-.right_elements {
-	flex: 1 1 500px;
+.track_controls {
+	flex: 1 0 500px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -55,7 +55,8 @@
 }
 
 .music_progress {
-	flex: 0 0 92%;
+	flex: 1 1 auto;
+	min-width: 0;
 	height: 4px;
 	border-radius: 5px;
 	background-color: var(--text-disable-color);
@@ -106,6 +107,7 @@
 	align-items: end;
 	width: 100%;
 	height: 12px;
+	gap: 10px;
 }
 
 .time {

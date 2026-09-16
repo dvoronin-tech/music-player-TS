@@ -73,9 +73,11 @@
     padding: 1.4rem;
     aspect-ratio: 1;
 
-    &:hover {
-        svg {
-            color: var(--accent-color-hover);
+    @media (hover: hover) {
+        &:hover {
+            svg {
+                color: var(--accent-color-hover);
+            }
         }
     }
 }
@@ -84,6 +86,10 @@
     margin-left: 40px;
     margin-bottom: 20px;
     z-index: 3;
+
+    > button {
+        border-radius: 100px;
+    }
 
     > button:first-child {
         aspect-ratio: 1;
@@ -120,6 +126,12 @@
     margin-top: 20px;
 }
 
+.more_tracks_list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
 .error_block {
     display: flex;
     justify-content: center;
@@ -127,5 +139,105 @@
     span {
         font-size: 2rem;
         font-weight: 700;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .popular_track_list_wrapper {
+        flex-direction: column;
+        
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .artist_bg {
+        height: 280px;
+    }
+
+    .artist_name {
+        font-size: 4.8rem;
+    }
+
+    .artist_info {
+        margin: 40px;
+    }
+
+    .artist_action_buttons {
+        margin-left: 40px;
+    }
+
+    .additional_artist_info {
+        span:first-child {
+            font-size: 2rem;
+        }
+    }
+
+    .artist_track_title {
+        font-size: 2.4rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .artist {
+        padding-top: 0;
+        padding-bottom: 20px;
+    }
+
+    .artist_bg {
+        height: 260px;
+        box-sizing: border-box;
+        padding: 40px 20px 20px 20px;
+        justify-content: space-between;
+
+        &::after {
+            height: 75%;
+        }
+    }
+
+    .artist_info {
+        margin: 0;
+    }
+
+    .artist_name {
+        font-size: clamp(2.6rem, 10vw, 4.2rem);
+        line-height: 1.08;
+    }
+
+    .additional_artist_info {
+        span:first-child {
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            margin-right: 12px;
+        }
+
+        span:last-child {
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+        }
+    }
+
+    .artist_action_buttons {
+        margin-left: 0;
+        margin-bottom: 0;
+
+        > button:first-child {
+            padding: 1.6rem;
+        }
+    }
+
+    .follow_artist_btn {
+        margin-left: 12px;
+        padding: 1.2rem;
+    }
+
+    .artist_tracks_wrapper {
+        padding: 0 20px;
+        margin-top: 16px;
+    }
+
+    .artist_track_title {
+        font-size: 2rem;
+    }
+
+    .more_tracks_wrapper {
+        margin-top: 16px;
     }
 }

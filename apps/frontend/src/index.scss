@@ -24,7 +24,16 @@
     --success-color: #4EBA3C;
 
     --play-selection-height: 80px;
+    --mobile-play-section-height: 60px;
     --header-height: 80px;
+    --mobile-nav-panel-height: 80px;
+    --main-padding: 40px;
+}
+
+@media screen and (max-width: 480px) {
+    :root {
+        --main-padding: 20px;
+    }
 }
 
 *,
@@ -34,6 +43,11 @@
     margin: 0;
     padding: 0;
     scrollbar-width: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:focus:not(:focus-visible) {
+    outline: none;
 }
 
 html {
@@ -179,4 +193,3 @@ code {
         }
     }
 }
-

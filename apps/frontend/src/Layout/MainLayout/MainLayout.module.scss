@@ -1,7 +1,14 @@
 .main {
-	padding: 80px 40px 40px 40px;
+	padding: var(--header-height) var(--main-padding) var(--main-padding);
 	background-color: var(--main-bg-color);
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
+    overflow-x: hidden;
+}
+
+@media screen and (max-width: 480px) {
+    .main {
+        padding: var(--main-padding);
+    }
 }

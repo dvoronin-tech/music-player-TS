@@ -1,9 +1,10 @@
 .notification_wrapper {
     position: fixed;
     z-index: 100;
-    width: 100svw;
-    height: 100svh;
-    overflow: scroll;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
     pointer-events: none;
     display: flex;
     flex-direction: column;
@@ -97,13 +98,22 @@
     pointer-events: visible;
     top: 2px;
     right: 2px;
+    opacity: 1;
+
     @media (hover: hover) {
+        opacity: 0;
+
+        .notification:hover & {
+            opacity: 1;
+        }
+
         &:hover {
             svg {
                 color: var(--accent-color);
             }
         }
     }
+
     svg {
         width: 14px;
         height: 14px;

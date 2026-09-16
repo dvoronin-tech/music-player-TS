@@ -13,10 +13,8 @@ import {
 	selectCurrentTrack,
 	startTrack,
 } from '@/store/slices/player';
-import { addNotification } from '@/store/slices/notification';
 import { formatArtistNames } from '@/utils/formatArtists';
 import type { ApiTrack } from '@music-player/backend';
-import { v4 as randomId } from 'uuid';
 
 interface SmallTrackListProps {
 	track: ApiTrack;
@@ -36,15 +34,7 @@ const SmallTrackCard: FC<SmallTrackListProps> = ({
 	const [isLikedTrack, setIsLikedTrack] = useState(false);
 
 	const deleteLike = () => {
-		toggleLikedTrack({ id: track.id, isLiked: isLikedTrack });
-		dispatch(
-			addNotification({
-				img: track.albumImg,
-				info: `${track.title} - ${formatArtistNames(track.artists)}`,
-				additionalInfo: 'Трек удалён из __избранного__',
-				notificationId: randomId(),
-			}),
-		);
+		toggleLikedTrack({ id: track.id, isLiked: isLikedTrack, track });
 	};
 
 	useEffect(() => {
