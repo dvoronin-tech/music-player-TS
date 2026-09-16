@@ -1,52 +1,25 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC } from 'react';
 import { useAppSelector } from '@/hooks/useTypedRedux';
 import { formatArtistNames } from '@/utils/formatArtists';
 import { selectCurrentTrack } from '@/store/slices/player';
 import styles from './TopElements.module.scss';
 
-const canHover = () => window.matchMedia('(hover: hover)').matches;
-
 export const FullScreenTrackInfo: FC = () => {
 	const currentTrack = useAppSelector(selectCurrentTrack);
-	const [spanTranslateValue, setSpanTranslateValue] = useState(0);
-	const [isSpanHovered, setIsSpanHovered] = useState(false);
-	const infoDiv = useRef<HTMLDivElement | null>(null);
-	const trackTitleSpan = useRef<HTMLSpanElement | null>(null);
-
-	useEffect(() => {
-		if (infoDiv.current && trackTitleSpan.current) {
-			const wrapper = infoDiv.current;
-			const span = trackTitleSpan.current;
-
-			if (wrapper.clientWidth < span.clientWidth && isSpanHovered) {
-				setSpanTranslateValue(wrapper.clientWidth - span.clientWidth);
-			} else {
-				setSpanTranslateValue(0);
-			}
-		}
-	}, [isSpanHovered]);
 
 	if (!currentTrack) {
 		return null;
 	}
 
+	const artistNames = formatArtistNames(currentTrack.artists);
+
 	return (
-		<div ref={infoDiv} className={styles.fullscreen_track_info}>
-			<span
-				className={styles.track_title}
-				style={{ left: spanTranslateValue }}
-				onMouseEnter={() => {
-					if (canHover()) setIsSpanHovered(true);
-				}}
-				onMouseLeave={() => {
-					if (canHover()) setIsSpanHovered(false);
-				}}
-				ref={trackTitleSpan}
-			>
+		<div className={styles.fullscreen_track_info}>
+			<span className={styles.track_title} title={currentTrack.title}>
 				{currentTrack.title}
 			</span>
-			<span className={styles.fullscreen_artist}>
-				{formatArtistNames(currentTrack.artists)}
+			<span className={styles.fullscreen_artist} title={artistNames}>
+				{artistNames}
 			</span>
 		</div>
 	);

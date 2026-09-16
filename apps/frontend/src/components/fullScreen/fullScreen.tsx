@@ -3,7 +3,7 @@ import styles from './fullScreen.module.scss';
 import { useAppSelector } from '@/hooks/useTypedRedux';
 import { selectCurrentTrack } from '@/store/slices/player';
 import { TopElements } from './TopElements/TopElements';
-import { PlayBack } from './PlayBackControllers/PlayBack';
+import { FullScreenQueue } from './FullScreenQueue';
 
 const FullScreen: FC = () => {
 	const currentTrack = useAppSelector(selectCurrentTrack);
@@ -40,8 +40,10 @@ const FullScreen: FC = () => {
 				alt=""
 				draggable={false}
 			/>
-			<TopElements />
-			<PlayBack />
+			<div className={styles.content}>
+				<TopElements />
+				<FullScreenQueue />
+			</div>
 		</div>
 	);
 };

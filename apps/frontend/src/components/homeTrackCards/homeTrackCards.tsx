@@ -3,7 +3,6 @@ import clsx from 'clsx';
 
 import styles from './homeTrackCards.module.scss';
 import PlaylistAddIcon from '@/assets/icons/playlist-add.svg?react';
-import CloseIcon from '@/assets/icons/close.svg?react';
 import HeartIcon from '@/assets/icons/heart.svg?react';
 import PlayIcon from '@/assets/icons/play.svg?react';
 import { PlayingTrackTag } from '@/components/playingTrackTag/PlayingTrackTag';
@@ -14,7 +13,6 @@ import {
 } from '@/api/rtk/liked';
 import {
 	addTrackToQueue,
-	removeTrackFromQueue,
 	selectCurrentTrack,
 	selectIsPlaying,
 	selectPlayerQueue,
@@ -29,14 +27,9 @@ import { shallowEqual } from 'react-redux';
 interface Prop {
 	track: ApiTrack;
 	playList: ApiTrack[];
-	renderedInFullScreen?: boolean;
 }
 
-export const HomeTrackCard: FC<Prop> = ({
-	track,
-	playList,
-	renderedInFullScreen,
-}) => {
+export const HomeTrackCard: FC<Prop> = ({ track, playList }) => {
 	const dispatch = useAppDispatch();
 	const { data: likedTrackList = [] } = useGetLikedTracksQuery();
 	const [toggleLikedTrack] = useToggleLikedTrackMutation();
@@ -91,10 +84,6 @@ export const HomeTrackCard: FC<Prop> = ({
 		}
 	};
 
-	const deleteTrack = () => {
-		dispatch(removeTrackFromQueue(track.id));
-	};
-
 	return (
 		<div className={styles.home_track_card}>
 			<div
@@ -111,17 +100,9 @@ export const HomeTrackCard: FC<Prop> = ({
 					<span>{formatArtistNames(artists)}</span>
 				</div>
 				<div className={styles.home_track_card_buttons}>
-					{renderedInFullScreen ? (
-						track.id !== currentTrack?.id && (
-							<button onClick={deleteTrack}>
-								<CloseIcon className="icon" />
-							</button>
-						)
-					) : (
-						<button onClick={addToPlayList}>
-							<PlaylistAddIcon className="icon" />
-						</button>
-					)}
+					<button onClick={addToPlayList}>
+						<PlaylistAddIcon className="icon" />
+					</button>
 					<button onClick={toggleIsLiked}>
 						<HeartIcon
 							className={clsx(

@@ -1,37 +1,35 @@
 import { FC } from 'react';
-import clsx from 'clsx';
 import { useAppSelector } from '@/hooks/useTypedRedux';
 import { selectCurrentTrack } from '@/store/slices/player';
-import { FullScreenQueueCarousel } from './FullScreenQueueCarousel';
+import { PlayBackControls } from '../PlayBackControllers/PlayBackControls';
 import { FullScreenTrackInfo } from './FullScreenTrackInfo';
+import PlayBack from '../PlayBack/PlayBack';
 import styles from './TopElements.module.scss';
 
 export const TopElements: FC = () => {
 	const currentTrack = useAppSelector(selectCurrentTrack);
-	const showCurrentPlayList = useAppSelector(
-		(state) => state.ui.showCurrentPlayList,
-	);
 
 	if (!currentTrack) {
 		return null;
 	}
 
 	return (
-		<div className={styles.fullscreen_top_elements}>
-			<img
-				className={clsx(
-					styles.track_img,
-					showCurrentPlayList
-						? styles.track_img_large
-						: styles.track_img_small,
-				)}
-				src={currentTrack.albumImg}
-				alt="фото альбома"
-			/>
-			<div className={styles.fullscreen_info}>
-				<FullScreenQueueCarousel />
+		<div className={styles.now_playing}>
+			<div className={styles.track_info}>
+				<div className={styles.cover}>
+					<img
+						className={styles.track_img}
+						src={currentTrack.albumImg}
+						alt="фото альбома"
+						draggable={false}
+					/>
+					<div className={styles.cover_overlay}>
+						<PlayBackControls />
+					</div>
+				</div>
 				<FullScreenTrackInfo />
 			</div>
+			<PlayBack />
 		</div>
 	);
 };
