@@ -14,7 +14,7 @@ import styles from './LikedTracksLayout.module.scss';
 import { Input } from '@/components/inputFields/inputFields';
 import Button from '@/components/buttons/buttons';
 import type { ApiTrack } from '@music-player/backend';
-import { useIsMobileLayout } from '@/hooks/useIsMobileLayout';
+import { useLayout } from '@/hooks/useLayout';
 
 const LikedTracksGrid = lazy(() =>
 	import('@/components/likedTracks/LikedTracksGrid').then((module) => ({
@@ -34,7 +34,7 @@ export const LikedTracksContent: FC<LikedTracksContentProps> = ({ tracks }) => {
 	const [dataArr, setDataArr] = useState<ApiTrack[]>([]);
 	const [searchStr, setSearchStr] = useState('');
 	const [isPopular, setIsPopular] = useState(false);
-	const isMobile = useIsMobileLayout();
+	const isMobile = useLayout() === 'mobile';
 
 	const sortedByPopular = useMemo(
 		() => [...tracks].sort((a, b) => b.auditions - a.auditions),

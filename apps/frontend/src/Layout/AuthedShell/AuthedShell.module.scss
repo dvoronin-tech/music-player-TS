@@ -2,12 +2,20 @@
 	padding-bottom: 0;
 }
 
-.shell_with_player {
+.shell_desktop.shell_with_player {
 	padding-bottom: var(--play-selection-height);
 }
 
-@media screen and (max-width: 480px) {
-	.shell {
-		padding-bottom: calc(var(--mobile-nav-panel-height) + 20px);
-	}
+.shell_tablet.shell_with_player {
+	padding-bottom: calc(var(--mobile-play-section-height) + 40px);
+}
+
+.shell_mobile {
+	padding-bottom: calc(var(--mobile-nav-panel-height) + 20px);
+}
+
+.shell_mobile.shell_with_player {
+	padding-bottom: calc(
+		var(--mobile-nav-panel-height) + var(--mobile-play-section-height) + 30px
+	);
 }

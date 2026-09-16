@@ -8,13 +8,13 @@ import { shuffle } from '@/utils/shuffle';
 import styles from './HomeCard.module.scss';
 import { HomeCard } from './HomeCard';
 import type { HomeCardProps } from './HomeCard';
-import { useIsMobileLayout } from '@/hooks/useIsMobileLayout';
+import { useLayout } from '@/hooks/useLayout';
 import { HomeCardsSlider } from './HomeCardsSlider/HomeCardsSlider';
 
 export const HomeCardsSection: FC = memo(() => {
 	const dispatch = useAppDispatch();
 	const { data: trackList = [] } = useGetTracksQuery();
-	const isMobile = useIsMobileLayout();
+	const isMobile = useLayout() === 'mobile';
 
 	const setArtistOfMonthPlayList = () => {
 		const tracks = trackList.filter((item) =>
