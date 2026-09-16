@@ -50,17 +50,7 @@ const ArtistTrackCard: FC<Prop> = ({ track, playList }) => {
 	}, [likedTrackList, id]);
 
 	const toggleIsLiked = () => {
-		toggleLikedTrack({ id, isLiked });
-		dispatch(
-			addNotification({
-				notificationId: randomId(),
-				img: track.albumImg,
-				info: `${track.title} - ${formatArtistNames(track.artists)}`,
-				additionalInfo: isLiked
-					? 'Трек удалён из __избранного__'
-					: 'Трек добавлен в __избранное__',
-			}),
-		);
+		toggleLikedTrack({ id, isLiked, track });
 	};
 
 	const addToPlayList = () => {

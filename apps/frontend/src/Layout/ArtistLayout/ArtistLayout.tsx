@@ -15,9 +15,7 @@ import {
 	useToggleLikedArtistMutation,
 } from '@/api/rtk/liked';
 import { useAppDispatch } from '@/hooks/useTypedRedux';
-import { addNotification } from '@/store/slices/notification';
 import { skipToken } from '@reduxjs/toolkit/query/react';
-import { v4 as randomId } from 'uuid';
 import { startTrack } from '@/store/slices/player';
 
 const ArtistLayout: FC = () => {
@@ -71,17 +69,7 @@ const ArtistLayout: FC = () => {
 
 	const toggleIsFollowed = () => {
 		if (artist) {
-			toggleLikedArtist({ id: artist.id, isLiked: isLikedArtist });
-			dispatch(
-				addNotification({
-					notificationId: randomId(),
-					img: artist.artistImg,
-					info: artist.name,
-					additionalInfo: !isLikedArtist
-						? 'Вы __подписались__ на артиста'
-						: 'Вы __отписались__ от артиста',
-				}),
-			);
+			toggleLikedArtist({ id: artist.id, isLiked: isLikedArtist, artist });
 		}
 	};
 
