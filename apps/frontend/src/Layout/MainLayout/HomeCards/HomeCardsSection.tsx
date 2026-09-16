@@ -7,10 +7,14 @@ import { startTrack } from '@/store/slices/player';
 import { shuffle } from '@/utils/shuffle';
 import styles from './HomeCard.module.scss';
 import { HomeCard } from './HomeCard';
+import type { HomeCardProps } from './HomeCard';
+import { useIsMobileLayout } from '@/hooks/useIsMobileLayout';
+import { HomeCardsSlider } from './HomeCardsSlider/HomeCardsSlider';
 
-export const HomeCards: FC = memo(() => {
+export const HomeCardsSection: FC = memo(() => {
 	const dispatch = useAppDispatch();
 	const { data: trackList = [] } = useGetTracksQuery();
+	const isMobile = useIsMobileLayout();
 
 	const setArtistOfMonthPlayList = () => {
 		const tracks = trackList.filter((item) =>
@@ -51,7 +55,7 @@ export const HomeCards: FC = memo(() => {
 		}
 	};
 
-	const cards = [
+	const cards: HomeCardProps[] = [
 		{
 			onClick: setArtistOfMonthPlayList,
 			category: 'Артист месяца',
@@ -82,6 +86,9 @@ export const HomeCards: FC = memo(() => {
 		},
 	];
 
+	if (isMobile) {
+		return <HomeCardsSlider cards={cards} />;
+	}
 	return (
 		<div className={styles.home_cards_wrapper}>
 			{cards.map((card) => (

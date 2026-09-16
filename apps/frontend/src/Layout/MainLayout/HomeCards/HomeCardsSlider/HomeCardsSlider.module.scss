@@ -1,0 +1,67 @@
+.sliderWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    --gap: 10px;
+}
+
+.slider {
+    display: flex;
+    gap: var(--gap);
+}
+
+.slide {
+    flex: 0 0 calc(100svw - var(--main-padding) * 2);
+}
+
+.isAnimating{ 
+    transition: translate 0.5s ease;
+}
+
+.dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.dot {
+    position: relative;
+    overflow: hidden;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--text-color) 45%, var(--text-disable-color));
+    transition: width 0.2s ease;
+}
+
+.dotActive {
+    width: 28px;
+}
+
+.dotFill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    border-radius: inherit;
+    background-color: var(--accent-color);
+    animation: dotFill var(--auto-slide-duration) linear forwards;
+}
+
+.isDragging .dotFill {
+    animation-play-state: paused;
+}
+
+@keyframes dotFill {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
