@@ -33,21 +33,24 @@
     cursor: default;
 
     svg {
-        width: 32px;
-        height: 32px;
+        width: 26px;
+        height: 26px;
     }
 }
 
 .account {
-    width: 42px;
-    height: 42px;
     overflow: hidden;
     border-radius: 50%;
-    background-color: var(--inputs-bg-color);
+
+    img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
 
     svg {
-        width: 22px;
-        height: 22px;
+        width: 20px;
+        height: 20px;
     }
 }
 
