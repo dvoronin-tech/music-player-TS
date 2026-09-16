@@ -103,7 +103,7 @@
 }
 
 .fullscreen_top_elements {
-    flex: 0 0 500px;
+    flex: 0 1 500px;
     width: 100%;
     position: relative;
     z-index: 2;
@@ -112,11 +112,11 @@
 }
 
 .fullscreen_info {
-    flex: 1 1 500px;
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: calc(100svw - 660px);
     height: 100%;
 }
 
