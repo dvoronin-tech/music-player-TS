@@ -3,6 +3,7 @@ import styles from './HomeArtistsLine.module.scss';
 import Button from '@/components/buttons/buttons';
 import { HomeArtists } from '@/components/artistCards/HomeArtists';
 import { useGetArtistsQuery } from '@/api/rtk/artists';
+import { Loader } from '@/components/loader/Loader';
 
 export const HomeArtistsLine: FC = () => {
 	const {
@@ -77,7 +78,7 @@ export const HomeArtistsLine: FC = () => {
 			>
 				<div className={styles.artists_line} ref={artistLine}>
 					{artistLoading ? (
-						<div className="loader"></div>
+						<Loader />
 					) : (
 						<HomeArtists artists={artists} error={artistError} />
 					)}
