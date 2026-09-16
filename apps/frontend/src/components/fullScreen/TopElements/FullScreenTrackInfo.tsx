@@ -4,6 +4,8 @@ import { formatArtistNames } from '@/utils/formatArtists';
 import { selectCurrentTrack } from '@/store/slices/player';
 import styles from './TopElements.module.scss';
 
+const canHover = () => window.matchMedia('(hover: hover)').matches;
+
 export const FullScreenTrackInfo: FC = () => {
 	const currentTrack = useAppSelector(selectCurrentTrack);
 	const [spanTranslateValue, setSpanTranslateValue] = useState(0);
@@ -33,8 +35,12 @@ export const FullScreenTrackInfo: FC = () => {
 			<span
 				className={styles.track_title}
 				style={{ left: spanTranslateValue }}
-				onMouseEnter={() => setIsSpanHovered(true)}
-				onMouseLeave={() => setIsSpanHovered(false)}
+				onMouseEnter={() => {
+					if (canHover()) setIsSpanHovered(true);
+				}}
+				onMouseLeave={() => {
+					if (canHover()) setIsSpanHovered(false);
+				}}
 				ref={trackTitleSpan}
 			>
 				{currentTrack.title}

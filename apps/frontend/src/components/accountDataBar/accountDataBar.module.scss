@@ -82,9 +82,11 @@
 		color: var(--text-second-color);
 	}
 
-	&:hover {
-		svg {
-			color: var(--accent-color);
+	@media (hover: hover) {
+		&:hover {
+			svg {
+				color: var(--accent-color);
+			}
 		}
 	}
 }
@@ -114,8 +116,10 @@
 		width: 100%;
 	}
 
-	svg:hover {
-		color: var(--text-color);
+	@media (hover: hover) {
+		svg:hover {
+			color: var(--text-color);
+		}
 	}
 }
 
@@ -260,8 +264,10 @@ button.file_picker {
 		z-index: 1;
 	}
 
-	&:hover {
-		transform: scale(1.02);
+	@media (hover: hover) {
+		&:hover {
+			transform: scale(1.02);
+		}
 	}
 
 	&::after {

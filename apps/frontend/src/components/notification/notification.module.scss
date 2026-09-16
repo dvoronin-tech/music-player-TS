@@ -97,13 +97,22 @@
     pointer-events: visible;
     top: 2px;
     right: 2px;
+    opacity: 1;
+
     @media (hover: hover) {
+        opacity: 0;
+
+        .notification:hover & {
+            opacity: 1;
+        }
+
         &:hover {
             svg {
                 color: var(--accent-color);
             }
         }
     }
+
     svg {
         width: 14px;
         height: 14px;

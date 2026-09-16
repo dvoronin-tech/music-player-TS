@@ -99,29 +99,31 @@
     justify-content: space-between;
     overflow: hidden;
 
-    &:hover {
-        flex-basis: 60%;
+    @media (hover: hover) {
+        &:hover {
+            flex-basis: 60%;
 
-        .background_img {
-            width: 70%;
+            .background_img {
+                width: 70%;
 
-            span {
-                opacity: 0;
-                left: -20%;
+                span {
+                    opacity: 0;
+                    left: -20%;
+                }
             }
-        }
 
-        .track_item_info_panel {
-            width: 30%;
+            .track_item_info_panel {
+                width: 30%;
 
-            &::before {
+                &::before {
+                    opacity: 1;
+                }
+            }
+
+            .track_item_info,
+            .track_item_action_buttons {
                 opacity: 1;
             }
-        }
-
-        .track_item_info,
-        .track_item_action_buttons {
-            opacity: 1;
         }
     }
 }

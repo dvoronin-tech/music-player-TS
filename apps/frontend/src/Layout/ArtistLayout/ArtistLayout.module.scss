@@ -73,9 +73,11 @@
     padding: 1.4rem;
     aspect-ratio: 1;
 
-    &:hover {
-        svg {
-            color: var(--accent-color-hover);
+    @media (hover: hover) {
+        &:hover {
+            svg {
+                color: var(--accent-color-hover);
+            }
         }
     }
 }
