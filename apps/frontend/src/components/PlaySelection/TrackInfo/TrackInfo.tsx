@@ -1,4 +1,5 @@
 import { FC, memo } from 'react';
+import clsx from 'clsx';
 import { shallowEqual } from 'react-redux';
 import { useNavigate } from '@tanstack/react-router';
 import type { ApiArtistRef } from '@music-player/backend';
@@ -7,14 +8,15 @@ import { Loader } from '@/components/loader/Loader';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import { toggleShowFullScreen } from '@/store/slices/ui';
 import { ArtistButtons } from '@/utils/formatArtists';
-import {
-	selectCurrentTrack,
-	selectIsLoading,
-} from '@/store/slices/player';
+import { selectCurrentTrack, selectIsLoading } from '@/store/slices/player';
 
-import styles from './LeftElements.module.scss';
+import styles from './TrackInfo.module.scss';
 
-export const LeftElements: FC = memo(() => {
+interface TrackInfoProps {
+	className?: string;
+}
+
+export const TrackInfo: FC<TrackInfoProps> = memo(({ className }) => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { currentTrack, pending } = useAppSelector(
@@ -45,7 +47,10 @@ export const LeftElements: FC = memo(() => {
 	};
 
 	return (
-		<div className={styles.left_elements} onClick={handleToggleFullScreen}>
+		<div
+			className={clsx(styles.track_info, className)}
+			onClick={handleToggleFullScreen}
+		>
 			<div className={styles.album_img_wrapper}>
 				{pending ? (
 					<Loader />
@@ -57,8 +62,8 @@ export const LeftElements: FC = memo(() => {
 					/>
 				)}
 			</div>
-			<div className={styles.track_info}>
-				<span>{currentTrack.title}</span>
+			<div className={styles.meta}>
+				<span className={styles.title}>{currentTrack.title}</span>
 				<ArtistButtons
 					artists={currentTrack.artists}
 					className={styles.artists_wrapper}

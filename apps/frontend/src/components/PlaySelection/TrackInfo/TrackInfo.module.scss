@@ -1,10 +1,12 @@
-.left_elements {
+.track_info {
 	display: flex;
-	flex: 0 0 400px;
+	flex: 0 1 400px;
 	align-items: stretch;
+	gap: 15px;
 	height: 100%;
 	cursor: pointer;
 	animation: fade-out 1s ease;
+	overflow: hidden;
 }
 
 .album_img_wrapper {
@@ -16,7 +18,11 @@
 	aspect-ratio: 1 / 1;
 	width: auto;
 	flex-shrink: 0;
-	margin-right: 15px;
+
+	:global(.loader) {
+		width: 24px;
+		border-width: 3px;
+	}
 }
 
 .album_img {
@@ -28,26 +34,36 @@
 	transition: 0.3s all ease;
 }
 
-.track_info {
+.meta {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
+	overflow: hidden;
+	flex: 1 1 auto;
 	font-size: 1.8rem;
 	font-weight: bold;
 	color: var(--text-color);
 	transition: 0.3s all ease;
 }
 
+.title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .artists_wrapper {
-	display: flex;
-	align-items: center;
-	flex-wrap: wrap;
-	gap: 4px;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	min-width: 0;
 	color: var(--text-second-color);
 	font-size: 1.4rem;
 }
 
 .artists {
+	display: inline;
 	background: none;
 	border: none;
 	padding: 0;

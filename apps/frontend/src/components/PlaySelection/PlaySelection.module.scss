@@ -3,6 +3,7 @@
 	background-color: var(--second-bg-color-for-blur);
 	backdrop-filter: blur(20px);
 	display: flex;
+	gap: 15px;
 	padding: 15px 40px;
 	transition: 0.3s all ease;
 	position: fixed;
