@@ -17,39 +17,41 @@
 	border-radius: 35px;
 	transition: 0.5s ease filter;
 
-	&:hover {
-		filter: contrast(1.05);
+	@media (hover: hover) {
+		&:hover {
+			filter: contrast(1.05);
 
-		.home_card_image {
-			transform: scale(1.1);
-		}
+			.home_card_image {
+				transform: scale(1.1);
+			}
 
-		.home_card_wrapper {
-			backdrop-filter: blur(5px);
-		}
+			.home_card_wrapper {
+				backdrop-filter: blur(5px);
+			}
 
-		.home_card_button {
-			right: 0;
-			opacity: 1;
-			scale: 1;
-		}
+			.home_card_button {
+				right: 0;
+				opacity: 1;
+				scale: 1;
+			}
 
-		.home_card_category {
-			font-size: 3.2rem;
-			font-weight: 500;
-			left: 0;
-			top: 0;
-			color: var(--text-second-color);
-		}
+			.home_card_category {
+				font-size: 3.2rem;
+				font-weight: 500;
+				left: 0;
+				top: 0;
+				color: var(--text-second-color);
+			}
 
-		.home_card_content {
-			left: 0;
-			opacity: 1;
-		}
+			.home_card_content {
+				left: 0;
+				opacity: 1;
+			}
 
-		.home_card_additional {
-			left: 0;
-			opacity: 1;
+			.home_card_additional {
+				left: 0;
+				opacity: 1;
+			}
 		}
 	}
 }
@@ -145,14 +147,77 @@
 			color 0.2s ease;
 	}
 
-	&:hover svg {
-		color: var(--accent-color-hover);
+	@media (hover: hover) {
+		&:hover svg {
+			color: var(--accent-color-hover);
+		}
 	}
 }
 
 @media screen and (max-width: 1490px) {
 	.home_card_category {
 		font-size: 4.8rem;
-        top: 60px
+		top: 60px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+    .home_card_category {
+        font-size: 3.2rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+	.home_cards_wrapper {
+		gap: 16px;
+		grid-template-columns: 1fr;
+	}
+
+	.home_card {
+		height: 168px;
+		border-radius: 24px;
+	}
+
+	.home_card_wrapper {
+		padding: 16px 16px 16px 20px;
+		gap: 12px;
+		border-radius: 24px;
+		backdrop-filter: blur(5px);
+	}
+
+	.home_card_info {
+		min-width: 0;
+		flex: 1;
+	}
+
+	.home_card_category {
+		font-size: 1.6rem;
+		font-weight: 500;
+		left: 0;
+		top: 0;
+		line-height: 1.2;
+		color: var(--text-second-color);
+		transition: none;
+	}
+
+	.home_card_content {
+		left: 0;
+		opacity: 1;
+		font-size: 2.4rem;
+		line-height: 1.15;
+		transition: none;
+	}
+
+	.home_card_additional {
+		left: 0;
+		opacity: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		transition: none;
+	}
+
+	.home_card_button {
+		display: none;
 	}
 }
