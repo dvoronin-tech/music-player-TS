@@ -277,6 +277,17 @@ export const toggleShuffle = (): PlayerThunk => (dispatch, getState) => {
 	);
 };
 
+export const seekBy =
+	(deltaSeconds: number): PlayerThunk =>
+	(dispatch, getState) => {
+		const { currentTrackId, currentTime } = getState().player;
+		if (!currentTrackId) {
+			return;
+		}
+
+		dispatch(seekTo(currentTime + deltaSeconds));
+	};
+
 export const selectPlayerQueue = (state: PlayerRootState) => state.player.queue;
 const selectPlayOrder = (state: PlayerRootState) => state.player.playOrder;
 const selectCurrentTrackId = (state: PlayerRootState) =>

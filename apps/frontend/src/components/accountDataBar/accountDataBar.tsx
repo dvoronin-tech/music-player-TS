@@ -4,12 +4,11 @@ import {
 	type FC,
 	useRef,
 	useState,
-    useEffect,
 } from 'react';
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import CloseIcon from '@/assets/icons/close.svg?react';
-import { toggleShowUserData } from '@/store/slices/ui';
+import { toggleShowShortcuts, toggleShowUserData } from '@/store/slices/ui';
 import { useGetMeQuery } from '@/api/rtk/user';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import styles from './accountDataBar.module.scss';
@@ -18,7 +17,7 @@ import ChangePhotoForm from './ChangePhotoForm';
 
 const AccountDataBar: FC = () => {
 	const dispatch = useAppDispatch();
-	const { showUserData } = useAppSelector((state) => state.ui);
+	const { showUserData, showShortcuts } = useAppSelector((state) => state.ui);
 	const { data: user } = useGetMeQuery();
 
 	const username = user?.username ?? '';
@@ -30,16 +29,24 @@ const AccountDataBar: FC = () => {
 	const [shouldRenderBlur, setShouldRenderBlur] = useState(showUserData);
 
 	const accountBarRef = useRef<HTMLDivElement>(null);
-    const mobileNavPanelRef = useRef<HTMLDivElement>(null);
+	const mobileNavPanelRef = useRef<HTMLDivElement>(null);
 
 	const handleCloseAccountBar = () => {
 		dispatch(toggleShowUserData(false));
+	};
+
+	const handleOpenShortcuts = () => {
+		dispatch(toggleShowShortcuts(true));
 	};
 
 	useOutsideClick(accountBarRef, handleCloseAccountBar);
 
 	if (showUserData && !shouldRenderBlur) {
 		setShouldRenderBlur(true);
+	}
+
+	if (showShortcuts && shouldRenderBlur) {
+		setShouldRenderBlur(false);
 	}
 
 	const handleTransitionEnd = (e: TransitionEvent) => {
@@ -89,10 +96,11 @@ const AccountDataBar: FC = () => {
 						userImg={userImg}
 						regDate={regDate}
 						onChangePhoto={() => setChangePhoto(true)}
+						onOpenShortcuts={handleOpenShortcuts}
 					/>
 				)}
 			</aside>
-			{shouldRenderBlur && (
+			{shouldRenderBlur && !showShortcuts && (
 				<div
 					className={clsx(
 						styles.blur_bg,

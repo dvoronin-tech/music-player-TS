@@ -1,7 +1,14 @@
-import { FC, useEffect, useState, type AnimationEvent } from 'react';
+import {
+	FC,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+	type AnimationEvent,
+} from 'react';
 import clsx from 'clsx';
 import styles from './asideBar.module.scss';
-import { useAppSelector } from '@/hooks/useTypedRedux';
+import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import {
 	useGetLikedTracksQuery,
 	useGetLikedArtistsQuery,
@@ -9,22 +16,36 @@ import {
 import Button from '@/components/buttons/buttons';
 import { AsideLikedTracks } from './AsideLikedTracks';
 import { AsideLikedArtists } from './AsideLikedArtists';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
 import { selectCurrentTrack, selectPlayerQueue } from '@/store/slices/player';
+import { setAsideBarOpen } from '@/store/slices/ui';
 
 const canHover = () => window.matchMedia('(hover: hover)').matches;
 
 const AsideBar: FC = () => {
+	const dispatch = useAppDispatch();
 	const currentTrack = useAppSelector(selectCurrentTrack);
 	const currentPlayList = useAppSelector(selectPlayerQueue);
+	const showAsideBar = useAppSelector((state) => state.ui.showAsideBar);
 	const { data: likedTrackList = [], isLoading: tracksLoading } =
 		useGetLikedTracksQuery();
 	const { data: likedArtists = [], isLoading: artistsLoading } =
 		useGetLikedArtistsQuery();
 
+	const asideRef = useRef<HTMLElement>(null);
 	const [showPlayList, setShowPlayList] = useState(false);
 	const [isPopular, setIsPopular] = useState(false);
-	const [isOpen, setIsOpen] = useState(false);
+	const [isHovered, setIsHovered] = useState(false);
 	const [shouldRenderBlur, setShouldRenderBlur] = useState(false);
+	const isOpen = isHovered || showAsideBar;
+
+	const closeAsideBar = useCallback(() => {
+		if (showAsideBar) {
+			dispatch(setAsideBarOpen(false));
+		}
+	}, [dispatch, showAsideBar]);
+
+	useOutsideClick(asideRef, closeAsideBar);
 
 	useEffect(() => {
 		if (currentTrack && currentPlayList.length > 0) {
@@ -49,15 +70,17 @@ const AsideBar: FC = () => {
 	return (
 		<>
 			<aside
+				ref={asideRef}
 				className={clsx(
 					styles.aside_bar,
 					showPlayList && styles.with_playlist,
+					isOpen && styles.aside_bar_show,
 				)}
 				onMouseEnter={() => {
-					if (canHover()) setIsOpen(true);
+					if (canHover()) setIsHovered(true);
 				}}
 				onMouseLeave={() => {
-					if (canHover()) setIsOpen(false);
+					if (canHover()) setIsHovered(false);
 				}}
 			>
 				<div className={styles.flex_row}>

@@ -24,6 +24,11 @@
         }
     }
 
+    &.aside_bar_show {
+        left: 40px;
+        opacity: 1;
+    }
+
     &::before {
         content: '';
         width: 42px;

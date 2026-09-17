@@ -13,6 +13,7 @@ type AccountViewProps = {
 	userImg: string | null;
 	regDate: Date;
 	onChangePhoto: () => void;
+	onOpenShortcuts: () => void;
 };
 
 const AccountView: FC<AccountViewProps> = ({
@@ -21,6 +22,7 @@ const AccountView: FC<AccountViewProps> = ({
 	userImg,
 	regDate,
 	onChangePhoto,
+	onOpenShortcuts,
 }) => {
 	const navigate = useNavigate();
 	const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -68,6 +70,14 @@ const AccountView: FC<AccountViewProps> = ({
 					weight="semibold"
 				>
 					Изменить фото
+				</Button>
+				<Button
+					onClick={onOpenShortcuts}
+					variant="simple"
+					size="xl"
+					weight="semibold"
+				>
+					Горячие клавиши
 				</Button>
 				<Button
 					variant="simple"
