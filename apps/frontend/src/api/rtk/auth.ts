@@ -6,14 +6,13 @@ import { parseHonoJson } from '@/api/parseHono';
 
 export type { LoginBody, RegisterBody };
 
-export type LoginResult = {
+export type AuthResult = {
 	token: string;
 	user: ApiUser;
 };
 
-export type RegisterResult = {
-	user: ApiUser;
-};
+export type LoginResult = AuthResult;
+export type RegisterResult = AuthResult;
 
 export const authApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({

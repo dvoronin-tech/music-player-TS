@@ -16,20 +16,29 @@ export const registerUser = factory.createHandlers(
 		const body = c.req.valid('json');
 
 		try {
-			const [user] = await db
-				.insert(users)
-				.values({
-					username: body.username,
-					email: body.email,
-					passwordHash: await hashPassword(body.password),
-				})
-				.returning();
+			const passwordHash = await hashPassword(body.password);
 
-			if (!user) {
-				return jsonError(c, 500, 'Failed to create user');
-			}
+			const { user, token } = await db.transaction(async (tx) => {
+				const [createdUser] = await tx
+					.insert(users)
+					.values({
+						username: body.username,
+						email: body.email,
+						passwordHash,
+					})
+					.returning();
 
-			return c.json({ user: toApiUser(user) }, 201);
+				if (!createdUser) {
+					throw new Error('Failed to create user');
+				}
+
+				const token = createToken();
+				await tx.insert(tokens).values({ key: token, userId: createdUser.id });
+
+				return { user: createdUser, token };
+			});
+
+			return c.json({ token, user: toApiUser(user) }, 201);
 		} catch (error) {
 			const constraint = uniqueConstraint(error);
 			if (constraint === 'users_username_unique') {
@@ -37,6 +46,9 @@ export const registerUser = factory.createHandlers(
 			}
 			if (constraint === 'users_email_unique') {
 				return jsonError(c, 409, 'Email is already taken');
+			}
+			if (error instanceof Error && error.message === 'Failed to create user') {
+				return jsonError(c, 500, 'Failed to create user');
 			}
 			throw error;
 		}

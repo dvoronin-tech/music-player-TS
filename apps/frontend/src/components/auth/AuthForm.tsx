@@ -104,12 +104,14 @@ export const AuthForm: FC = () => {
 
 			const res = await registerUser(result.data);
 			if ('data' in res && res.data) {
+				localStorage.setItem('Token', res.data.token);
 				sendToast({
 					info: 'Регистрация',
 					additionalInfo: 'Регистрация прошла __успешно__',
 					isError: false,
 				});
-				setFormData(initialFormValues);
+				await navigate({ to: '/home' });
+				return;
 			}
 			sendToast({
 				info: 'Регистрация',
@@ -126,9 +128,9 @@ export const AuthForm: FC = () => {
 			const res = await loginUser(result.data);
 			if ('data' in res && res.data) {
 				localStorage.setItem('Token', res.data.token);
-                sendToast({
+				sendToast({
 					info: 'Вход',
-					additionalInfo: 'Вход прошл __успешно__',
+					additionalInfo: 'Вход прошёл __успешно__',
 					isError: false,
 				});
 				await navigate({ to: '/home' });
