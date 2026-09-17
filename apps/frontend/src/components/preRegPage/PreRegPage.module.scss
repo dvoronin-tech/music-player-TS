@@ -63,6 +63,10 @@
 		line-height: 1.55;
 		overflow-wrap: break-word;
 	}
+
+	b {
+		color: var(--accent-color);
+	}
 }
 
 .warning {
