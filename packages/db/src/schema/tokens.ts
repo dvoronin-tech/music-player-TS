@@ -5,7 +5,6 @@ export const tokens = pgTable('tokens', {
 	key: text('key').primaryKey(),
 	userId: uuid('user_id')
 		.notNull()
-		.unique()
 		.references(() => users.id, { onDelete: 'cascade' }),
 	createdAt: timestamp('created_at', { withTimezone: true })
 		.notNull()

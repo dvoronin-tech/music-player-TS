@@ -1,0 +1,186 @@
+.overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 1200;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	background-color: var(--second-bg-color-for-blur);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	animation: shortcuts-overlay-fade-in 0.3s ease;
+}
+
+.dialog {
+	width: 100%;
+	max-width: 560px;
+	max-height: calc(100svh - 40px);
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	border: 1px solid var(--stroke-light);
+	border-radius: 15px;
+	background-color: var(--second-bg-color-for-blur);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	outline: none;
+	animation: shortcuts-dialog-fade-in 0.3s ease;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+}
+
+.title {
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--text-color);
+}
+
+.close_btn {
+	width: 30px;
+	height: 30px;
+	flex-shrink: 0;
+	border-radius: 100px;
+	background-color: var(--main-bg-color-for-blur);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+
+	svg {
+		color: var(--text-second-color);
+	}
+
+	@media (hover: hover) {
+		&:hover {
+			svg {
+				color: var(--accent-color);
+			}
+		}
+	}
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 12px 0;
+	border-bottom: 1px solid var(--stroke-light);
+
+	&:last-child {
+		border-bottom: none;
+		padding-bottom: 0;
+	}
+}
+
+.keys {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	flex-shrink: 0;
+}
+
+.key_group {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.plus {
+	font-size: 1.3rem;
+	font-weight: 600;
+	color: var(--text-disable-color);
+}
+
+.kbd {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 32px;
+	padding: 5px 10px;
+	border: 1px solid var(--stroke-light);
+	border-radius: 8px;
+	background-color: var(--main-bg-color-for-blur);
+	color: var(--text-color);
+	font-family: inherit;
+	font-size: 1.3rem;
+	font-weight: 600;
+	line-height: 1.2;
+	white-space: nowrap;
+}
+
+.action {
+	font-size: 1.4rem;
+	font-weight: 600;
+	color: var(--text-second-color);
+	text-align: right;
+}
+
+.note {
+	font-size: 1.3rem;
+	font-weight: 500;
+	line-height: 1.4;
+	color: var(--text-disable-color);
+}
+
+@keyframes shortcuts-overlay-fade-in {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes shortcuts-dialog-fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.dialog {
+		max-height: calc(100svh - 40px);
+	}
+
+	.title {
+		font-size: 1.8rem;
+	}
+
+	.close_btn {
+		width: 40px;
+		height: 40px;
+	}
+
+	.row {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	.action {
+		text-align: left;
+	}
+}

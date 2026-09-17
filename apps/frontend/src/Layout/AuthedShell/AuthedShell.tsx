@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { lazy, Suspense, useEffect } from 'react';
 import clsx from 'clsx';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useLayout } from '@/hooks/useLayout';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
 import MainHeader from '@/components/headers/MainHeader';
@@ -28,6 +29,9 @@ const MobilePlaySection = lazy(
 const MobileNavPanel = lazy(
 	() => import('@/components/MobileNavPanel/MobileNavPanel'),
 );
+const ShortcutsModal = lazy(
+	() => import('@/components/ShortcutsModal/ShortcutsModal'),
+);
 
 interface AuthedShellProps {
 	children: ReactNode;
@@ -36,8 +40,9 @@ interface AuthedShellProps {
 export default function AuthedShell({ children }: AuthedShellProps) {
 	const layout = useLayout();
 	const dispatch = useAppDispatch();
+	useKeyboardShortcuts();
 	const currentTrack = useAppSelector(selectCurrentTrack);
-	const { showUserData, showFullScreen, showCurrentPlayList } =
+	const { showUserData, showFullScreen, showCurrentPlayList, showShortcuts } =
 		useAppSelector((state) => state.ui);
 
 	useEffect(() => {
@@ -83,6 +88,7 @@ export default function AuthedShell({ children }: AuthedShellProps) {
 					<MobilePlaySection layout={layout} />
 				)}
 				{layout === 'mobile' && <MobileNavPanel />}
+				{showShortcuts && <ShortcutsModal />}
 			</Suspense>
 		</div>
 	);

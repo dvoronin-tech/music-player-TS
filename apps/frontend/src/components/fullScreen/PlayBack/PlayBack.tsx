@@ -5,7 +5,6 @@ import {
 	useRef,
 	useState,
 	PointerEvent,
-	KeyboardEvent,
 } from 'react';
 import { shallowEqual } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '@/hooks/useTypedRedux';
@@ -57,7 +56,6 @@ const PlayBack: FC = () => {
 	);
 
 	const trackRef = useRef<HTMLDivElement>(null);
-	const draggingRef = useRef(false);
 	const [dotCount, setDotCount] = useState(36);
 	const [dragProgress, setDragProgress] = useState<number | null>(null);
 
@@ -124,23 +122,21 @@ const PlayBack: FC = () => {
 			return;
 		}
 
-		draggingRef.current = true;
 		event.currentTarget.setPointerCapture(event.pointerId);
 		seekByClientX(event.clientX);
 	};
 
 	const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
-		if (!draggingRef.current) {
+		if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
 			return;
 		}
 
 		seekByClientX(event.clientX);
 	};
 
-	const stopDragging = useCallback(() => {
-		draggingRef.current = false;
+	const stopDragging = () => {
 		setDragProgress(null);
-	}, []);
+	};
 
 	return (
 		<div className={styles.playback}>
@@ -156,7 +152,7 @@ const PlayBack: FC = () => {
 				aria-valuenow={Math.round(currentTime)}
 				aria-valuetext={`${humanizingNumbers(currentTime)} из ${humanizingNumbers(duration)}`}
 				className={styles.dots_track}
-				data-dragging={!!dragProgress}
+				data-dragging={dragProgress || null}
 				role="slider"
 				tabIndex={0}
 				onPointerDown={handlePointerDown}
