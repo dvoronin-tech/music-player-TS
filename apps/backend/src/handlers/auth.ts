@@ -48,7 +48,7 @@ export const loginUser = factory.createHandlers(
 	async (c) => {
 		const { username, password } = c.req.valid('json');
 		const user = await db.query.users.findFirst({
-			where: eq(users.username, username),
+			where: (users, {eq}) => eq(users.username, username),
 		});
 
 		if (!user || !(await verifyPassword(password, user.passwordHash))) {
@@ -56,10 +56,7 @@ export const loginUser = factory.createHandlers(
 		}
 
 		const token = createToken();
-		await db.transaction(async (tx) => {
-			await tx.delete(tokens).where(eq(tokens.userId, user.id));
-			await tx.insert(tokens).values({ key: token, userId: user.id });
-		});
+		await db.insert(tokens).values({ key: token, userId: user.id });
 
 		return c.json({ token, user: toApiUser(user) });
 	},
